@@ -1,0 +1,3787 @@
+[
+    {
+        "location_id":"11",
+        "location_name":"Maxaquene - Baltazar",
+        "location_type":"container",
+        "lat":"-25.94473333",
+        "long":"32.57893333",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"12",
+        "location_name":"Maxaquene - Custodio",
+        "location_type":"container",
+        "lat":"-25.94306667",
+        "long":"32.57893333",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"13",
+        "location_name":"Maxaquene - Etrago",
+        "location_type":"container",
+        "lat":"-25.94076667",
+        "long":"32.57918333",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"14",
+        "location_name":"Maxaquene - MICOA",
+        "location_type":"container",
+        "lat":"-25.93733333",
+        "long":"32.57791667",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"20",
+        "location_name":"Polana Canico B - Carlos Cardoso  Com Costa do sol",
+        "location_type":"container",
+        "lat":"-25.9338",
+        "long":"32.60638333",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"21",
+        "location_name":"Polana Canico B - Mercado Chiquelene",
+        "location_type":"container",
+        "lat":"-25.9315",
+        "long":"32.60143333",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"31",
+        "location_name":"Magoanine C - Grande Maputo",
+        "location_type":"container",
+        "lat":"-25.8283",
+        "long":"32.6008",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"32",
+        "location_name":"Magoanine C - Mercado",
+        "location_type":"container",
+        "lat":"-25.84651667",
+        "long":"32.59408333",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"33",
+        "location_name":"Magoanine C - Campo schelle",
+        "location_type":"container",
+        "lat":"-25.84651667",
+        "long":"32.58356667",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"41",
+        "location_name":"Inhagoia B - Mercado Informal",
+        "location_type":"container",
+        "lat":"-25.91806667",
+        "long":"32.55518333",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"1001",
+        "location_name":"Magoanine C - Quarteirao 1",
+        "location_type":"quarter",
+        "lat":"-25.84651667",
+        "long":"32.59408333",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1002",
+        "location_name":"Magoanine C - Quarteirao 2",
+        "location_type":"quarter",
+        "lat":"-25.84651668",
+        "long":"32.59408334",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1003",
+        "location_name":"Magoanine C - Quarteirao 3",
+        "location_type":"quarter",
+        "lat":"-25.84651669",
+        "long":"32.59408335",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1004",
+        "location_name":"Magoanine C - Quarteirao 4",
+        "location_type":"quarter",
+        "lat":"-25.8465167",
+        "long":"32.59408336",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1005",
+        "location_name":"Magoanine C - Quarteirao 5",
+        "location_type":"quarter",
+        "lat":"-25.84651671",
+        "long":"32.59408337",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1006",
+        "location_name":"Magoanine C - Quarteirao 6",
+        "location_type":"quarter",
+        "lat":"-25.84651672",
+        "long":"32.59408338",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1007",
+        "location_name":"Magoanine C - Quarteirao 7",
+        "location_type":"quarter",
+        "lat":"-25.84651673",
+        "long":"32.59408339",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1008",
+        "location_name":"Magoanine C - Quarteirao 8",
+        "location_type":"quarter",
+        "lat":"-25.84651674",
+        "long":"32.5940834",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1009",
+        "location_name":"Magoanine C - Quarteirao 9",
+        "location_type":"quarter",
+        "lat":"-25.84651675",
+        "long":"32.59408341",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1010",
+        "location_name":"Magoanine C - Quarteirao 10",
+        "location_type":"quarter",
+        "lat":"-25.84651676",
+        "long":"32.59408342",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1011",
+        "location_name":"Magoanine C - Quarteirao 11",
+        "location_type":"quarter",
+        "lat":"-25.84651677",
+        "long":"32.59408343",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1012",
+        "location_name":"Magoanine C - Quarteirao 12",
+        "location_type":"quarter",
+        "lat":"-25.84651678",
+        "long":"32.59408344",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1013",
+        "location_name":"Magoanine C - Quarteirao 13",
+        "location_type":"quarter",
+        "lat":"-25.84651679",
+        "long":"32.59408345",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1014",
+        "location_name":"Magoanine C - Quarteirao 14",
+        "location_type":"quarter",
+        "lat":"-25.8465168",
+        "long":"32.59408346",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1015",
+        "location_name":"Magoanine C - Quarteirao 15",
+        "location_type":"quarter",
+        "lat":"-25.84651681",
+        "long":"32.59408347",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1016",
+        "location_name":"Magoanine C - Quarteirao 16",
+        "location_type":"quarter",
+        "lat":"-25.84651682",
+        "long":"32.59408348",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1017",
+        "location_name":"Magoanine C - Quarteirao 17",
+        "location_type":"quarter",
+        "lat":"-25.84651683",
+        "long":"32.59408349",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1018",
+        "location_name":"Magoanine C - Quarteirao 18",
+        "location_type":"quarter",
+        "lat":"-25.84651684",
+        "long":"32.5940835",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1019",
+        "location_name":"Magoanine C - Quarteirao 19",
+        "location_type":"quarter",
+        "lat":"-25.84651685",
+        "long":"32.59408351",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1020",
+        "location_name":"Magoanine C - Quarteirao 20",
+        "location_type":"quarter",
+        "lat":"-25.84651686",
+        "long":"32.59408352",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1021",
+        "location_name":"Magoanine C - Quarteirao 21",
+        "location_type":"quarter",
+        "lat":"-25.84651687",
+        "long":"32.59408353",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1022",
+        "location_name":"Magoanine C - Quarteirao 22",
+        "location_type":"quarter",
+        "lat":"-25.84651688",
+        "long":"32.59408354",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1023",
+        "location_name":"Magoanine C - Quarteirao 23",
+        "location_type":"quarter",
+        "lat":"-25.84651689",
+        "long":"32.59408355",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1024",
+        "location_name":"Magoanine C - Quarteirao 24",
+        "location_type":"quarter",
+        "lat":"-25.8465169",
+        "long":"32.59408356",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1025",
+        "location_name":"Magoanine C - Quarteirao 25",
+        "location_type":"quarter",
+        "lat":"-25.84651691",
+        "long":"32.59408357",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1026",
+        "location_name":"Magoanine C - Quarteirao 26",
+        "location_type":"quarter",
+        "lat":"-25.84651692",
+        "long":"32.59408358",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1027",
+        "location_name":"Magoanine C - Quarteirao 27",
+        "location_type":"quarter",
+        "lat":"-25.84651693",
+        "long":"32.59408359",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1028",
+        "location_name":"Magoanine C - Quarteirao 28",
+        "location_type":"quarter",
+        "lat":"-25.84651694",
+        "long":"32.5940836",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1029",
+        "location_name":"Magoanine C - Quarteirao 29",
+        "location_type":"quarter",
+        "lat":"-25.84651695",
+        "long":"32.59408361",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1030",
+        "location_name":"Magoanine C - Quarteirao 30",
+        "location_type":"quarter",
+        "lat":"-25.84651696",
+        "long":"32.59408362",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1031",
+        "location_name":"Magoanine C - Quarteirao 31",
+        "location_type":"quarter",
+        "lat":"-25.84651697",
+        "long":"32.59408363",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1032",
+        "location_name":"Magoanine C - Quarteirao 32",
+        "location_type":"quarter",
+        "lat":"-25.84651698",
+        "long":"32.59408364",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1033",
+        "location_name":"Magoanine C - Quarteirao 33",
+        "location_type":"quarter",
+        "lat":"-25.84651699",
+        "long":"32.59408365",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1034",
+        "location_name":"Magoanine C - Quarteirao 34",
+        "location_type":"quarter",
+        "lat":"-25.846517",
+        "long":"32.59408366",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1035",
+        "location_name":"Magoanine C - Quarteirao 35",
+        "location_type":"quarter",
+        "lat":"-25.84651701",
+        "long":"32.59408367",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1036",
+        "location_name":"Magoanine C - Quarteirao 36",
+        "location_type":"quarter",
+        "lat":"-25.84651702",
+        "long":"32.59408368",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1037",
+        "location_name":"Magoanine C - Quarteirao 37",
+        "location_type":"quarter",
+        "lat":"-25.84651703",
+        "long":"32.59408369",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1038",
+        "location_name":"Magoanine C - Quarteirao 38",
+        "location_type":"quarter",
+        "lat":"-25.84651704",
+        "long":"32.5940837",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1039",
+        "location_name":"Magoanine C - Quarteirao 39",
+        "location_type":"quarter",
+        "lat":"-25.84651705",
+        "long":"32.59408371",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1040",
+        "location_name":"Magoanine C - Quarteirao 40",
+        "location_type":"quarter",
+        "lat":"-25.84651706",
+        "long":"32.59408372",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1041",
+        "location_name":"Magoanine C - Quarteirao 41",
+        "location_type":"quarter",
+        "lat":"-25.84651707",
+        "long":"32.59408373",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1042",
+        "location_name":"Magoanine C - Quarteirao 42",
+        "location_type":"quarter",
+        "lat":"-25.84651708",
+        "long":"32.59408374",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1043",
+        "location_name":"Magoanine C - Quarteirao 43",
+        "location_type":"quarter",
+        "lat":"-25.84651709",
+        "long":"32.59408375",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1044",
+        "location_name":"Magoanine C - Quarteirao 44",
+        "location_type":"quarter",
+        "lat":"-25.8465171",
+        "long":"32.59408376",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1045",
+        "location_name":"Magoanine C - Quarteirao 45",
+        "location_type":"quarter",
+        "lat":"-25.84651711",
+        "long":"32.59408377",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1046",
+        "location_name":"Magoanine C - Quarteirao 46",
+        "location_type":"quarter",
+        "lat":"-25.84651712",
+        "long":"32.59408378",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1047",
+        "location_name":"Magoanine C - Quarteirao 47",
+        "location_type":"quarter",
+        "lat":"-25.84651713",
+        "long":"32.59408379",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1048",
+        "location_name":"Magoanine C - Quarteirao 48",
+        "location_type":"quarter",
+        "lat":"-25.84651714",
+        "long":"32.5940838",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1049",
+        "location_name":"Magoanine C - Quarteirao 49",
+        "location_type":"quarter",
+        "lat":"-25.84651715",
+        "long":"32.59408381",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1050",
+        "location_name":"Magoanine C - Quarteirao 50",
+        "location_type":"quarter",
+        "lat":"-25.84651716",
+        "long":"32.59408382",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1051",
+        "location_name":"Magoanine C - Quarteirao 51",
+        "location_type":"quarter",
+        "lat":"-25.84651717",
+        "long":"32.59408383",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1052",
+        "location_name":"Magoanine C - Quarteirao 52",
+        "location_type":"quarter",
+        "lat":"-25.84651718",
+        "long":"32.59408384",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1053",
+        "location_name":"Magoanine C - Quarteirao 53",
+        "location_type":"quarter",
+        "lat":"-25.84651719",
+        "long":"32.59408385",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1054",
+        "location_name":"Magoanine C - Quarteirao 54",
+        "location_type":"quarter",
+        "lat":"-25.8465172",
+        "long":"32.59408386",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1055",
+        "location_name":"Magoanine C - Quarteirao 55",
+        "location_type":"quarter",
+        "lat":"-25.84651721",
+        "long":"32.59408387",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1056",
+        "location_name":"Magoanine C - Quarteirao 56",
+        "location_type":"quarter",
+        "lat":"-25.84651722",
+        "long":"32.59408388",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1057",
+        "location_name":"Magoanine C - Quarteirao 57",
+        "location_type":"quarter",
+        "lat":"-25.84651723",
+        "long":"32.59408389",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1058",
+        "location_name":"Magoanine C - Quarteirao 58",
+        "location_type":"quarter",
+        "lat":"-25.84651724",
+        "long":"32.5940839",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1059",
+        "location_name":"Magoanine C - Quarteirao 59",
+        "location_type":"quarter",
+        "lat":"-25.84651725",
+        "long":"32.59408391",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1060",
+        "location_name":"Magoanine C - Quarteirao 60",
+        "location_type":"quarter",
+        "lat":"-25.84651726",
+        "long":"32.59408392",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1061",
+        "location_name":"Magoanine C - Quarteirao 61",
+        "location_type":"quarter",
+        "lat":"-25.84651727",
+        "long":"32.59408393",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1062",
+        "location_name":"Magoanine C - Quarteirao 62",
+        "location_type":"quarter",
+        "lat":"-25.84651728",
+        "long":"32.59408394",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1063",
+        "location_name":"Magoanine C - Quarteirao 63",
+        "location_type":"quarter",
+        "lat":"-25.84651729",
+        "long":"32.59408395",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1064",
+        "location_name":"Magoanine C - Quarteirao 64",
+        "location_type":"quarter",
+        "lat":"-25.8465173",
+        "long":"32.59408396",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1065",
+        "location_name":"Magoanine C - Quarteirao 65",
+        "location_type":"quarter",
+        "lat":"-25.84651731",
+        "long":"32.59408397",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1066",
+        "location_name":"Magoanine C - Quarteirao 66",
+        "location_type":"quarter",
+        "lat":"-25.84651732",
+        "long":"32.59408398",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1067",
+        "location_name":"Magoanine C - Quarteirao 67",
+        "location_type":"quarter",
+        "lat":"-25.84651733",
+        "long":"32.59408399",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1068",
+        "location_name":"Magoanine C - Quarteirao 68",
+        "location_type":"quarter",
+        "lat":"-25.84651734",
+        "long":"32.594084",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1069",
+        "location_name":"Magoanine C - Quarteirao 69",
+        "location_type":"quarter",
+        "lat":"-25.84651735",
+        "long":"32.59408401",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1070",
+        "location_name":"Magoanine C - Quarteirao 70",
+        "location_type":"quarter",
+        "lat":"-25.84651736",
+        "long":"32.59408402",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1071",
+        "location_name":"Magoanine C - Quarteirao 71",
+        "location_type":"quarter",
+        "lat":"-25.84651737",
+        "long":"32.59408403",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1072",
+        "location_name":"Magoanine C - Quarteirao 72",
+        "location_type":"quarter",
+        "lat":"-25.84651738",
+        "long":"32.59408404",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1073",
+        "location_name":"Magoanine C - Quarteirao 73",
+        "location_type":"quarter",
+        "lat":"-25.84651739",
+        "long":"32.59408405",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1074",
+        "location_name":"Magoanine C - Quarteirao 74",
+        "location_type":"quarter",
+        "lat":"-25.8465174",
+        "long":"32.59408406",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1075",
+        "location_name":"Magoanine C - Quarteirao 75",
+        "location_type":"quarter",
+        "lat":"-25.84651741",
+        "long":"32.59408407",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1076",
+        "location_name":"Magoanine C - Quarteirao 76",
+        "location_type":"quarter",
+        "lat":"-25.84651742",
+        "long":"32.59408408",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1077",
+        "location_name":"Magoanine C - Quarteirao 77",
+        "location_type":"quarter",
+        "lat":"-25.84651743",
+        "long":"32.59408409",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1078",
+        "location_name":"Magoanine C - Quarteirao 78",
+        "location_type":"quarter",
+        "lat":"-25.84651744",
+        "long":"32.5940841",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1079",
+        "location_name":"Magoanine C - Quarteirao 79",
+        "location_type":"quarter",
+        "lat":"-25.84651745",
+        "long":"32.59408411",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1080",
+        "location_name":"Magoanine C - Quarteirao 80",
+        "location_type":"quarter",
+        "lat":"-25.84651746",
+        "long":"32.59408412",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1081",
+        "location_name":"Magoanine C - Quarteirao 81",
+        "location_type":"quarter",
+        "lat":"-25.84651747",
+        "long":"32.59408413",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1082",
+        "location_name":"Magoanine C - Quarteirao 82",
+        "location_type":"quarter",
+        "lat":"-25.84651748",
+        "long":"32.59408414",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1083",
+        "location_name":"Magoanine C - Quarteirao 83",
+        "location_type":"quarter",
+        "lat":"-25.84651749",
+        "long":"32.59408415",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1084",
+        "location_name":"Magoanine C - Quarteirao 84",
+        "location_type":"quarter",
+        "lat":"-25.8465175",
+        "long":"32.59408416",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1085",
+        "location_name":"Magoanine C - Quarteirao 85",
+        "location_type":"quarter",
+        "lat":"-25.84651751",
+        "long":"32.59408417",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1086",
+        "location_name":"Magoanine C - Quarteirao 86",
+        "location_type":"quarter",
+        "lat":"-25.84651752",
+        "long":"32.59408418",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1087",
+        "location_name":"Magoanine C - Quarteirao 87",
+        "location_type":"quarter",
+        "lat":"-25.84651753",
+        "long":"32.59408419",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1088",
+        "location_name":"Magoanine C - Quarteirao 88",
+        "location_type":"quarter",
+        "lat":"-25.84651754",
+        "long":"32.5940842",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1089",
+        "location_name":"Magoanine C - Quarteirao 89",
+        "location_type":"quarter",
+        "lat":"-25.84651755",
+        "long":"32.59408421",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1090",
+        "location_name":"Magoanine C - Quarteirao 90",
+        "location_type":"quarter",
+        "lat":"-25.84651756",
+        "long":"32.59408422",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1091",
+        "location_name":"Magoanine C - Quarteirao 91",
+        "location_type":"quarter",
+        "lat":"-25.84651757",
+        "long":"32.59408423",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1092",
+        "location_name":"Magoanine C - Quarteirao 92",
+        "location_type":"quarter",
+        "lat":"-25.84651758",
+        "long":"32.59408424",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1093",
+        "location_name":"Magoanine C - Quarteirao 93",
+        "location_type":"quarter",
+        "lat":"-25.84651759",
+        "long":"32.59408425",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1094",
+        "location_name":"Magoanine C - Quarteirao 94",
+        "location_type":"quarter",
+        "lat":"-25.8465176",
+        "long":"32.59408426",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1095",
+        "location_name":"Magoanine C - Quarteirao 95",
+        "location_type":"quarter",
+        "lat":"-25.84651761",
+        "long":"32.59408427",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1096",
+        "location_name":"Magoanine C - Quarteirao 96",
+        "location_type":"quarter",
+        "lat":"-25.84651762",
+        "long":"32.59408428",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1097",
+        "location_name":"Magoanine C - Quarteirao 97",
+        "location_type":"quarter",
+        "lat":"-25.84651763",
+        "long":"32.59408429",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1098",
+        "location_name":"Magoanine C - Quarteirao 98",
+        "location_type":"quarter",
+        "lat":"-25.84651764",
+        "long":"32.5940843",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1099",
+        "location_name":"Magoanine C - Quarteirao 99",
+        "location_type":"quarter",
+        "lat":"-25.84651765",
+        "long":"32.59408431",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1100",
+        "location_name":"Magoanine C - Quarteirao 100",
+        "location_type":"quarter",
+        "lat":"-25.84651766",
+        "long":"32.59408432",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1101",
+        "location_name":"Magoanine C - Quarteirao 101",
+        "location_type":"quarter",
+        "lat":"-25.84651767",
+        "long":"32.59408433",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1102",
+        "location_name":"Magoanine C - Quarteirao 102",
+        "location_type":"quarter",
+        "lat":"-25.84651768",
+        "long":"32.59408434",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1103",
+        "location_name":"Magoanine C - Quarteirao 103",
+        "location_type":"quarter",
+        "lat":"-25.84651769",
+        "long":"32.59408435",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1104",
+        "location_name":"Magoanine C - Quarteirao 104",
+        "location_type":"quarter",
+        "lat":"-25.8465177",
+        "long":"32.59408436",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1105",
+        "location_name":"Magoanine C - Quarteirao 105",
+        "location_type":"quarter",
+        "lat":"-25.84651771",
+        "long":"32.59408437",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1106",
+        "location_name":"Magoanine C - Quarteirao 106",
+        "location_type":"quarter",
+        "lat":"-25.84651772",
+        "long":"32.59408438",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1107",
+        "location_name":"Magoanine C - Quarteirao 107",
+        "location_type":"quarter",
+        "lat":"-25.84651773",
+        "long":"32.59408439",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1108",
+        "location_name":"Magoanine C - Quarteirao 108",
+        "location_type":"quarter",
+        "lat":"-25.84651774",
+        "long":"32.5940844",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1109",
+        "location_name":"Magoanine C - Quarteirao 109",
+        "location_type":"quarter",
+        "lat":"-25.84651775",
+        "long":"32.59408441",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1110",
+        "location_name":"Magoanine C - Quarteirao 110",
+        "location_type":"quarter",
+        "lat":"-25.84651776",
+        "long":"32.59408442",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1111",
+        "location_name":"Magoanine C - Quarteirao 111",
+        "location_type":"quarter",
+        "lat":"-25.84651777",
+        "long":"32.59408443",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1112",
+        "location_name":"Magoanine C - Quarteirao 112",
+        "location_type":"quarter",
+        "lat":"-25.84651778",
+        "long":"32.59408444",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1113",
+        "location_name":"Magoanine C - Quarteirao 113",
+        "location_type":"quarter",
+        "lat":"-25.84651779",
+        "long":"32.59408445",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1114",
+        "location_name":"Magoanine C - Quarteirao 114",
+        "location_type":"quarter",
+        "lat":"-25.8465178",
+        "long":"32.59408446",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1115",
+        "location_name":"Magoanine C - Quarteirao 115",
+        "location_type":"quarter",
+        "lat":"-25.84651781",
+        "long":"32.59408447",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1116",
+        "location_name":"Magoanine C - Quarteirao 116",
+        "location_type":"quarter",
+        "lat":"-25.84651782",
+        "long":"32.59408448",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1117",
+        "location_name":"Magoanine C - Quarteirao 117",
+        "location_type":"quarter",
+        "lat":"-25.84651783",
+        "long":"32.59408449",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1118",
+        "location_name":"Magoanine C - Quarteirao 118",
+        "location_type":"quarter",
+        "lat":"-25.84651784",
+        "long":"32.5940845",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1119",
+        "location_name":"Magoanine C - Quarteirao 119",
+        "location_type":"quarter",
+        "lat":"-25.84651785",
+        "long":"32.59408451",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1120",
+        "location_name":"Magoanine C - Quarteirao 120",
+        "location_type":"quarter",
+        "lat":"-25.84651786",
+        "long":"32.59408452",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1121",
+        "location_name":"Magoanine C - Quarteirao 121",
+        "location_type":"quarter",
+        "lat":"-25.84651787",
+        "long":"32.59408453",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1122",
+        "location_name":"Magoanine C - Quarteirao 122",
+        "location_type":"quarter",
+        "lat":"-25.84651788",
+        "long":"32.59408454",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1123",
+        "location_name":"Magoanine C - Quarteirao 123",
+        "location_type":"quarter",
+        "lat":"-25.84651789",
+        "long":"32.59408455",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1124",
+        "location_name":"Magoanine C - Quarteirao 124",
+        "location_type":"quarter",
+        "lat":"-25.8465179",
+        "long":"32.59408456",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1125",
+        "location_name":"Magoanine C - Quarteirao 125",
+        "location_type":"quarter",
+        "lat":"-25.84651791",
+        "long":"32.59408457",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1126",
+        "location_name":"Magoanine C - Quarteirao 126",
+        "location_type":"quarter",
+        "lat":"-25.84651792",
+        "long":"32.59408458",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1127",
+        "location_name":"Magoanine C - Quarteirao 127",
+        "location_type":"quarter",
+        "lat":"-25.84651793",
+        "long":"32.59408459",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1128",
+        "location_name":"Magoanine C - Quarteirao 128",
+        "location_type":"quarter",
+        "lat":"-25.84651794",
+        "long":"32.5940846",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1129",
+        "location_name":"Magoanine C - Quarteirao 129",
+        "location_type":"quarter",
+        "lat":"-25.84651795",
+        "long":"32.59408461",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1130",
+        "location_name":"Magoanine C - Quarteirao 130",
+        "location_type":"quarter",
+        "lat":"-25.84651796",
+        "long":"32.59408462",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1131",
+        "location_name":"Magoanine C - Quarteirao 131",
+        "location_type":"quarter",
+        "lat":"-25.84651797",
+        "long":"32.59408463",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1132",
+        "location_name":"Magoanine C - Quarteirao 132",
+        "location_type":"quarter",
+        "lat":"-25.84651798",
+        "long":"32.59408464",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1133",
+        "location_name":"Magoanine C - Quarteirao 133",
+        "location_type":"quarter",
+        "lat":"-25.84651799",
+        "long":"32.59408465",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1134",
+        "location_name":"Magoanine C - Quarteirao 134",
+        "location_type":"quarter",
+        "lat":"-25.846518",
+        "long":"32.59408466",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1135",
+        "location_name":"Magoanine C - Quarteirao 135",
+        "location_type":"quarter",
+        "lat":"-25.84651801",
+        "long":"32.59408467",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1136",
+        "location_name":"Magoanine C - Quarteirao 136",
+        "location_type":"quarter",
+        "lat":"-25.84651802",
+        "long":"32.59408468",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1137",
+        "location_name":"Magoanine C - Quarteirao 137",
+        "location_type":"quarter",
+        "lat":"-25.84651803",
+        "long":"32.59408469",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1138",
+        "location_name":"Magoanine C - Quarteirao 138",
+        "location_type":"quarter",
+        "lat":"-25.84651804",
+        "long":"32.5940847",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1139",
+        "location_name":"Magoanine C - Quarteirao 139",
+        "location_type":"quarter",
+        "lat":"-25.84651805",
+        "long":"32.59408471",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1140",
+        "location_name":"Magoanine C - Quarteirao 140",
+        "location_type":"quarter",
+        "lat":"-25.84651806",
+        "long":"32.59408472",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1141",
+        "location_name":"Magoanine C - Quarteirao 141",
+        "location_type":"quarter",
+        "lat":"-25.84651807",
+        "long":"32.59408473",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1142",
+        "location_name":"Magoanine C - Quarteirao 142",
+        "location_type":"quarter",
+        "lat":"-25.84651808",
+        "long":"32.59408474",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1143",
+        "location_name":"Magoanine C - Quarteirao 143",
+        "location_type":"quarter",
+        "lat":"-25.84651809",
+        "long":"32.59408475",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1144",
+        "location_name":"Magoanine C - Quarteirao 144",
+        "location_type":"quarter",
+        "lat":"-25.8465181",
+        "long":"32.59408476",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1145",
+        "location_name":"Magoanine C - Quarteirao 145",
+        "location_type":"quarter",
+        "lat":"-25.84651811",
+        "long":"32.59408477",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1146",
+        "location_name":"Magoanine C - Quarteirao 146",
+        "location_type":"quarter",
+        "lat":"-25.84651812",
+        "long":"32.59408478",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1147",
+        "location_name":"Magoanine C - Quarteirao 147",
+        "location_type":"quarter",
+        "lat":"-25.84651813",
+        "long":"32.59408479",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1148",
+        "location_name":"Magoanine C - Quarteirao 148",
+        "location_type":"quarter",
+        "lat":"-25.84651814",
+        "long":"32.5940848",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1149",
+        "location_name":"Magoanine C - Quarteirao 149",
+        "location_type":"quarter",
+        "lat":"-25.84651815",
+        "long":"32.59408481",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1150",
+        "location_name":"Magoanine C - Quarteirao 150",
+        "location_type":"quarter",
+        "lat":"-25.84651816",
+        "long":"32.59408482",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1151",
+        "location_name":"Magoanine C - Quarteirao 151",
+        "location_type":"quarter",
+        "lat":"-25.84651817",
+        "long":"32.59408483",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"1152",
+        "location_name":"Magoanine C - Quarteirao 152",
+        "location_type":"quarter",
+        "lat":"-25.84651818",
+        "long":"32.59408484",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Magoanine C"
+        ]
+    },
+    {
+        "location_id":"2001",
+        "location_name":"Inhagoia B - Quarteirao 1",
+        "location_type":"quarter",
+        "lat":"-25.91255",
+        "long":"32.55565",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2002",
+        "location_name":"Inhagoia B - Quarteirao 2",
+        "location_type":"quarter",
+        "lat":"-25.91256",
+        "long":"32.55566",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2003",
+        "location_name":"Inhagoia B - Quarteirao 3",
+        "location_type":"quarter",
+        "lat":"-25.91257",
+        "long":"32.55567",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2004",
+        "location_name":"Inhagoia B - Quarteirao 4",
+        "location_type":"quarter",
+        "lat":"-25.91258",
+        "long":"32.55568",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2005",
+        "location_name":"Inhagoia B - Quarteirao 5",
+        "location_type":"quarter",
+        "lat":"-25.91259",
+        "long":"32.55569",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2006",
+        "location_name":"Inhagoia B - Quarteirao 6",
+        "location_type":"quarter",
+        "lat":"-25.9126",
+        "long":"32.5557",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2007",
+        "location_name":"Inhagoia B - Quarteirao 7",
+        "location_type":"quarter",
+        "lat":"-25.91261",
+        "long":"32.55571",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2008",
+        "location_name":"Inhagoia B - Quarteirao 8",
+        "location_type":"quarter",
+        "lat":"-25.91262",
+        "long":"32.55572",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2009",
+        "location_name":"Inhagoia B - Quarteirao 9",
+        "location_type":"quarter",
+        "lat":"-25.91263",
+        "long":"32.55573",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2010",
+        "location_name":"Inhagoia B - Quarteirao 10",
+        "location_type":"quarter",
+        "lat":"-25.91264",
+        "long":"32.55574",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2011",
+        "location_name":"Inhagoia B - Quarteirao 11",
+        "location_type":"quarter",
+        "lat":"-25.91265",
+        "long":"32.55575",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2012",
+        "location_name":"Inhagoia B - Quarteirao 12",
+        "location_type":"quarter",
+        "lat":"-25.91266",
+        "long":"32.55576",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2013",
+        "location_name":"Inhagoia B - Quarteirao 13",
+        "location_type":"quarter",
+        "lat":"-25.91267",
+        "long":"32.55577",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2014",
+        "location_name":"Inhagoia B - Quarteirao 14",
+        "location_type":"quarter",
+        "lat":"-25.91268",
+        "long":"32.55578",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2015",
+        "location_name":"Inhagoia B - Quarteirao 15",
+        "location_type":"quarter",
+        "lat":"-25.91269",
+        "long":"32.55579",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2016",
+        "location_name":"Inhagoia B - Quarteirao 16",
+        "location_type":"quarter",
+        "lat":"-25.9127",
+        "long":"32.5558",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2017",
+        "location_name":"Inhagoia B - Quarteirao 17",
+        "location_type":"quarter",
+        "lat":"-25.91271",
+        "long":"32.55581",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2018",
+        "location_name":"Inhagoia B - Quarteirao 18",
+        "location_type":"quarter",
+        "lat":"-25.91272",
+        "long":"32.55582",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2019",
+        "location_name":"Inhagoia B - Quarteirao 19",
+        "location_type":"quarter",
+        "lat":"-25.91273",
+        "long":"32.55583",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2020",
+        "location_name":"Inhagoia B - Quarteirao 20",
+        "location_type":"quarter",
+        "lat":"-25.91274",
+        "long":"32.55584",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2021",
+        "location_name":"Inhagoia B - Quarteirao 21",
+        "location_type":"quarter",
+        "lat":"-25.91275",
+        "long":"32.55585",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2022",
+        "location_name":"Inhagoia B - Quarteirao 22",
+        "location_type":"quarter",
+        "lat":"-25.91276",
+        "long":"32.55586",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2023",
+        "location_name":"Inhagoia B - Quarteirao 23",
+        "location_type":"quarter",
+        "lat":"-25.91277",
+        "long":"32.55587",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2024",
+        "location_name":"Inhagoia B - Quarteirao 24",
+        "location_type":"quarter",
+        "lat":"-25.91278",
+        "long":"32.55588",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2025",
+        "location_name":"Inhagoia B - Quarteirao 25",
+        "location_type":"quarter",
+        "lat":"-25.91279",
+        "long":"32.55589",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2026",
+        "location_name":"Inhagoia B - Quarteirao 26",
+        "location_type":"quarter",
+        "lat":"-25.9128",
+        "long":"32.5559",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2027",
+        "location_name":"Inhagoia B - Quarteirao 27",
+        "location_type":"quarter",
+        "lat":"-25.91281",
+        "long":"32.55591",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2028",
+        "location_name":"Inhagoia B - Quarteirao 28",
+        "location_type":"quarter",
+        "lat":"-25.91282",
+        "long":"32.55592",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2029",
+        "location_name":"Inhagoia B - Quarteirao 29",
+        "location_type":"quarter",
+        "lat":"-25.91283",
+        "long":"32.55593",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2030",
+        "location_name":"Inhagoia B - Quarteirao 30",
+        "location_type":"quarter",
+        "lat":"-25.91284",
+        "long":"32.55594",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2031",
+        "location_name":"Inhagoia B - Quarteirao 31",
+        "location_type":"quarter",
+        "lat":"-25.91285",
+        "long":"32.55595",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2032",
+        "location_name":"Inhagoia B - Quarteirao 32",
+        "location_type":"quarter",
+        "lat":"-25.91286",
+        "long":"32.55596",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2033",
+        "location_name":"Inhagoia B - Quarteirao 33",
+        "location_type":"quarter",
+        "lat":"-25.91287",
+        "long":"32.55597",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2034",
+        "location_name":"Inhagoia B - Quarteirao 34",
+        "location_type":"quarter",
+        "lat":"-25.91288",
+        "long":"32.55598",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2035",
+        "location_name":"Inhagoia B - Quarteirao 35",
+        "location_type":"quarter",
+        "lat":"-25.91289",
+        "long":"32.55599",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2036",
+        "location_name":"Inhagoia B - Quarteirao 36",
+        "location_type":"quarter",
+        "lat":"-25.9129",
+        "long":"32.556",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2037",
+        "location_name":"Inhagoia B - Quarteirao 37",
+        "location_type":"quarter",
+        "lat":"-25.91291",
+        "long":"32.55601",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2038",
+        "location_name":"Inhagoia B - Quarteirao 38",
+        "location_type":"quarter",
+        "lat":"-25.91292",
+        "long":"32.55602",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2039",
+        "location_name":"Inhagoia B - Quarteirao 39",
+        "location_type":"quarter",
+        "lat":"-25.91293",
+        "long":"32.55603",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2040",
+        "location_name":"Inhagoia B - Quarteirao 40",
+        "location_type":"quarter",
+        "lat":"-25.91294",
+        "long":"32.55604",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2041",
+        "location_name":"Inhagoia B - Quarteirao 41",
+        "location_type":"quarter",
+        "lat":"-25.91295",
+        "long":"32.55605",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2042",
+        "location_name":"Inhagoia B - Quarteirao 42",
+        "location_type":"quarter",
+        "lat":"-25.91296",
+        "long":"32.55606",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2043",
+        "location_name":"Inhagoia B - Quarteirao 43",
+        "location_type":"quarter",
+        "lat":"-25.91297",
+        "long":"32.55607",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2044",
+        "location_name":"Inhagoia B - Quarteirao 44",
+        "location_type":"quarter",
+        "lat":"-25.91298",
+        "long":"32.55608",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2045",
+        "location_name":"Inhagoia B - Quarteirao 45",
+        "location_type":"quarter",
+        "lat":"-25.91299",
+        "long":"32.55609",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2046",
+        "location_name":"Inhagoia B - Quarteirao 46",
+        "location_type":"quarter",
+        "lat":"-25.913",
+        "long":"32.5561",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2047",
+        "location_name":"Inhagoia B - Quarteirao 47",
+        "location_type":"quarter",
+        "lat":"-25.91301",
+        "long":"32.55611",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2048",
+        "location_name":"Inhagoia B - Quarteirao 48",
+        "location_type":"quarter",
+        "lat":"-25.91302",
+        "long":"32.55612",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2049",
+        "location_name":"Inhagoia B - Quarteirao 49",
+        "location_type":"quarter",
+        "lat":"-25.91303",
+        "long":"32.55613",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2050",
+        "location_name":"Inhagoia B - Quarteirao 50",
+        "location_type":"quarter",
+        "lat":"-25.91304",
+        "long":"32.55614",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2051",
+        "location_name":"Inhagoia B - Quarteirao 51",
+        "location_type":"quarter",
+        "lat":"-25.91305",
+        "long":"32.55615",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2052",
+        "location_name":"Inhagoia B - Quarteirao 52",
+        "location_type":"quarter",
+        "lat":"-25.91306",
+        "long":"32.55616",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2053",
+        "location_name":"Inhagoia B - Quarteirao 53",
+        "location_type":"quarter",
+        "lat":"-25.91307",
+        "long":"32.55617",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"2054",
+        "location_name":"Inhagoia B - Quarteirao 54",
+        "location_type":"quarter",
+        "lat":"-25.91308",
+        "long":"32.55618",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Inhagoia B"
+        ]
+    },
+    {
+        "location_id":"3001",
+        "location_name":"Maxaquene A - Quarteirao 1",
+        "location_type":"quarter",
+        "lat":"-25.9334783",
+        "long":"32.58503488",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3002",
+        "location_name":"Maxaquene A - Quarteirao 2",
+        "location_type":"quarter",
+        "lat":"-25.93393359",
+        "long":"32.58397706",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3003",
+        "location_name":"Maxaquene A - Quarteirao 3",
+        "location_type":"quarter",
+        "lat":"-25.9339336",
+        "long":"32.58397707",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3004",
+        "location_name":"Maxaquene A - Quarteirao 4",
+        "location_type":"quarter",
+        "lat":"-25.93401497",
+        "long":"32.58387861",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3005",
+        "location_name":"Maxaquene A - Quarteirao 5",
+        "location_type":"quarter",
+        "lat":"-25.93478433",
+        "long":"32.58497493",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3006",
+        "location_name":"Maxaquene A - Quarteirao 6",
+        "location_type":"quarter",
+        "lat":"-25.93478434",
+        "long":"32.58497494",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3007",
+        "location_name":"Maxaquene A - Quarteirao 7",
+        "location_type":"quarter",
+        "lat":"-25.93478435",
+        "long":"32.58497495",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3008",
+        "location_name":"Maxaquene A - Quarteirao 8",
+        "location_type":"quarter",
+        "lat":"-25.93433637",
+        "long":"32.5829296",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3009",
+        "location_name":"Maxaquene A - Quarteirao 9",
+        "location_type":"quarter",
+        "lat":"-25.93590604",
+        "long":"32.58232563",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3010",
+        "location_name":"Maxaquene A - Quarteirao 10",
+        "location_type":"quarter",
+        "lat":"-25.93688194",
+        "long":"32.58350832",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3011",
+        "location_name":"Maxaquene A - Quarteirao 11",
+        "location_type":"quarter",
+        "lat":"-25.93606385",
+        "long":"32.58093209",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3012",
+        "location_name":"Maxaquene A - Quarteirao 12",
+        "location_type":"quarter",
+        "lat":"-25.93597325",
+        "long":"32.58384728",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3013",
+        "location_name":"Maxaquene A - Quarteirao 13",
+        "location_type":"quarter",
+        "lat":"-25.93645976",
+        "long":"32.58068438",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3014",
+        "location_name":"Maxaquene A - Quarteirao 14",
+        "location_type":"quarter",
+        "lat":"-25.93505819",
+        "long":"32.58462104",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3015",
+        "location_name":"Maxaquene A - Quarteirao 15",
+        "location_type":"quarter",
+        "lat":"-25.93791431",
+        "long":"32.58083322",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3016",
+        "location_name":"Maxaquene A - Quarteirao 16",
+        "location_type":"quarter",
+        "lat":"-25.93651",
+        "long":"32.58466522",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3017",
+        "location_name":"Maxaquene A - Quarteirao 17",
+        "location_type":"quarter",
+        "lat":"-25.93798856",
+        "long":"32.58057336",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3018",
+        "location_name":"Maxaquene A - Quarteirao 18",
+        "location_type":"quarter",
+        "lat":"-25.93653217",
+        "long":"32.58460828",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3019",
+        "location_name":"Maxaquene A - Quarteirao 19",
+        "location_type":"quarter",
+        "lat":"-25.93839323",
+        "long":"32.57994316",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3020",
+        "location_name":"Maxaquene A - Quarteirao 20",
+        "location_type":"quarter",
+        "lat":"-25.9376877",
+        "long":"32.58265078",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3021",
+        "location_name":"Maxaquene A - Quarteirao 21",
+        "location_type":"quarter",
+        "lat":"-25.93753248",
+        "long":"32.58103725",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3022",
+        "location_name":"Maxaquene A - Quarteirao 22",
+        "location_type":"quarter",
+        "lat":"-25.93793449",
+        "long":"32.58412365",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3023",
+        "location_name":"Maxaquene A - Quarteirao 23",
+        "location_type":"quarter",
+        "lat":"-25.93788537",
+        "long":"32.5840655",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3024",
+        "location_name":"Maxaquene A - Quarteirao 24",
+        "location_type":"quarter",
+        "lat":"-25.93800203",
+        "long":"32.58348125",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3025",
+        "location_name":"Maxaquene A - Quarteirao 25",
+        "location_type":"quarter",
+        "lat":"-25.93999626",
+        "long":"32.57927734",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3026",
+        "location_name":"Maxaquene A - Quarteirao 26",
+        "location_type":"quarter",
+        "lat":"-25.93907788",
+        "long":"32.58313721",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3027",
+        "location_name":"Maxaquene A - Quarteirao 27",
+        "location_type":"quarter",
+        "lat":"-25.93907958",
+        "long":"32.58313963",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3028",
+        "location_name":"Maxaquene A - Quarteirao 28",
+        "location_type":"quarter",
+        "lat":"-25.94023876",
+        "long":"32.58363772",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3029",
+        "location_name":"Maxaquene A - Quarteirao 29",
+        "location_type":"quarter",
+        "lat":"-25.94029532",
+        "long":"32.58378536",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3030",
+        "location_name":"Maxaquene A - Quarteirao 30",
+        "location_type":"quarter",
+        "lat":"-25.94029533",
+        "long":"32.58378537",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3031",
+        "location_name":"Maxaquene A - Quarteirao 31",
+        "location_type":"quarter",
+        "lat":"-25.94088357",
+        "long":"32.58306175",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3032",
+        "location_name":"Maxaquene A - Quarteirao 32",
+        "location_type":"quarter",
+        "lat":"-25.94084067",
+        "long":"32.58359129",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3033",
+        "location_name":"Maxaquene A - Quarteirao 33",
+        "location_type":"quarter",
+        "lat":"-25.94096277",
+        "long":"32.58271308",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3034",
+        "location_name":"Maxaquene A - Quarteirao 34",
+        "location_type":"quarter",
+        "lat":"-25.94317714",
+        "long":"32.58065037",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3035",
+        "location_name":"Maxaquene A - Quarteirao 35",
+        "location_type":"quarter",
+        "lat":"-25.94317715",
+        "long":"32.58065038",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3036",
+        "location_name":"Maxaquene A - Quarteirao 36",
+        "location_type":"quarter",
+        "lat":"-25.94333192",
+        "long":"32.57967383",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3037",
+        "location_name":"Maxaquene A - Quarteirao 37",
+        "location_type":"quarter",
+        "lat":"-25.94333193",
+        "long":"32.57967384",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3038",
+        "location_name":"Maxaquene A - Quarteirao 38",
+        "location_type":"quarter",
+        "lat":"-25.94208483",
+        "long":"32.58064961",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3039",
+        "location_name":"Maxaquene A - Quarteirao 39",
+        "location_type":"quarter",
+        "lat":"-25.94086994",
+        "long":"32.57934721",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3040",
+        "location_name":"Maxaquene A - Quarteirao 40",
+        "location_type":"quarter",
+        "lat":"-25.94148505",
+        "long":"32.5791701",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3041",
+        "location_name":"Maxaquene A - Quarteirao 41",
+        "location_type":"quarter",
+        "lat":"-25.94016454",
+        "long":"32.58115362",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3042",
+        "location_name":"Maxaquene A - Quarteirao 42",
+        "location_type":"quarter",
+        "lat":"-25.94078649",
+        "long":"32.58235115",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3043",
+        "location_name":"Maxaquene A - Quarteirao 43",
+        "location_type":"quarter",
+        "lat":"-25.94030962",
+        "long":"32.58205031",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3044",
+        "location_name":"Maxaquene A - Quarteirao 44",
+        "location_type":"quarter",
+        "lat":"-25.93946327",
+        "long":"32.57950245",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3045",
+        "location_name":"Maxaquene A - Quarteirao 45",
+        "location_type":"quarter",
+        "lat":"-25.93952501",
+        "long":"32.57959667",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3046",
+        "location_name":"Maxaquene A - Quarteirao 46",
+        "location_type":"quarter",
+        "lat":"-25.93952502",
+        "long":"32.57959668",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3047",
+        "location_name":"Maxaquene A - Quarteirao 47",
+        "location_type":"quarter",
+        "lat":"-25.93952503",
+        "long":"32.57959669",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3048",
+        "location_name":"Maxaquene A - Quarteirao 48",
+        "location_type":"quarter",
+        "lat":"-25.93952504",
+        "long":"32.5795967",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3049",
+        "location_name":"Maxaquene A - Quarteirao 49",
+        "location_type":"quarter",
+        "lat":"-25.93952505",
+        "long":"32.57959671",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3050",
+        "location_name":"Maxaquene A - Quarteirao 50",
+        "location_type":"quarter",
+        "lat":"-25.93952506",
+        "long":"32.57959672",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3051",
+        "location_name":"Maxaquene A - Quarteirao 51",
+        "location_type":"quarter",
+        "lat":"-25.93952507",
+        "long":"32.57959673",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3052",
+        "location_name":"Maxaquene A - Quarteirao 52",
+        "location_type":"quarter",
+        "lat":"-25.93952508",
+        "long":"32.57959674",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3053",
+        "location_name":"Maxaquene A - Quarteirao 53",
+        "location_type":"quarter",
+        "lat":"-25.93952509",
+        "long":"32.57959675",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3054",
+        "location_name":"Maxaquene A - Quarteirao 54",
+        "location_type":"quarter",
+        "lat":"-25.9395251",
+        "long":"32.57959676",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3055",
+        "location_name":"Maxaquene A - Quarteirao 55",
+        "location_type":"quarter",
+        "lat":"-25.93952511",
+        "long":"32.57959677",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3056",
+        "location_name":"Maxaquene A - Quarteirao 56",
+        "location_type":"quarter",
+        "lat":"-25.93952512",
+        "long":"32.57959678",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3057",
+        "location_name":"Maxaquene A - Quarteirao 57",
+        "location_type":"quarter",
+        "lat":"-25.93952513",
+        "long":"32.57959679",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3058",
+        "location_name":"Maxaquene A - Quarteirao 58",
+        "location_type":"quarter",
+        "lat":"-25.93952514",
+        "long":"32.5795968",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3059",
+        "location_name":"Maxaquene A - Quarteirao 59",
+        "location_type":"quarter",
+        "lat":"-25.93952515",
+        "long":"32.57959681",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"3060",
+        "location_name":"Maxaquene A - Quarteirao 60",
+        "location_type":"quarter",
+        "lat":"-25.93952516",
+        "long":"32.57959682",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Maxaquene A"
+        ]
+    },
+    {
+        "location_id":"4001",
+        "location_name":"Polana Canico B - Quarteirao 1",
+        "location_type":"quarter",
+        "lat":"-25.9315",
+        "long":"32.60143333",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4002",
+        "location_name":"Polana Canico B - Quarteirao 2",
+        "location_type":"quarter",
+        "lat":"-25.9316",
+        "long":"32.60143334",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4003",
+        "location_name":"Polana Canico B - Quarteirao 3",
+        "location_type":"quarter",
+        "lat":"-25.9317",
+        "long":"32.60143335",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4004",
+        "location_name":"Polana Canico B - Quarteirao 4",
+        "location_type":"quarter",
+        "lat":"-25.9318",
+        "long":"32.60143336",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4005",
+        "location_name":"Polana Canico B - Quarteirao 5",
+        "location_type":"quarter",
+        "lat":"-25.9319",
+        "long":"32.60143337",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4006",
+        "location_name":"Polana Canico B - Quarteirao 6",
+        "location_type":"quarter",
+        "lat":"-25.932",
+        "long":"32.60143338",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4007",
+        "location_name":"Polana Canico B - Quarteirao 7",
+        "location_type":"quarter",
+        "lat":"-25.9321",
+        "long":"32.60143339",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4008",
+        "location_name":"Polana Canico B - Quarteirao 8",
+        "location_type":"quarter",
+        "lat":"-25.9322",
+        "long":"32.6014334",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4009",
+        "location_name":"Polana Canico B - Quarteirao 9",
+        "location_type":"quarter",
+        "lat":"-25.9323",
+        "long":"32.60143341",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4010",
+        "location_name":"Polana Canico B - Quarteirao 10",
+        "location_type":"quarter",
+        "lat":"-25.9324",
+        "long":"32.60143342",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4011",
+        "location_name":"Polana Canico B - Quarteirao 11",
+        "location_type":"quarter",
+        "lat":"-25.9325",
+        "long":"32.60143343",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4012",
+        "location_name":"Polana Canico B - Quarteirao 12",
+        "location_type":"quarter",
+        "lat":"-25.9326",
+        "long":"32.60143344",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4013",
+        "location_name":"Polana Canico B - Quarteirao 13",
+        "location_type":"quarter",
+        "lat":"-25.9327",
+        "long":"32.60143345",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4014",
+        "location_name":"Polana Canico B - Quarteirao 14",
+        "location_type":"quarter",
+        "lat":"-25.9328",
+        "long":"32.60143346",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4015",
+        "location_name":"Polana Canico B - Quarteirao 15",
+        "location_type":"quarter",
+        "lat":"-25.9329",
+        "long":"32.60143347",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4016",
+        "location_name":"Polana Canico B - Quarteirao 16",
+        "location_type":"quarter",
+        "lat":"-25.933",
+        "long":"32.60143348",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4017",
+        "location_name":"Polana Canico B - Quarteirao 17",
+        "location_type":"quarter",
+        "lat":"-25.9331",
+        "long":"32.60143349",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4018",
+        "location_name":"Polana Canico B - Quarteirao 18",
+        "location_type":"quarter",
+        "lat":"-25.9332",
+        "long":"32.6014335",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4019",
+        "location_name":"Polana Canico B - Quarteirao 19",
+        "location_type":"quarter",
+        "lat":"-25.9333",
+        "long":"32.60143351",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4020",
+        "location_name":"Polana Canico B - Quarteirao 20",
+        "location_type":"quarter",
+        "lat":"-25.9334",
+        "long":"32.60143352",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4021",
+        "location_name":"Polana Canico B - Quarteirao 21",
+        "location_type":"quarter",
+        "lat":"-25.9335",
+        "long":"32.60143353",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4022",
+        "location_name":"Polana Canico B - Quarteirao 22",
+        "location_type":"quarter",
+        "lat":"-25.9336",
+        "long":"32.60143354",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4023",
+        "location_name":"Polana Canico B - Quarteirao 23",
+        "location_type":"quarter",
+        "lat":"-25.9337",
+        "long":"32.60143355",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4024",
+        "location_name":"Polana Canico B - Quarteirao 24",
+        "location_type":"quarter",
+        "lat":"-25.9338",
+        "long":"32.60143356",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4025",
+        "location_name":"Polana Canico B - Quarteirao 25",
+        "location_type":"quarter",
+        "lat":"-25.9339",
+        "long":"32.60143357",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4026",
+        "location_name":"Polana Canico B - Quarteirao 26",
+        "location_type":"quarter",
+        "lat":"-25.934",
+        "long":"32.60143358",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4027",
+        "location_name":"Polana Canico B - Quarteirao 27",
+        "location_type":"quarter",
+        "lat":"-25.9341",
+        "long":"32.60143359",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4028",
+        "location_name":"Polana Canico B - Quarteirao 28",
+        "location_type":"quarter",
+        "lat":"-25.9342",
+        "long":"32.6014336",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4029",
+        "location_name":"Polana Canico B - Quarteirao 29",
+        "location_type":"quarter",
+        "lat":"-25.9343",
+        "long":"32.60143361",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4030",
+        "location_name":"Polana Canico B - Quarteirao 30",
+        "location_type":"quarter",
+        "lat":"-25.9344",
+        "long":"32.60143362",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4031",
+        "location_name":"Polana Canico B - Quarteirao 31",
+        "location_type":"quarter",
+        "lat":"-25.9345",
+        "long":"32.60143363",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4032",
+        "location_name":"Polana Canico B - Quarteirao 32",
+        "location_type":"quarter",
+        "lat":"-25.9346",
+        "long":"32.60143364",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4033",
+        "location_name":"Polana Canico B - Quarteirao 33",
+        "location_type":"quarter",
+        "lat":"-25.9347",
+        "long":"32.60143365",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4034",
+        "location_name":"Polana Canico B - Quarteirao 34",
+        "location_type":"quarter",
+        "lat":"-25.9348",
+        "long":"32.60143366",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4035",
+        "location_name":"Polana Canico B - Quarteirao 35",
+        "location_type":"quarter",
+        "lat":"-25.9349",
+        "long":"32.60143367",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4036",
+        "location_name":"Polana Canico B - Quarteirao 36",
+        "location_type":"quarter",
+        "lat":"-25.935",
+        "long":"32.60143368",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4037",
+        "location_name":"Polana Canico B - Quarteirao 37",
+        "location_type":"quarter",
+        "lat":"-25.9351",
+        "long":"32.60143369",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4038",
+        "location_name":"Polana Canico B - Quarteirao 38",
+        "location_type":"quarter",
+        "lat":"-25.9352",
+        "long":"32.6014337",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4039",
+        "location_name":"Polana Canico B - Quarteirao 39",
+        "location_type":"quarter",
+        "lat":"-25.9353",
+        "long":"32.60143371",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4040",
+        "location_name":"Polana Canico B - Quarteirao 40",
+        "location_type":"quarter",
+        "lat":"-25.9354",
+        "long":"32.60143372",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4041",
+        "location_name":"Polana Canico B - Quarteirao 41",
+        "location_type":"quarter",
+        "lat":"-25.9355",
+        "long":"32.60143373",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4042",
+        "location_name":"Polana Canico B - Quarteirao 42",
+        "location_type":"quarter",
+        "lat":"-25.9356",
+        "long":"32.60143374",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4043",
+        "location_name":"Polana Canico B - Quarteirao 43",
+        "location_type":"quarter",
+        "lat":"-25.9357",
+        "long":"32.60143375",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4044",
+        "location_name":"Polana Canico B - Quarteirao 44",
+        "location_type":"quarter",
+        "lat":"-25.9358",
+        "long":"32.60143376",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4045",
+        "location_name":"Polana Canico B - Quarteirao 45",
+        "location_type":"quarter",
+        "lat":"-25.9359",
+        "long":"32.60143377",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4046",
+        "location_name":"Polana Canico B - Quarteirao 46",
+        "location_type":"quarter",
+        "lat":"-25.936",
+        "long":"32.60143378",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4047",
+        "location_name":"Polana Canico B - Quarteirao 47",
+        "location_type":"quarter",
+        "lat":"-25.9361",
+        "long":"32.60143379",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4048",
+        "location_name":"Polana Canico B - Quarteirao 48",
+        "location_type":"quarter",
+        "lat":"-25.9362",
+        "long":"32.6014338",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4049",
+        "location_name":"Polana Canico B - Quarteirao 49",
+        "location_type":"quarter",
+        "lat":"-25.9363",
+        "long":"32.60143381",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4050",
+        "location_name":"Polana Canico B - Quarteirao 50",
+        "location_type":"quarter",
+        "lat":"-25.9364",
+        "long":"32.60143382",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4051",
+        "location_name":"Polana Canico B - Quarteirao 51",
+        "location_type":"quarter",
+        "lat":"-25.9365",
+        "long":"32.60143383",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4052",
+        "location_name":"Polana Canico B - Quarteirao 52",
+        "location_type":"quarter",
+        "lat":"-25.9366",
+        "long":"32.60143384",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4053",
+        "location_name":"Polana Canico B - Quarteirao 53",
+        "location_type":"quarter",
+        "lat":"-25.9367",
+        "long":"32.60143385",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4054",
+        "location_name":"Polana Canico B - Quarteirao 54",
+        "location_type":"quarter",
+        "lat":"-25.9368",
+        "long":"32.60143386",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4055",
+        "location_name":"Polana Canico B - Quarteirao 55",
+        "location_type":"quarter",
+        "lat":"-25.9369",
+        "long":"32.60143387",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"4056",
+        "location_name":"Polana Canico B - Quarteirao 56",
+        "location_type":"quarter",
+        "lat":"-25.937",
+        "long":"32.60143388",
+        "district":"KaMaXaquene",
+        "neighbourhoods":[
+            "Polana Canico B"
+        ]
+    },
+    {
+        "location_id":"1001",
+        "location_name":"KaMubukwana",
+        "location_type":"district",
+        "lat":"-25.91261",
+        "long":"32.55571",
+        "district":"KaMubukwana",
+        "neighbourhoods":[
+            "Zimpeto",
+            "Bagamoyo",
+            "Inhagoia A",
+            "Inhagoia B",
+            "Jardim",
+            "George Dimitrov (Benfica)",
+            "Luis Cabral",
+            "Magoanine A",
+            "Magoanine B",
+            "Magoanine C",
+            "Malhazine",
+            "Nsalane",
+            "25 de Junho A",
+            "25 de Junho B"
+        ]
+    },
+    {
+        "location_id":"1002",
+        "location_name":"KaMpfumo",
+        "location_type":"district",
+        "lat":"-25.937",
+        "long":"32.60143388",
+        "district":"KaMpfumo",
+        "neighbourhoods":[
+            "Central A",
+            "Central B",
+            "Central C",
+            "Alto Mae A",
+            "Alto Mae B",
+            "Malhangalene A",
+            "Malhangalene B",
+            "Polana Cimento A",
+            "Polana Cimento B",
+            "Coop",
+            "Sommerchield"
+        ]
+    },
+    {
+        "location_id":"1003",
+        "location_name":"Nlhamankulu",
+        "location_type":"district",
+        "lat":"-25.937",
+        "long":"32.60143388",
+        "district":"Nlhamankulu",
+        "neighbourhoods":[
+            "Aeroporto B",
+            "Aeroporto A",
+            "Xipamanine",
+            "Minkadjuine",
+            "Unidade 7",
+            "Chamanculo A",
+            "Chamanculo B",
+            "Chamanculo C",
+            "Chamanculo D",
+            "Malanga",
+            "Munhuana"
+        ]
+    },
+    {
+        "location_id":"1004",
+        "location_name":"KaMaxaquene",
+        "location_type":"district",
+        "lat":"-25.9367",
+        "long":"32.60143385",
+        "district":"KaMaxaquene",
+        "neighbourhoods":[
+            "Maxaquene A",
+            "Mafalala",
+            "Maxaquene B",
+            "Maxaquene C",
+            "Maxaquene D",
+            "Polana Canico A",
+            "Polana Canico B",
+            "Urbanizacao"
+        ]
+    },
+    {
+        "location_id":"1005",
+        "location_name":"KaMavota",
+        "location_type":"district",
+        "lat":"-25.937",
+        "long":"32.60143388",
+        "district":"KaMavota",
+        "neighbourhoods":[
+            "Mavalane A",
+            "Mavalane B",
+            "FPLM",
+            "Hulene A",
+            "Hulene B",
+            "Costa do Sol",
+            "Ferroviario",
+            "Laulane",
+            "3 de Fevereiro",
+            "Mahotas",
+            "Albazine"
+        ]
+    },
+    {
+        "location_id":"1006",
+        "location_name":"KaTembe",
+        "location_type":"district",
+        "lat":"-25.937",
+        "long":"32.60143388",
+        "district":"KaTembe",
+        "neighbourhoods":[
+            "Xamissava",
+            "Gwachene",
+            "Chale",
+            "Inguice",
+            "Ncassene"
+        ]
+    },
+    {
+        "location_id":"1007",
+        "location_name":"KaNyaka",
+        "location_type":"district",
+        "lat":"-25.937",
+        "long":"32.60143388",
+        "district":"KaNyaka",
+        "neighbourhoods":[
+            "Nhaquene",
+            "Ingwane",
+            "Ribjene"
+        ]
+    }
+]

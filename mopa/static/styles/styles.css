@@ -1,0 +1,97 @@
+body{
+	font-family: 'Lato', Helvetica;
+	text-align: left;
+}
+
+table{
+	border-collapse: collapse;
+}
+
+table, th, td{
+	border: 0.5px solid rgb(153, 153, 153);
+}
+
+.no-border{
+	border-style: none;
+	border-top-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-right-style: none;
+}
+
+th{
+	color: #60c29b;
+}
+
+td, th {
+    padding: 0.5em;
+}
+
+.section-title {
+	font-size: 30px;
+	height: 30px;
+	width: 80%;
+	color: #f15722;
+	line-height: 20px;
+	font-weight: 300;
+	margin: 0 auto 0 auto;
+}
+
+.footer {
+	border-style: none;
+	border-top: 0.5px solid rgb(153, 153, 153);
+	clear: both;
+	height: 0;
+	border-collapse: collapse;
+	margin: 1em;
+}
+
+.gray{
+	color: rgb(153, 153, 153);
+}
+
+.black{
+	color: rgb(0,0,0);
+}
+
+.orange{
+	color : #f15722;
+}
+
+.green{
+	color: rgb(96, 194, 155);
+}
+
+.center{
+	text-align: center;
+}
+
+.left{
+	text-align: left; 
+}
+
+.right{
+	text-align: right;
+}
+
+.justify{
+	text-align: justify;
+}
+
+a {
+	text-decoration: none;
+	color: rgb(153, 153, 153);
+}
+
+hr{
+	color: #ddd;
+	height: 0.5px;
+}
+
+#header_content {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+}

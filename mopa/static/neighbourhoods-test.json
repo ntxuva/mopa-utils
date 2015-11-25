@@ -1,0 +1,822 @@
+{
+    "services" : [
+        {
+            "service_code": "01",
+            "service_name": "Camiao nao recolheu contentor"
+        },
+        {
+            "service_code": "02",
+            "service_name": "Contentor a Arder"
+        },
+        {
+            "service_code": "03",
+            "service_name": "Lixo fora do contentor"
+        },
+        {
+            "service_code": "04",
+            "service_name": "Txova nao passou"
+        },
+        {
+            "service_code": "05",
+            "service_name": "Lixeira informal"
+        }
+    ],
+
+    "notified_people" : [
+        {
+            "id": 0,
+            "phone": "828658957",
+            "institution" : "UX",
+            "department": "Developer",
+            "name": "Paulo Phagula"
+        },
+        {
+            "id": 1,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria",
+            "department": "Técnico",
+            "name": "Eurídia"
+        },
+        {
+            "id": 2,
+            "phone": "828658957",
+            "institution" : "Enviroserv",
+            "department": "Gestor",
+            "name": "Jordão Matemula"
+        },
+        {
+            "id": 3,
+            "phone": "828658957",
+            "institution" : "DGRSU",
+            "department": "Técnico",
+            "name": "Langa"
+        },
+        {
+            "id": 4,
+            "phone": "828658957",
+            "institution" : "Micro empresa",
+            "department": "Gerente",
+            "name": "Sérgio José"
+        },
+        {
+            "id": 5,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria",
+            "department": "Chefe da repartição da monitoria",
+            "name": "Sérgio Manhique"
+        },
+        {
+            "id": 6,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria",
+            "department": "Técnico",
+            "name": "Simão"
+        },
+        {
+            "id": 7,
+            "phone": "828658957",
+            "institution" : "Micro empresa",
+            "department": "Supervisor",
+            "name": "Bernardo Tai"
+        },
+        {
+            "id": 8,
+            "phone": "828658957",
+            "institution" : "CMM",
+            "department": "Secretário do bairro",
+            "name": "Aurélio Nhalungo"
+        },
+        {
+            "id": 9,
+            "phone": "828658957",
+            "institution" : "DM Kamubukwana",
+            "department": "Fiscal distrital",
+            "name": "Maluana"
+        },
+        {
+            "id": 10,
+            "phone": "828658957",
+            "institution" : "DM Kamubukwana",
+            "department": "Fiscal distrital",
+            "name": "Cuacua"
+        },
+        {
+            "id": 11,
+            "phone": "828658957",
+            "institution" : "DMGRUS - Fiscalização",
+            "department": "Fiscal central",
+            "name": "Elidio"
+        },
+        {
+            "id": 12,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria/Recolha Secundária",
+            "department": "",
+            "name": "MOPA (RS)"
+        },
+        {
+            "id": 13,
+            "phone": "828658957",
+            "institution" : "DM Kamubukwana",
+            "department": "Fiscal distrital",
+            "name": "Mombe"
+        },
+        {
+            "id": 14,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria/Recolha Primária",
+            "department": "l",
+            "name": "MOPA (RP)"
+        },
+        {
+            "id": 15,
+            "phone": "828658957",
+            "institution" : "DMGRUS - Fiscalização",
+            "department": "Fiscal central",
+            "name": "António"
+        },
+        {
+            "id": 16,
+            "phone": "828658957",
+            "institution" : "",
+            "department": "",
+            "name": "MOPA (GRS)"
+        },
+        {
+            "id": 17,
+            "phone": "828658957",
+            "institution" : "DMGRUS - Fiscalização",
+            "department": "Fiscal central",
+            "name": "Guambe"
+        },
+        {
+            "id": 18,
+            "phone": "828658957",
+            "institution" : "DMGRUS - Fiscalização",
+            "department": "Fiscal central",
+            "name": "Alfeu"
+        },
+        {
+            "id": 19,
+            "phone": "828658957",
+            "institution" : "DGRSU",
+            "department": "Técnica",
+            "name": "Stela"
+        },
+        {
+            "id": 20,
+            "phone": "828658957",
+            "institution" : "Micro Empresa",
+            "department": "Gerente",
+            "name": "Manuel Muchave"
+        },
+        {
+            "id": 21,
+            "phone": "828658957",
+            "institution" : "Micro Empresa",
+            "department": "Supervisor",
+            "name": "Preciosa Serafina"
+        },
+        {
+            "id": 22,
+            "phone": "828658957",
+            "institution" : "CMM",
+            "department": "Secretário do bairro",
+            "name": "Agostinho Raul Daniel"
+        },
+        {
+            "id": 23,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria",
+            "department": "Chefe da repartição da monitoria",
+            "name": "Manhique"
+        },
+        {
+            "id": 24,
+            "phone": "828658957",
+            "institution" : "Micro empresa",
+            "department": "Gerente",
+            "name": "Paulino Uaene"
+        },
+        {
+            "id": 25,
+            "phone": "828658957",
+            "institution" : "Micro empresa",
+            "department": "Supervisor",
+            "name": "Januário Quimisse"
+        },
+        {
+            "id": 26,
+            "phone": "828658957",
+            "institution" : "CMM",
+            "department": "Secretário do bairro",
+            "name": "Simião Valente"
+        },
+        {
+            "id": 27,
+            "phone": "828658957",
+            "institution" : "DM Kamaxaquene",
+            "department": "Fiscal distrital",
+            "name": "Abelardo Velichane"
+        },
+        {
+            "id": 28,
+            "phone": "828658957",
+            "institution" : "DM Kamaxaquene",
+            "department": "Fiscal distrital",
+            "name": "Salvador"
+        },
+        {
+            "id": 29,
+            "phone": "828658957",
+            "institution" : "CMM/Monitoria",
+            "department": "",
+            "name": "MOPA (GRS)"
+        },
+        {
+            "id": 30,
+            "phone": "828658957",
+            "institution" : "Micro empresa",
+            "department": "Gerente",
+            "name": "Neface Domingos Sitoe"
+        },
+        {
+            "id": 31,
+            "phone": "828658957",
+            "institution" : "Micro empresa",
+            "department": "Supervisor",
+            "name": "Vicente A. Mucavele"
+        },
+        {
+            "id": 32,
+            "phone": "828658957",
+            "institution" : "CMM",
+            "department": "Secretário do bairro",
+            "name": "Muchavane A. Cossa"
+        }
+    ],
+
+    "monitors" : [
+        {
+            "id": 0,
+            "name": "Paulo Phagula",
+            "phone": "848504509"
+        },
+        {
+            "id": 1,
+            "name": "Gertrudes Alfredo",
+            "phone": "828658957"   
+        },
+        {
+            "id": 2,
+            "name": "Dioclesio Xerindza",
+            "phone": "828658957"   
+        },
+        {
+            "id": 3,
+            "phone": "828658957",
+            "name": "Artemisio Matsolo"
+        },
+        {
+            "id": 4,
+            "name": "Claudio Portugal",
+            "phone": "828658957"
+        },
+        {
+            "id": 5,
+            "name": "Daniel Matsinhe",
+            "phone": "828658957"
+        },
+        {
+            "id": 6,
+            "name": "Euclesio Matsinhe",
+            "phone": "828658957"  
+        },
+        {
+            "id": 7,
+            "name": "Otilia Machava",
+            "phone": "828658957"  
+        },
+        {
+            "id": 8,
+            "name": "Pedro Mula",
+            "phone": "828658957"  
+        },
+        {
+            "id": 9,
+            "name": "Armindo Macupe",
+            "phone": "828658957"  
+        },
+        {
+            "id":10,
+            "name": "Hortencia Bila",
+            "phone": "821615656"
+        },
+        {
+            "id":11,
+            "name": "Castigo Chissano",
+            "phone": "828658957"
+        },
+        {
+            "id":12,
+            "name": "Maria Manjate",
+            "phone": "828658957"
+        },
+        {
+            "id":13,
+            "name": "Genito Rafael",
+            "phone": "828658957"
+        },
+        {
+            "id":14,
+            "name": "Amelia Nhagombe",
+            "phone": "828658957"
+        },
+        {
+            "id":15,
+            "name": "Nelia Chacha",
+            "phone": "828658957"
+        },
+        {
+            "id":16,
+            "name": "Alberto Mario",
+            "phone": "828658957"
+        },
+        {
+            "id":17,
+            "name": "Maria Chonguica",
+            "phone": "828658957"
+        },
+        {
+            "id":18,
+            "name": "Causalio Munguambe",
+            "phone": "828658957"
+        },
+        {
+            "id":19,
+            "name": "Nisia",
+            "phone": "828658957"
+        },
+        {
+            "id":20,
+            "name": "Alzira Inguane",
+            "phone": "828658957"
+        },
+        {
+            "id":21,
+            "name": "Virginia Alberto",
+            "phone": "828658957"
+        },
+        {
+            "id":22,
+            "name": "Maria Fernando",
+            "phone": "828658957"
+        }
+    ],
+
+    "districts" : [
+        {
+            "id": 1,
+            "name": "Ka Maxaquene",
+            "neighbourhoods": [
+                {
+                    "id": 1,
+                    "name": "Maxaquene A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [5, 2, 6, 25, 12, 18, 17, 11, 15, 27, 28]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [5, 2, 26, 25, 12, 18, 17, 11, 15, 27, 28]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [5, 24, 25, 1, 12, 18, 17, 11, 15, 27, 28]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [24, 25, 26, 5, 1, 6, 14]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [5, 24, 25, 26, 19, 3, 6, 1, 16]
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1,
+                            "address_id": "",
+                            "name": "Contentor do Estádio 1o de Maio",
+                            "location": "Entre os Bairros Maxaquene B, C e A",
+                            "geo_location": {
+                                "latitude": -25.93509333333333,
+                                "longitude": 32.586416666666665
+                            },
+                            "monitors": [1]
+                        },
+                        {
+                            "id": 2,
+                            "address_id": "",
+                            "name": "Contentor_1 do Estaleiro",
+                            "location": "Maxaquene A, prolongamento Acordos de Lusaka, quase a chegar Av. Joaquim Chissano",
+                            "geo_location": {
+                                "latitude": -25.94436166666667,
+                                "longitude": 32.57904666666666
+                            },
+                            "monitors": [2]
+                        },
+                        {
+                            "id": 3,
+                            "address_id": "13",
+                            "name": "Contentor do Baltazar",
+                            "location": "Acordos de Lusaka em frente a ETRAGO",
+                            "geo_location": {
+                                "latitude": -25.94037166666667,
+                                "longitude": 32.579166666666666
+                            },
+                            "monitors": [3]
+                        },
+                        {
+                            "id": 4,
+                            "address_id": "",
+                            "name": "Contentores do Pachisso",
+                            "location": "Rua Lisboa Matavele",
+                            "geo_location": {
+                                "latitude": -25.936878333333333,
+                                "longitude": 32.57944833333333
+                            },
+                            "monitors": [4]
+                        },
+                        {
+                            "id": 5,
+                            "address_id": "",
+                            "name": "Escola do Noroeste 1, Lixeira Informal",
+                            "location": "Praça do Heróis",
+                            "geo_location": {
+                                "latitude": -25.9360635,
+                                "longitude": 32.58093209
+                            },
+                            "monitors": [5]
+                        },
+                        {
+                            "id": 6,
+                            "address_id": "",
+                            "name": "Escola do Noroeste 2, Lixeira Informal",
+                            "location": "Av. Acordos Lusaka, Estaleiro perto da construção Custódio",
+                            "geo_location": {
+                                "latitude": -25.941514999999995,
+                                "longitude": 32.58242
+                            },
+                            "monitors": [5]
+                        },
+                        {
+                            "id": 7,
+                            "address_id": "",
+                            "name": "Contentor_2 do Estaleiro",
+                            "location": "Rua Estevão Chanique",
+                            "geo_location": {
+                                "latitude": -25.943681666666667,
+                                "longitude": 32.57907
+                            },
+                            "monitors": [2]
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Polana Canico B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [5, 2, 32, 31, 12, 18, 17, 11, 15, 27, 28]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [5, 2, 32, 12, 18, 17, 11, 15,27, 28]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [5, 30, 31, 6, 1, 14, 18, 17, 11, 15, 27, 28]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [30, 31, 32, 5, 1, 6, 14]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [5, 30, 31, 32, 19, 3, 6, 1, 16]
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1,
+                            "address_id": "",
+                            "name": "Lixeira Informal Matchiki Tchiki, Escola, Mercado",
+                            "location": "Quarteirões 32, Matchiki Tchiki, Escola, Mercado",
+                            "geo_location": {
+                                "latitude": -25.9229937,
+                                "longitude": 32.6101739
+                            },
+                            "monitors": [6]
+                        },
+                        {
+                            "id": 2,
+                            "address_id": "",
+                            "name": "Contentor Entre os Quarteirões 31, 32, 35",
+                            "location": "Quarteirões 32, Matchiki Tchiki, Escola, Mercado",
+                            "geo_location": {
+                                "latitude": -25.93153332,
+                                "longitude": 32.61116722
+                            },
+                            "monitors": [6]
+                        },
+                        {
+                            "id": 3,
+                            "address_id": "",
+                            "name": "Contentor Mercado do Peixe",
+                            "location": "Quarteirão 40, Perto do Minguene",
+                            "geo_location": {
+                                "latitude": -25.92869929,
+                                "longitude": 32.60699522
+                            },
+                            "monitors": [7]
+                        },
+                        {
+                            "id": 4,
+                            "address_id": "21",
+                            "name": "Lixeira Informal, Mercado de Xiquelene",
+                            "location": "Av. Julius Nyerere, parlamento, saída de carros",
+                            "geo_location": {
+                                "latitude": -25.9250404,
+                                "longitude": 32.6063382
+                            },
+                            "monitors": [8]
+                        },
+                        {
+                            "id": 5,
+                            "address_id": "",
+                            "name": "Contentor do Parlamento",
+                            "location": "Quarteirões 46, Rua do parlamento",
+                            "geo_location": {
+                                "latitude": -25.92541416,
+                                "longitude": 32.61112559
+                            },
+                            "monitors": [9]
+                        },
+                        {
+                            "id": 6,
+                            "address_id": "",
+                            "name": "Contentor Mercado Metical",
+                            "location": "Quarteirões 53",
+                            "geo_location": {
+                                "latitude": -25.93591763,
+                                "longitude": 32.61496079
+                            },
+                            "monitors": [10]
+                        },
+                        {
+                            "id": 7,
+                            "address_id": "",
+                            "name": "Lixeira Informal Entrada do Golf junto dos condomínios",
+                            "location": "Quarteirão 54, Entrada do Golf junto dos condomínios",
+                            "geo_location": {
+                                "latitude": -25.93954422,
+                                "longitude": 32.61353555
+                            },
+                            "monitors": [11]
+                        },
+                        {
+                            "id": 8,
+                            "address_id": "",
+                            "name": "Contentor entre Carlos Cardoso e Costa do Sol",
+                            "location": "Cruzamento entre Costa do Sol e Carlos Cardoso",
+                            "geo_location": {
+                                "latitude": -25.93463047,
+                                "longitude": 32.60646889
+                            },
+                            "monitors": [12]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Ka Mubukwana",
+            "neighbourhoods": [
+                {
+                    "id": 1,
+                    "name": "Inhagoia B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [5, 2, 8, 7, 12, 18, 17, 11, 15, 10, 13, 9]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [5, 2, 4, 7, 12, 18, 17, 11, 15, 10, 13, 9]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [5, 4, 7, 6, 1, 12, 18, 17, 11, 15, 10, 13, 9]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [4, 7, 8, 5, 1, 6, 14]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [5, 4, 7, 8, 19, 3, 1, 16]
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1,
+                            "address_id": "",
+                            "name": "Reserva do Jardim",
+                            "location": "Jardim Zoológico",
+                            "geo_location": {
+                                "latitude": -25.922806666666663,
+                                "longitude": 32.557045
+                            },
+                            "monitors": [13]
+                        },
+                        {
+                            "id": 2,
+                            "address_id": "",
+                            "name": "Lixeira Informal Rua dos Quarteiroes 17",
+                            "location": "Av. Joaquim Chissano, próximo a Fabrica de Cervejas",
+                            "geo_location": {
+                                "latitude": -25.921883333333334,
+                                "longitude": 32.54634333333333
+                            },
+                            "monitors": [14]
+                        },
+                        {
+                            "id": 3,
+                            "address_id": "",
+                            "name": "Lixeira Informal Mercado de Inhagoia",
+                            "location": "Mercado de Inhagoia, Rua que divide Inhagoia A e B",
+                            "geo_location": {
+                                "latitude": -25.919696666666663,
+                                "longitude": 32.56027666666667
+                            },
+                            "monitors": [13]                        
+                        },
+                        {
+                            "id": 4,
+                            "address_id": "",
+                            "name": "Contentor da Igreja Católica",
+                            "location": "Rua que divide Inhagoia A e B",
+                            "geo_location": {
+                                "latitude": -25.91788,
+                                "longitude": 32.555281666666666
+                            },
+                            "monitors": [15] 
+                        },
+                        {
+                            "id": 5,
+                            "address_id": "",
+                            "name": "Contentor da 2M",
+                            "location": "Rua 1, Quarteirão 17.14, Esquina com Av. Joaquim Chissano, em frente a Fabrica de Cervejas",
+                            "geo_location": {
+                                "latitude": -25.91845166666667,
+                                "longitude": 32.550365000000006
+                            },
+                            "monitors": [14]
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Magoanine C",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [22, 21, 12, 18, 17, 11, 15, 10, 13, 9]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [2, 22, 21, 12, 18, 17, 11, 15, 10, 13, 9]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [20, 21, 6, 1, 14, 18, 17, 11, 15, 10, 13, 9]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [20, 21, 22, 23, 1, 6, 14]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [20, 21, 22, 19, 3, 6, 1, 16]
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1,
+                            "address_id": "",
+                            "name": "Lixeira Informal Rua Casimiro Ngomane, Quarteirão 37",
+                            "location": "Rua Casimiro Ngomane, Quarteirão 37",
+                            "geo_location": {
+                                "latitude": -25.8717059,
+                                "longitude": 32.603066
+                            },
+                            "monitors": [16]
+                        },
+                        {
+                            "id": 2,
+                            "address_id": "",
+                            "name": "Lixeira Informal Quarteirão 45 Ao redor do Mercado Rua 58",
+                            "location": "Quarteirão 45, Ao redor do Mercado Municipal de Matendene, Rua 58",
+                            "geo_location": {
+                                "latitude": -25.846041666666665,
+                                "longitude": 32.59387166666667
+                            },
+                            "monitors": [16]
+                        },
+                        {
+                            "id": 3,
+                            "address_id": "",
+                            "name": "Lixeira Informal Campo da EDM",
+                            "location": "Entre Av Alberto Chipande e Rua do Hospital",
+                            "geo_location": {
+                                "latitude": -25.851815000000002,
+                                "longitude": 32.59694666666667
+                            },
+                            "monitors": [17]
+                        },
+                        {
+                            "id": 4,
+                            "address_id": "",
+                            "name": "Lixeira Informal Quarteirão 85",
+                            "location": "Quarteirão 85, Perto da Casa do Chefe do Quarteirão, Rua Policaju",
+                            "geo_location": {
+                                "latitude": -25.838359999999998,
+                                "longitude": 32.597139999999996
+                            },
+                            "monitors": [18]
+                        },
+                        {
+                            "id": 5,
+                            "address_id": "33",
+                            "name": "Contentor do Campo Chele",
+                            "location": "Quarteirão 29, Av. Nelson Mandela",
+                            "geo_location": {
+                                "latitude": -25.84529,
+                                "longitude": 32.58230666666667
+                            },
+                            "monitors": [19]
+                        },
+                        {
+                            "id": 6,
+                            "address_id": "32",
+                            "name": "Contentor do Mercado de Matendene",
+                            "location": "Quarteirão 35, Av. Nelson Mandela",
+                            "geo_location": {
+                                "latitude": -25.846041666666665,
+                                "longitude": 32.59387166666667
+                            },
+                            "monitors": []
+                        },
+                        {
+                            "id": 7,
+                            "address_id": "",
+                            "name": "Contentor Mercado Mbuzini",
+                            "location": "Quarteirão 80A, Av. Graca Machel",
+                            "geo_location": {
+                                "latitude": -25.839951666666668,
+                                "longitude": 32.59739833333333
+                            },
+                            "monitors": [20]
+                        },
+                        {
+                            "id": 8,
+                            "address_id": "",
+                            "name": "Quarteirão 72, Avenida Graça Machel",
+                            "location": "Quarteirão 72, Avenida Graça Machel",
+                            "geo_location": {
+                                "latitude": -25.8706633,
+                                "longitude": 32.6035809
+                            },
+                            "monitors": [21]
+                        },
+                        {
+                            "id": 9,
+                            "address_id": "31",
+                            "name": "Grande maputo",
+                            "location": "Quarteirao 101",
+                            "geo_location": {
+                                "latitude": -25.82670666666667,
+                                "longitude": 32.60240666666667
+                            },
+                            "monitors": [22]
+                        }
+                    ]
+                }
+            ]  
+        }
+    ]
+}

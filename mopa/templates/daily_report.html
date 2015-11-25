@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+    <link href="mopa/static/styles/lato.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/pdf.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/typography.css" rel="stylesheet" type="text/css">
+	<link href="mopa/static/styles/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <div class="center">
+            <img src="mopa/static/img/logo.jpg" style="vertical-align: middle;" /><br/>
+            <span class="no-border orange">ntxuva - plataforma de monitoria participativa</span>
+        </div>
+    </div>
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">
+        <span class="gray right">P&aacute;gina <pdf:pagenumber /></span>
+    </div>
+
+    <!-- HTML Content -->
+    <h1 class="center orange">Relat&oacute;rio di&aacute;rio de ocorr&ecirc;ncias</h1>
+    <div class="gray center">
+        Gerado a {{ today }}
+    </div>
+    <br/>
+
+    <table repeat="1">
+        <thead>
+            <tr>
+                <th>N&uacute;mero de Ocorr&ecirc;ncia</th>
+                <th>Distrito</th>
+                <th>Bairro</th>
+                <th>Ponto</th>
+                <th>Tipo</th>
+                <th>Data e Hora</th>
+                <th>Estado</th>
+                <th>Actualiza&ccedil;&atilde;o</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests_list %}
+            <tr>
+                <td class="center">{{ request.id }}</td>
+                <td class="center">{{ request.district }}</td>
+                <td class="center">{{ request.neighbourhood }}</td>
+                <td class="center">{{ request.location_name }}</td>
+                <td class="center">{{ request.type }}</td>
+                <td class="center">{{ request.datetime }}</td>
+                <td class="center">{{ request.status }}</td>
+                <td>{{ request.status_notes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>

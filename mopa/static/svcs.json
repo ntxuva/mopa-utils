@@ -1,0 +1,25 @@
+/*
+    service_code: "01"
+    service_name: CamiÃ£o nÃ£o recolheu o contentor
+    description: ""
+- 
+    service_code: "02"
+    service_name: Contentor a Arder
+    description: ""
+- 
+    service_code: "03"
+    service_name: Lixo fora do contentor
+    description: ""
+- 
+    service_code: "04"
+    service_name: Tchova nÃ£o passou
+    description: ""
+- 
+    service_code: "05"
+    service_name: Lixeira informal
+    description: ""
+- 
+    service_code: "06"
+    service_name: Lixo na vala de drenagem
+    description: Para os casos de lixo na vala de drenagem.
+ */

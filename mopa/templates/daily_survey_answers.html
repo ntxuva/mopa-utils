@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+    <link href="mopa/static/styles/lato.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/pdf.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/typography.css" rel="stylesheet" type="text/css">
+	<link href="mopa/static/styles/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <div class="center">
+            <img src="mopa/static/img/logo.jpg" style="vertical-align: middle;" /><br/>
+            <span class="no-border orange">ntxuva - plataforma de monitoria participativa</span>
+        </div>
+    </div>
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">
+        <span class="gray right">P&aacute;gina <pdf:pagenumber /></span>
+    </div>
+
+    <!-- HTML Content -->
+    <h1 class="center orange">Respostas aos Inqueritos Di&aacute;rios</h1>
+    <div class="gray center">
+        Gerado a {{ today }}
+    </div>
+    <br/>
+
+    <table repeat="1">
+        <thead>
+            <tr>
+                <th>Distrito</th>
+                <th>Bairro</th>
+                <th>Ponto</th>
+                <th>Resposta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for answer in answers %}
+            <tr>
+                <td class="center">{{ answer.district|default('') }}</td>
+                <td class="center">{{ answer.neighbourhood|default('') }}</td>
+                <td class="center">{{ answer.location|default('') + ' ' + answer.name|default('') }}</td>
+                <td class="center">{{ answer.answer|default('Sem resposta', true) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>

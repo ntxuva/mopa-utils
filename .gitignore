@@ -1,0 +1,11 @@
+env/
+mopa/client/deps/
+mopa/client/backup/
+mopa/logs/
+*.DS_Store
+deployment_details.txt
+nohup.out
+*.pyc
+*.pdf
+*.log
+mopa/logs/mopa.log.1

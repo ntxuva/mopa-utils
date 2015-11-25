@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+    <link href="mopa/static/styles/lato.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/pdf.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/typography.css" rel="stylesheet" type="text/css">
+	<link href="mopa/static/styles/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <div class="center">
+            <img src="mopa/static/img/logo.jpg" style="vertical-align: middle;" /><br/>
+            <span class="no-border orange">ntxuva - plataforma de monitoria participativa</span>
+        </div>
+    </div>
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">
+        <span class="gray right">P&aacute;gina <pdf:pagenumber /></span>
+    </div>
+
+    <!-- HTML Content -->
+    <h1 class="center orange">Relat&oacute;rio semanal</h1>
+    <div class="gray center">
+        Gerado a {{ today }}
+    </div>
+    <br/>
+
+    <h2>Sum&aacute;rio</h2>
+    <br/>
+    <h3>Estat&iacute;sticas por estado</h3>
+    <table repeat="1">
+        <thead>
+            <tr>
+                <th>Tipo de Ocorr&eacute;ncia</th>
+                <th>No. de Ocorr&eacute;ncias</th>
+                <th>% do Total de Ocorr&eacute;ncias</th>
+                <th>No. Arquivados sem resolu&ccedil;&atilde;o</th>
+                <th>Tempo M&eacute;dio de Resposta</th>
+                <th>Varia&ccedil;&atilde;o do Tempo M&eacute;dio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estado in sumario.estados %}
+            <tr>
+                <td class="center">{{ estado.type }}</td>
+                <td class="center">{{ estado.no_occorencias }}</td>
+                <td class="center">{{ estado.pct_do_total }}</td>
+                <td class="center">-</td>
+                <td class="center">{{ estado.tempo_medio_resolucao }}</td>
+                <td class="center">{{ estado.variacao }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+
+    <h3>Estat&iacute;sticas por Distrito/Bairro</h3>
+    <table repeat="1">
+        <thead>
+            <tr>
+                <th>Districto</th>
+                <th>No. de Ocorr&eacute;ncias</th>
+                <th>% do Total de Ocorr&eacute;ncias</th>
+                <th>No. Arquivados sem resolu&ccedil;&atilde;o</th>
+                <th>Tempo M&eacute;dio de Resposta</th>
+                <th>Varia&ccedil;&atilde;o do Tempo M&eacute;dio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for district_name in sumario.district_names %}
+                {% for row in sumario.districts[district_name]["rows"] %}
+                    <tr>
+                        <td class="center">{{ row.neighbourhood }}</td>
+                        <td class="center">{{ row.no_occorencias }}</td>
+                        <td class="center">{{ row.pct_do_total }}</td>
+                        <td class="center">-</td>
+                        <td class="center">{{ row.tempo_medio_resolucao }}</td>
+                        <td class="center">{{ row.variacao }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td class="center"><strong>{{ district_name }}</strong></td>
+                    <td class="center"><strong>{{ sumario.districts[district_name].totals.no_occorencias }}</strong></td>
+                    <td class="center"><strong>{{ sumario.districts[district_name].totals.pct_do_total }}</strong></td>
+                    <td class="center">-</td>
+                    <td class="center"><strong>{{ sumario.districts[district_name].totals.tempo_medio_resolucao }}</strong></td>
+                    <td class="center"><strong>{{ sumario.districts[district_name].totals.variacao }}</strong></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br/><br/>
+
+    <h2>Detalhes</h2>
+    <br/>
+    <h3>Ocorr&ecirc;ncias por Estados em Bairros</h3>
+    {% for neighbourhood in details.neighbourhood_names %}
+        <h4 class="orange">{{neighbourhood}}</h4>
+        <table repeat="1" class="no-border">
+            <tr class="no-border">
+                <td class="no-border center">
+                    <strong>Problema mais frequente</strong><br/>
+                    {% if details.neighbourhoods[neighbourhood]["most_frequent_problem"] %}
+                    <img src="{{ 'mopa/static/img/' + icons[details.neighbourhoods[neighbourhood]['most_frequent_problem']] + '.png' }}"/> <br/>
+                    {{details.neighbourhoods[neighbourhood]["most_frequent_problem"]}}
+                    {% else %}
+                        Sem problemas frequentes
+                    {% endif %}
+                </td>
+                <td class="no-border center">
+                    <strong>Problema mais resolvido</strong><br/>
+                    {% if details.neighbourhoods[neighbourhood]["most_solved_problem"] %}
+                    <img src="{{ 'mopa/static/img/' + icons[details.neighbourhoods[neighbourhood]['most_solved_problem']] + '.png' }}"/>
+                    {{details.neighbourhoods[neighbourhood]["most_solved_problem"]}}
+                    {% else %}
+                        Sem problemas resolvidos
+                    {% endif %}
+                </td>
+                <td class="no-border">
+                    <p class="center"><strong>Pontos mais cr&iacute;ticos</strong></p>
+                    <ol>
+                        {% for i in details.neighbourhoods[neighbourhood]["worst_critical_points"] %}
+                        <li>{{i["location_name"]}}</li>
+                        {% endfor %}
+                    </ol>
+                </td>
+            </tr>
+        </table>
+        <table repeat="1">
+            <thead>
+                <tr>
+                    <th>Problema</th>
+                    <th>Registado</th>
+                    <th>Em Processo</th>
+                    <th>Resolvido</th>
+                    <!--
+                    <th>Arquivado</th>
+                    -->
+                    <th>Inv&aacute;lido</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in details.neighbourhoods[neighbourhood]["rows"] %}
+                    <tr>
+                        <td>{{ row["problema"] }}</td>
+                        <td class="center">{{ row.registado }}</td>
+                        <td class="center">{{ row.em_processo }}</td>
+                        <td class="center">{{ row.resolvido }}</td>
+                        <!--
+                        <td class="center">{{ row.arquivado }}</td>
+                         -->
+                        <td class="center">{{ row.invalido }}</td>
+                        <td class="center"><strong>{{ row.total }}</strong></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br/>
+        <pdf:nextpage>
+    {% endfor %}
+
+    </div> <!-- Why are you here? -->
+</body>
+</html>
