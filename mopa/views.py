@@ -166,7 +166,6 @@ class SMSView(FlaskView):
                     answer["district"] = point.get('district', "")
             del answer["answered_by"]
             the_answers.append(answer)
-            # del answer["created_at"]
 
         return Response(json.dumps(the_answers, cls=MyJSONEncoder))
 

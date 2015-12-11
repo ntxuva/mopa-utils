@@ -45,6 +45,11 @@ class Uow():
     def commit():
         db.session.commit()
 
+    @staticmethod
+    def rollback():
+        db.session.rollback()
+        db.session.flush()  # for resetting non-commited .add()
+
 
 class BaseModel(db.Model):
     """A base model for other database tables to inherit"""
@@ -248,7 +253,7 @@ GROUP BY a.question, a.neighbourhood, a.point;
 
     @staticmethod
     def get_todays_answers():
-        """"""
+        """Gets todays answers"""
         sql = """
 SELECT a.*
 FROM mopa_survey_answers a JOIN mopa_survey b
@@ -295,7 +300,6 @@ WHERE c.direction='O'
         rows = []
         for row in query_result:
             rows.append(dict(zip(keys, row)))
-
         return rows
 
     @staticmethod
@@ -305,11 +309,11 @@ WHERE c.direction='O'
         """
         sql = """
 SELECT DISTINCT a.sent_to, d.answered_by, a.created_at, d.answer
-FROM mopa_sms a 
+FROM mopa_sms a
   LEFT JOIN (SELECT c.created_at, UPPER(LEFT(b.answer, 1)) as answer, b.answered_by 
-            FROM mopa_survey_answers b 
+            FROM mopa_survey_answers b
               INNER JOIN mopa_survey c ON b.survey_key=c.id
-            WHERE c.survey_type='G') d 
+            WHERE c.survey_type='G') d
     ON CONCAT('258', TRIM(a.sent_to)) = TRIM(d.answered_by) AND dayofyear(a.created_at) = dayofyear(d.created_at) AND year(a.created_at) = year(d.created_at)
 WHERE a.direction='O' AND LEFT(a.`text`, 6) = 'MOPA -'
 ORDER BY a.created_at, a.sent_to

@@ -43,7 +43,7 @@ API_END_POINTS = {
     'locations'	: API_BASE_URL + 'locations'
 }
 
-API_PHONE_KEY = 123456
+API_PHONE_KEY = 666554
 
 # Mail Settings
 GMAIL_SERVER = 'smtp.gmail.com'
@@ -53,4 +53,5 @@ GMAIL_PASSWORD = ""
 
 DAILY_REPORT_TO = ['admin@localhost']
 DAILY_REPORT_CC = ['admin@localhost']
-DAILY_ENQUIRY_REPORT_TO = ['admin@localhost']
+DAILY_ENQUIRY_REPORT_TO = DAILY_REPORT_CC
+WEEKLY_REPORT_TO = DAILY_REPORT_CC

@@ -38,8 +38,8 @@
                 <th>No. de Ocorr&eacute;ncias</th>
                 <th>% do Total de Ocorr&eacute;ncias</th>
                 <th>No. Arquivados sem resolu&ccedil;&atilde;o</th>
-                <th>Tempo M&eacute;dio de Resposta</th>
-                <th>Varia&ccedil;&atilde;o do Tempo M&eacute;dio</th>
+                <th>Tempo M&eacute;dio de Resposta (hrs)</th>
+                <th>Varia&ccedil;&atilde;o do Tempo M&eacute;dio (hrs)</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
                 <td class="center">{{ estado.pct_do_total }}</td>
                 <td class="center">-</td>
                 <td class="center">{{ estado.tempo_medio_resolucao }}</td>
-                <td class="center">{{ estado.variacao }}</td>
+                <td class="center">{{ estado.variacao|default('0', true) }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -65,8 +65,8 @@
                 <th>No. de Ocorr&eacute;ncias</th>
                 <th>% do Total de Ocorr&eacute;ncias</th>
                 <th>No. Arquivados sem resolu&ccedil;&atilde;o</th>
-                <th>Tempo M&eacute;dio de Resposta</th>
-                <th>Varia&ccedil;&atilde;o do Tempo M&eacute;dio</th>
+                <th>Tempo M&eacute;dio de Resposta (hrs)</th>
+                <th>Varia&ccedil;&atilde;o do Tempo M&eacute;dio (hrs)</th>
             </tr>
         </thead>
         <tbody>
@@ -78,7 +78,7 @@
                         <td class="center">{{ row.pct_do_total }}</td>
                         <td class="center">-</td>
                         <td class="center">{{ row.tempo_medio_resolucao }}</td>
-                        <td class="center">{{ row.variacao }}</td>
+                        <td class="center">{{ row.variacao|default('0', true) }}</td>
                     </tr>
                 {% endfor %}
                 <tr>
@@ -87,7 +87,7 @@
                     <td class="center"><strong>{{ sumario.districts[district_name].totals.pct_do_total }}</strong></td>
                     <td class="center">-</td>
                     <td class="center"><strong>{{ sumario.districts[district_name].totals.tempo_medio_resolucao }}</strong></td>
-                    <td class="center"><strong>{{ sumario.districts[district_name].totals.variacao }}</strong></td>
+                    <td class="center"><strong>{{ sumario.districts[district_name].totals.variacao|default('0', true) }}</strong></td>
                 </tr>
             {% endfor %}
         </tbody>

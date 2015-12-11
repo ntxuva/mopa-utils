@@ -1,6 +1,6 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
-from mopa import app, tasks, models, views, common, constants, graphs
+from mopa import app, tasks, models, views, common, constants
 from threading import Thread
 import logging
 import config
@@ -8,6 +8,8 @@ from logging.handlers import RotatingFileHandler, SMTPHandler
 
 if __name__ == "__main__":
 
+    tasks.send_weekly_report()
+    """
     # Setup Logging
     # Rotating log file handling
     handler = RotatingFileHandler("mopa/logs/mopa.log", maxBytes=10000, backupCount=1)
@@ -44,3 +46,4 @@ if __name__ == "__main__":
             host="0.0.0.0",
             port=int(5000),
             threaded=True)
+    """

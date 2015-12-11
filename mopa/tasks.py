@@ -13,6 +13,7 @@ import time
 from datetime import datetime, date, timedelta
 from dateutil.parser import parse
 import requests
+import traceback
 
 from mopa import app
 import mopa.constants as constants
@@ -25,8 +26,6 @@ def send_weekly_report():
     """Task to run weekly for report"""
     app.logger.info("--- Extracting and Sending Weekly Report ---")
     try:
-        url = 'http://mopa.co.mz/georeport/v2/requests.json'
-
         TODAY = date.today()
         start_date = TODAY + timedelta(days=-7)  # -7
         end_date = TODAY
@@ -62,7 +61,12 @@ def send_weekly_report():
             report.status_notes = xstr(request.get('status_notes', ''))
 
             Uow.add(report)
-        Uow.commit()
+            try:
+                Uow.commit()
+            except Exception, ex:
+                Uow.rollback()
+                app.logger.error("Error While Inserting Report in DB\n" +
+                                 traceback.format_exc())
 
         # Report by State
         # ---------------
@@ -236,10 +240,29 @@ def send_weekly_report():
         f_name = 'relatorio-semanal-' + TODAY.strftime('%Y_%m_%d') + '.pdf'
         common.generate_pdf('weekly_report.html', context, f_name)
 
+        # Send mail
+        html = '''\
+            <html>
+                <head></head>
+                <body>
+                <p>Sauda&ccedil;&otilde;es!<br/><br/>
+                    Segue em anexo o relat&oacute;rio MOPA<br/><br/>
+                    Cumprimentos,<br/>
+                    <em>Enviado automaticamente</em>
+                </p>
+                </body>
+            </html>
+                '''
+        common.mail(
+            constants.WEEKLY_REPORT_TO,
+            constants.DAILY_REPORT_CC,
+            'MOPA - Relatorio Semanal - ' + TODAY.strftime('%Y-%m-%d'),
+            html,
+            constants.REPORTS_DIR + '/' + f_name)
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error running Weekly Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno))
+        app.logger.error("--- Error running Weekly Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
         app.logger.info("--- Succesfully run Weekly Report ---")
 
@@ -318,7 +341,7 @@ def send_daily_report():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error running Daily Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno))
+        app.logger.error("--- Error running Daily Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
         app.logger.info("--- Succesfully run Daily Report ---")
 
@@ -377,7 +400,7 @@ def send_daily_survey_replies():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error running Daily Survey Replies Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno))
+        app.logger.error("--- Error running Daily Survey Replies Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
         app.logger.info("--- Succesfully run Daily Survey Replies Report ---")
 
@@ -399,7 +422,7 @@ def send_daily_survey():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error Sending daily G survey ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno))
+        app.logger.error("--- Error Sending daily G survey ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
         app.logger.info("--- Succesfully Sent daily G survey ---")
 
@@ -427,7 +450,7 @@ def check_if_answers_were_received():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error while Checking if monitors answered G survey ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno))
+        app.logger.error("--- Error while Checking if monitors answered G survey ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
         app.logger.info("--- Succesfully Checked if monitors answered G survey ---")
 
@@ -464,7 +487,7 @@ def notify_updates_on_requests():
                     for phone in phones:
                         db_sms = SMS.static_send(
                                     phone,
-                                    'Novo problema reportado no mopa: Numero de Ocurrencia: %s - %s - %s em %s - %s - %s' % \
+                                    'Novo problema reportado no mopa: Numero de Ocorrencia: %s - %s - %s em %s - %s - %s' % \
                                     (request['service_request_id'],
                                      request['service_name'],
                                      request['description'].replace('Criado por USSD. ', ''),
@@ -475,7 +498,7 @@ def notify_updates_on_requests():
                         Uow.add(db_sms)
                     Uow.commit()
                 else:
-                    app.logger.error("New request with no neighbourhood data found. Cannot notify companies")
+                    app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + request['service_request_id'])
 
             elif(
                     (updated_datetime >= HOUR_AGO and updated_datetime <= NOW) and
@@ -498,7 +521,7 @@ def notify_updates_on_requests():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error while Notifying of updates on requests ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno))
+        app.logger.error("--- Error while Notifying of updates on requests ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
         app.logger.info("--- Succesfully Notified of updates on requests ---")
 

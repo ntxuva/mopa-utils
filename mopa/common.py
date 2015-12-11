@@ -198,6 +198,7 @@ class Location(singleton.SingletonMixin):
             return self.ONLINE_LOCATIONS
 
         r = requests.get(constants.API_BASE_URL + "locations.json")
+        print('Get locations status code' + str(r.status_code))
         if r.status_code == 200:
             z_json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
             self.ONLINE_LOCATIONS = json.loads(z_json)
@@ -226,7 +227,7 @@ class Location(singleton.SingletonMixin):
                 if float(latitude) == f_latitude and float(longitude) == f_longitude:
                     _return[u'district']        = location[u'district']
                     _return[u'location_name']   = location[u'location_name']
-                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0]
+                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0] if location.get('neighbourhoods') and type(location.get('neighbourhoods')) == 'list' else u''
 
         return _return
 
@@ -243,10 +244,11 @@ class Location(singleton.SingletonMixin):
 
         if location_id is not None:
             for location in self.ONLINE_LOCATIONS:
+                # pprint(location)
                 if location["location_id"] == location_id:
                     _return[u'district']        = location[u'district']
                     _return[u'location_name']   = location[u'location_name']
-                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0]
+                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0] if location.get('neighbourhoods') and type(location.get('neighbourhoods')) == 'list' else u''
 
         elif latitude and longitude:
             lat_len = len(str(latitude).split('.')[1])
@@ -256,7 +258,7 @@ class Location(singleton.SingletonMixin):
                 if round(float(location["lat"]), lat_len) == latitude and round(float(location["long"]), long_len) == longitude:
                     _return[u'district']        = location[u'district']
                     _return[u'location_name']   = location[u'location_name']
-                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0]
+                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0] if location.get('neighbourhoods') and type(location.get('neighbourhoods')) == 'list' else u''
 
         elif not _return[u'district']:
 
@@ -267,7 +269,7 @@ class Location(singleton.SingletonMixin):
                 if round(float(location["lat"]), 6) == latitude and round(float(location["long"]), 6) == longitude:
                     _return[u'district']        = location[u'district']
                     _return[u'location_name']   = location[u'location_name']
-                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0]
+                    _return[u'neighbourhood']   = location[u'neighbourhoods'][0] if location.get('neighbourhoods') and type(location.get('neighbourhoods')) == 'list' else u''
 
         return _return
 
