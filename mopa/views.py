@@ -78,23 +78,33 @@ class SMSView(FlaskView):
         """Right now incoming SMS are only for surveys so check sms for answer
             of survey"""
         sms_answer_parts = sms["text"].split("|")
-        if len(sms_answer_parts) == 1 and sms_answer_parts[0].lower() in SMS_VALID_ANSWERS:
+        if (len(sms_answer_parts) == 1 and
+                sms_answer_parts[0].lower() in SMS_VALID_ANSWERS):
             # Group survey answer
             today_survey = Survey.todays()
             if today_survey:
-                answer = SurveyAnswer(today_survey.survey_id, sms_answer_parts[0], sms["from"], db_sms.id, survey_key=today_survey.id)
+                answer = SurveyAnswer(today_survey.survey_id,
+                                      sms_answer_parts[0],
+                                      sms["from"],
+                                      db_sms.id,
+                                      survey_key=today_survey.id)
                 Uow.add(answer)
                 Uow.commit()
                 SMS.static_send(sms["from"], SMS_THANK_YOU)
             else:
                 SMS.static_send(sms["from"], SMS_INVALID_FEEDBACK)
-        elif len(sms_answer_parts) == 2 and is_int(sms_answer_parts[0]) and sms_answer_parts[1] in SMS_VALID_ANSWERS:
+        elif (len(sms_answer_parts) == 2 and is_int(sms_answer_parts[0]) and
+                sms_answer_parts[1] in SMS_VALID_ANSWERS):
             # Single survey answer
             survey = Survey.get_by_id(sms_answer_parts[0])
             if not survey:
                 SMS.static_send(sms["from"], SMS_INVALID_FEEDBACK)
             else:
-                answer = SurveyAnswer(survey.survey_id, sms_answer_parts[1], sms["from"], db_sms.id, survey_key=survey.id)
+                answer = SurveyAnswer(survey.survey_id,
+                                      sms_answer_parts[1],
+                                      sms["from"],
+                                      db_sms.id,
+                                      survey_key=survey.id)
                 Uow.add(answer)
                 Uow.commit()
                 SMS.static_send(sms["from"], SMS_THANK_YOU)
@@ -110,14 +120,15 @@ class SMSView(FlaskView):
 
         elif request.method == "POST":
             survey_data = {
-                "district"     : "",
+                "district":      "",
                 "neighbourhood": "",
-                "point"        : "",
-                "question_id"  : "",
-                "question"     : ""
+                "point":         "",
+                "question_id":   "",
+                "question":      ""
             }
             survey_data["district"] = request.form.get("district", "")
-            survey_data["neighbourhood"] = request.form.get("neighbourhood", "")
+            survey_data["neighbourhood"] = \
+                request.form.get("neighbourhood", "")
             survey_data["point"] = request.form.get("point", "")
             survey_data["question"] = escape(request.form.get("question", ""))
 
@@ -141,7 +152,9 @@ class SMSView(FlaskView):
             Uow.add(survey)
             Uow.commit()
 
-            sms = SMS.static_send(to, survey_data["question"] + " responda " + survey.survey_id + "| s ou n")
+            sms = SMS.static_send(to,
+                                  survey_data["question"] + " responda " +
+                                  survey.survey_id + "| s ou n")
             survey.question_sms = sms
 
             Uow.add(sms)

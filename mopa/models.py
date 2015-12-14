@@ -99,7 +99,8 @@ class SMS(BaseModel):
         """
         # probably save before sending
         if self.direction == 'O' and self.sent_to == 'Mopa':
-            raise Exception("Invalid addressee for outgoing message" + str(self))
+            raise Exception("Invalid addressee for outgoing message" +
+                            str(self))
 
         payload = {"from": "mopa", "to": self.sent_to, "text": self.text}
         response = requests.get(SMS_END_POINT, params=payload)
@@ -107,12 +108,16 @@ class SMS(BaseModel):
         if(
             response and
             response.status_code == 200 and
-            response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
+            response.text.strip() == "Message successfully forwarded from MOPA \
+                                      to SMSC"
         ):
-            app.logger.info("SMS " + self.__repr__() + " delivered to Source Code Succesfully")
+            app.logger.info("SMS " +
+                            self.__repr__() +
+                            " delivered to Source Code Succesfully")
         else:
             app.logger.error("Error while delivering SMS " +
-                             self.__repr__() + " to Source Code. Status code: " +
+                             self.__repr__() +
+                             " to Source Code. Status code: " +
                              str(response.status_code) +
                              ", response text: " + response.text)
 
@@ -137,7 +142,8 @@ class Survey(BaseModel):
 
     question = db.Column(db.String(255))
 
-    def __init__(self, survey_type="I", district=None, neighbourhood=None, point=None, question=None):
+    def __init__(self, survey_type="I", district=None, neighbourhood=None,
+                 point=None, question=None):
         """Constructor"""
         self.survey_id = self.get_next_survey_id()
         self.survey_type = survey_type
@@ -172,9 +178,7 @@ class Survey(BaseModel):
         sql = """
 SELECT id
 FROM mopa_survey
-WHERE survey_type='G'
-    AND DAYOFYEAR(created_at) = DAYOFYEAR(NOW())
-    AND YEAR(created_at) = YEAR(NOW())
+WHERE survey_type='G' AND DATE(created_at) = DATE(NOW())
 LIMIT 1;
     """
         results = db.engine.execute(sql)
@@ -191,11 +195,9 @@ LIMIT 1;
         sql = """
 SELECT id
 FROM mopa_survey
-WHERE survey_id = %s
-    AND DAYOFYEAR(created_at)  = DAYOFYEAR(NOW())
-    AND YEAR(created_at) = YEAR(NOW())
+WHERE survey_id = %s AND DATE(created_at)  = DATE(NOW())
 LIMIT 1;
-                """
+              """
         results = db.engine.execute(sql % (id))
         survey_id = None
         for row in results:
@@ -259,8 +261,7 @@ SELECT a.*
 FROM mopa_survey_answers a JOIN mopa_survey b
 WHERE b.survey_type = 'G'
     AND a.survey_key = b.id
-    AND dayofyear(a.answered_at) = dayofyear(now())
-    AND year(a.answered_at) = year(now());
+    AND DATE(a.answered_at) = DATE(NOW());
               """
         keys = ["id", "created_at", "updated_at", "survey_key", "survey_id",
                 "answer", "answered_at", "answered_by", "answer_sms_id",
@@ -286,13 +287,12 @@ FROM mopa_sms c
             INNER JOIN mopa_survey b
                 ON a.survey_key = b.id
                    AND b.survey_type = 'G'
-                   AND dayofyear(a.answered_at) = dayofyear('{0:s}')
-                   AND year(a.answered_at) = year('{0}')
+                   AND DATE(a.answered_at) = DATE('{0:s}')
         ) z
         ON CONCAT('258', TRIM(c.sent_to)) = TRIM(z.answered_by)
 WHERE c.direction='O'
     AND LEFT(c.`text`, 6) = 'MOPA -'
-    AND dayofyear(c.created_at) = dayofyear('{0:s}') AND year(c.created_at) = year('{0}')
+    AND DATE(c.created_at) = DATE('{0:s}')
         """.format(_date)
 
         keys = ["sent_to", "created_at", "answer", "answered_by"]
@@ -310,11 +310,14 @@ WHERE c.direction='O'
         sql = """
 SELECT DISTINCT a.sent_to, d.answered_by, a.created_at, d.answer
 FROM mopa_sms a
-  LEFT JOIN (SELECT c.created_at, UPPER(LEFT(b.answer, 1)) as answer, b.answered_by 
+  LEFT JOIN (SELECT c.created_at,
+                    UPPER(LEFT(b.answer, 1)) as answer,
+                    b.answered_by
             FROM mopa_survey_answers b
               INNER JOIN mopa_survey c ON b.survey_key=c.id
             WHERE c.survey_type='G') d
-    ON CONCAT('258', TRIM(a.sent_to)) = TRIM(d.answered_by) AND dayofyear(a.created_at) = dayofyear(d.created_at) AND year(a.created_at) = year(d.created_at)
+    ON CONCAT('258', TRIM(a.sent_to)) = TRIM(d.answered_by) AND
+       DATE(a.created_at) = DATE(d.created_at)
 WHERE a.direction='O' AND LEFT(a.`text`, 6) = 'MOPA -'
 ORDER BY a.created_at, a.sent_to
         """
@@ -329,7 +332,8 @@ ORDER BY a.created_at, a.sent_to
 
 
 class SurveyAnswer(BaseModel):
-    """Represents a survey which is sent to every monitor in Mopa automatically"""
+    """Represents a survey which is sent to every monitor in Mopa
+    automatically"""
 
     __tablename__ = DB_TABLE_PREFIX + "survey_answers"
 
@@ -357,7 +361,8 @@ class SurveyAnswer(BaseModel):
 
     NEIGHBOURHOODS = []
 
-    def __init__(self, survey_id, answer, answered_by, answer_sms_id=None, survey_key=None):
+    def __init__(self, survey_id, answer, answered_by, answer_sms_id=None,
+                 survey_key=None):
         """Constructor. TO-DO: The logic to know from which neighbourhood
         is the monitor is faulty as sometimes a monitor is responsible for 2
         points. Meaning that the logic here will get the first or last
@@ -376,10 +381,13 @@ class SurveyAnswer(BaseModel):
                 for point in neighbourhood['points']:
                     for monitor_id in point['monitors']:
                         monitor = Location.i().get_monitor(monitor_id)
-                        if monitor['phone'] == answered_by or "258" + monitor['phone'] == answered_by:
+                        if (monitor['phone'] == answered_by or
+                                "258" + monitor['phone'] == answered_by):
                             self.neighbourhood = neighbourhood['name']
                             self.quarter = ""
-                            self.point = point['name'] + " " + point['location']
+                            self.point = (point['name'] +
+                                          " " +
+                                          point['location'])
                             break
 
         if answer_sms_id:
@@ -458,8 +466,10 @@ ON recent.type=old.type
         return rows
 
     @staticmethod
-    def get_summary_by_district_report(start_date, end_date, old_start_date, old_end_date):
-        """Gets the report summary brokendown by district according to the provided mode: Weekly or Monthly
+    def get_summary_by_district_report(start_date, end_date, old_start_date,
+                                       old_end_date):
+        """Gets the report summary broken down by district according to the
+        provided mode: Weekly or Monthly
         Aka Louis' report 2
         """
         sql = """
@@ -506,7 +516,8 @@ ON recent.district=old.district AND recent.neighbourhood=old.neighbourhood
 
     @staticmethod
     def get_by_problem(start_date, end_date):
-        """Gets the report summary brokendown by district according to the provided mode: Weekly or Monthly
+        """Gets the report summary broken down by district according to the
+        provided mode: Weekly or Monthly
         Aka Tiago's report
         """
         sql = """

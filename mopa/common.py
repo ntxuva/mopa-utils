@@ -68,11 +68,14 @@ def get_requests(start_date, end_date, include_phone):
         phone_key = constants.API_PHONE_KEY
 
     payload = {'start_date': start_date,
-               'end_date'  : end_date,
-               'phone_key' : phone_key}
+               'end_date':   end_date,
+               'phone_key':  phone_key}
 
-    r = requests.get(constants.API_END_POINTS['requests'] + '.' + constants.API_RESPONSE_FORMATS['json'],
-                     params=payload, allow_redirects=False)
+    r = requests.get(constants.API_END_POINTS['requests'] +
+                     '.' +
+                     constants.API_RESPONSE_FORMATS['json'],
+                     params=payload,
+                     allow_redirects=False)
     z_json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
     json_requests = json.loads(z_json)
 
@@ -171,7 +174,8 @@ class Location(singleton.SingletonMixin):
             return self.NEIGHBOURHOODS
 
         data = ""
-        with open(name=os.path.join(constants.BASE_DIR, constants.NEIGHBOURHOODS_JSON_PATH),
+        with open(name=os.path.join(constants.BASE_DIR,
+                                    constants.NEIGHBOURHOODS_JSON_PATH),
                   mode="r") as f:
             for line in f.readlines():
                 data = data + line
@@ -185,7 +189,8 @@ class Location(singleton.SingletonMixin):
             return self.LOCATIONS
 
         data = ""
-        with open(name=constants.BASE_DIR + '/static/locations.json', mode='r') as f:
+        with open(name=constants.BASE_DIR + '/static/locations.json',
+                  mode='r') as f:
             for line in f.readlines():
                 data = data + line
         self.LOCATIONS = json.loads(data)
@@ -198,7 +203,6 @@ class Location(singleton.SingletonMixin):
             return self.ONLINE_LOCATIONS
 
         r = requests.get(constants.API_BASE_URL + "locations.json")
-        print('Get locations status code' + str(r.status_code))
         if r.status_code == 200:
             z_json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
             self.ONLINE_LOCATIONS = json.loads(z_json)
@@ -211,9 +215,9 @@ class Location(singleton.SingletonMixin):
         This data comes from the neighbourhoods.json file
         """
         _return = {
-            'district'      : "",
-            'location_name' : "",
-            'neighbourhood' : ""
+            'district':      "",
+            'location_name': "",
+            'neighbourhood': ""
         }
 
         for location in self.get_locations_offline():
@@ -221,8 +225,8 @@ class Location(singleton.SingletonMixin):
                                               u'quarter',
                                               u'critical point']:
 
-                f_latitude  = float(location[u'lat'])
-                f_longitude = float(location[u'long'])
+                f_latitude  = float(location[u'lat'].strip(u'\u200b'))
+                f_longitude = float(location[u'long'].strip(u'\u200b'))
 
                 if float(latitude) == f_latitude and float(longitude) == f_longitude:
                     _return[u'district']        = location[u'district']
@@ -234,9 +238,9 @@ class Location(singleton.SingletonMixin):
     def get_location_online(self, location_id=None, latitude=0, longitude=0):
         """Get the location data based on the online locations.json"""
         _return = {
-            'district'      : "",
-            'location_name' : "",
-            'neighbourhood' : ""
+            'district':      "",
+            'location_name': "",
+            'neighbourhood': ""
         }
 
         if not self.ONLINE_LOCATIONS:
@@ -254,7 +258,11 @@ class Location(singleton.SingletonMixin):
             long_len = len(str(longitude).split('.')[1])
 
             for location in self.ONLINE_LOCATIONS:
-                if round(float(location["lat"]), lat_len) == latitude and round(float(location["long"]), long_len) == longitude:
+                # Sometimes locations come with weird spaces so we remove them
+                f_latitude = location["lat"].strip(u'\u200b')
+                f_longitude = location["long"].strip(u'\u200b')
+
+                if round(float(f_latitude), lat_len) == latitude and round(float(f_longitude), long_len) == longitude:
                     _return[u'district']        = location[u'district']
                     _return[u'location_name']   = location[u'location_name']
                     _return[u'neighbourhood']   = location[u'neighbourhood'][0] if location.get('neighbourhood') and type(location.get('neighbourhood')) is list else u''
@@ -265,7 +273,7 @@ class Location(singleton.SingletonMixin):
             longitude = round(float(longitude), 6)
 
             for location in self.ONLINE_LOCATIONS:
-                if round(float(location["lat"]), 6) == latitude and round(float(location["long"]), 6) == longitude:
+                if round(float(location["lat"].strip()), 6) == latitude and round(float(location["long"].strip()), 6) == longitude:
                     _return[u'district']        = location[u'district']
                     _return[u'location_name']   = location[u'location_name']
                     _return[u'neighbourhood']   = location[u'neighbourhood'][0] if location.get('neighbourhood') and type(location.get('neighbourhood')) is list else u''
@@ -273,13 +281,13 @@ class Location(singleton.SingletonMixin):
         return _return
 
     def guess_location(self, request):
-        """Guesses what is the district, location_name and neighbourhood for a given report
-        and returns them as a tuple"""
+        """Guesses what is the district, location_name and neighbourhood for
+        a given report and returns them as a tuple"""
 
         _return = {
-            'district'      : "",
-            'location_name' : "",
-            'neighbourhood' : ""
+            'district':      "",
+            'location_name': "",
+            'neighbourhood': ""
         }
 
         district      = xstr(request.get('neighbourhood', default))
@@ -351,7 +359,8 @@ class Location(singleton.SingletonMixin):
         """Gets a specific monitors details"""
         neighbourhoods = self.get_locations_tree()
         for monitor in neighbourhoods['monitors']:
-            if str(monitor['id']) == str(_id) or int(monitor['id']) == int(_id):
+            if (str(monitor['id']) == str(_id) or
+                    int(monitor['id']) == int(_id)):
                 return monitor
         return None
 
@@ -387,7 +396,8 @@ class Location(singleton.SingletonMixin):
         for district in neighbourhoods["districts"]:
             for neighbourhood in district["neighbourhoods"]:
                 for point in neighbourhood["points"]:
-                    if monitor_id in point["monitors"] or str(monitor_id) in point["monitors"]:
+                    if (monitor_id in point["monitors"] or
+                            str(monitor_id) in point["monitors"]):
                         point_data["name"] = point["name"]
                         point_data["location"] = point["location"]
                         point_data["geo_location"] = point["geo_location"]

@@ -54,8 +54,14 @@ def send_weekly_report():
             report.neighbourhood = neighbourhood
             report.location_name = location_name
             report.nature = xstr(request['service_name'])
-            report.requested_datetime = xstr(request['requested_datetime'])[0:10] + " " + xstr(request['requested_datetime'])[11:19]
-            report.updated_datetime = xstr(request['updated_datetime'])[0:10] + " " + xstr(request['updated_datetime'])[11:19]
+            report.requested_datetime = (
+                xstr(request['requested_datetime'])[0:10] +
+                " " +
+                xstr(request['requested_datetime'])[11:19])
+            report.updated_datetime = (
+                xstr(request['updated_datetime'])[0:10] +
+                " " +
+                xstr(request['updated_datetime'])[11:19])
             report.type = xstr(request['service_name'])
             report.status = xstr(request['service_notice'])
             report.status_notes = xstr(request.get('status_notes', ''))
@@ -70,7 +76,10 @@ def send_weekly_report():
 
         # Report by State
         # ---------------
-        estados_report_rows = Report.get_summary_report(start_date, end_date, old_start_date, old_end_date)
+        estados_report_rows = Report.get_summary_report(start_date,
+                                                        end_date,
+                                                        old_start_date,
+                                                        old_end_date)
         # calculate totals for states
         total_occurencies = 0
         total_pct = 0
@@ -81,7 +90,8 @@ def send_weekly_report():
             total_occurencies += estado["no_occorencias"]
             total_pct += estado["pct_do_total"]
             total_tempo_medio_resolucao += estado["tempo_medio_resolucao"]
-            total_variacao += estado.get("variacao") if estado.get("variacao") else 0
+            total_variacao += \
+                estado.get("variacao") if estado.get("variacao") else 0
 
         estados_report_rows.append({
             'type': 'TOTAL',
@@ -93,7 +103,10 @@ def send_weekly_report():
 
         # Report by District
         # ------------------
-        district_rows = Report.get_summary_by_district_report(start_date, end_date, old_start_date, old_end_date)
+        district_rows = Report.get_summary_by_district_report(start_date,
+                                                              end_date,
+                                                              old_start_date,
+                                                              old_end_date)
         # Calculate totals per district
         district_totals = {}
         district_names = []
@@ -102,7 +115,7 @@ def send_weekly_report():
         for row in district_rows:
             district_names.append(row["district"])
 
-        district_names = list(set(district_names))  # remove duplicates from list
+        district_names = list(set(district_names))  # remove duplicates
 
         for row in district_rows:
             if not district_totals.get(row["district"]):
@@ -113,10 +126,14 @@ def send_weekly_report():
                     "variacao": 0
                 }
 
-            district_totals[row["district"]]["no_occorencias"] += row["no_occorencias"]
-            district_totals[row["district"]]["pct_do_total"] += row["pct_do_total"]
-            district_totals[row["district"]]["tempo_medio_resolucao"] += row["tempo_medio_resolucao"]
-            district_totals[row["district"]]["variacao"] += row.get("variacao", 0)
+            district_totals[row["district"]]["no_occorencias"] += \
+                row["no_occorencias"]
+            district_totals[row["district"]]["pct_do_total"] += \
+                row["pct_do_total"]
+            district_totals[row["district"]]["tempo_medio_resolucao"] += \
+                row["tempo_medio_resolucao"]
+            district_totals[row["district"]]["variacao"] += \
+                row.get("variacao", 0)
 
         for district in district_names:
             districts[district] = {
@@ -200,7 +217,8 @@ def send_weekly_report():
 
         for neighbourhood in t_neighbourhood_names:
             if t_neighbourhoods[neighbourhood]["rows"][0]["total"] > 0:
-                t_neighbourhoods[neighbourhood]["most_frequent_problem"] = t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
+                t_neighbourhoods[neighbourhood]["most_frequent_problem"] = \
+                    t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
             else:
                 t_neighbourhoods[neighbourhood]["most_frequent_problem"] = None
 
@@ -210,7 +228,8 @@ def send_weekly_report():
             )
 
             if t_neighbourhoods[neighbourhood]["rows"][0]["resolvido"] > 0:
-                t_neighbourhoods[neighbourhood]["most_solved_problem"] = t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
+                t_neighbourhoods[neighbourhood]["most_solved_problem"] = \
+                    t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
             else:
                 t_neighbourhoods[neighbourhood]["most_solved_problem"] = None
 
@@ -220,7 +239,10 @@ def send_weekly_report():
             )
 
         for neighbourhood in t_neighbourhood_names:
-            t_neighbourhoods[neighbourhood]["worst_critical_points"] = Report.get_worst_critical_points(neighbourhood, start_date, end_date)
+            t_neighbourhoods[neighbourhood]["worst_critical_points"] = \
+                Report.get_worst_critical_points(neighbourhood,
+                                                 start_date,
+                                                 end_date)
 
         # Generate PDF
         context = {
@@ -262,7 +284,12 @@ def send_weekly_report():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error running Weekly Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
+        app.logger.error("--- Error running Weekly Report ---" + "\n" +
+                         str(ex) + ' ' +
+                         str(exc_type) + ' ' +
+                         str(fname) + ' ' +
+                         str(exc_tb.tb_lineno) + "\n" +
+                         traceback.format_exc())
     else:
         app.logger.info("--- Succesfully run Weekly Report ---")
 
@@ -283,7 +310,7 @@ def send_daily_report():
         default = ''
         requests_list = []
 
-        start_date = (TODAY + timedelta(days=-2)).strftime('%Y-%m-%d')  # 48 Hours
+        start_date = (TODAY + timedelta(days=-2)).strftime('%Y-%m-%d')
         end_date = TODAY.strftime('%Y-%m-%d')
 
         for request in common.get_requests(start_date, end_date, None):
@@ -300,14 +327,20 @@ def send_daily_report():
                     'neighbourhood': neighbourhood,
                     'location_name': location_name,
                     'nature': xstr(request['service_name']),
-                    'datetime': xstr(request['requested_datetime'])[0:10] + " " + xstr(request['requested_datetime'])[11:19],
+                    'datetime': (xstr(request['requested_datetime'])[0:10] +
+                                 " " +
+                                 xstr(request['requested_datetime'])[11:19]),
                     'type': xstr(request['service_name']),
                     'status': xstr(request['service_notice']),
                     'status_notes': xstr(request.get('status_notes', ''))
                 })
 
         # sorting
-        requests_list = sorted(requests_list, key=lambda i: (i['district'], i['neighbourhood'], i['nature'], i['datetime']))
+        requests_list = sorted(requests_list,
+                               key=lambda i: (i['district'],
+                                              i['neighbourhood'],
+                                              i['nature'],
+                                              i['datetime']))
 
         # Generate PDF
         context = {
@@ -341,17 +374,23 @@ def send_daily_report():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error running Daily Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
+        app.logger.error("--- Error running Daily Report ---" + "\n" +
+                         str(ex) + ' ' +
+                         str(exc_type) + ' ' +
+                         str(fname) + ' ' +
+                         str(exc_tb.tb_lineno) + "\n" +
+                         traceback.format_exc())
     else:
         app.logger.info("--- Succesfully run Daily Report ---")
 
 
 def send_daily_survey_replies():
     """Task to send daily survey answers as PDF"""
-    app.logger.info("--- Extracting and Sending Daily Survey Replies Report ---")
+    app.logger.info("- Extracting and Sending Daily Survey Replies Report -")
     try:
         TODAY = date.today()
-        response = requests.get('http://mopa.co.mz:5000/critical-points/' + TODAY.strftime('%Y-%m-%d'))
+        response = requests.get('http://mopa.co.mz:5000/critical-points/' +
+                                TODAY.strftime('%Y-%m-%d'))
 
         answers = response.json()
 
@@ -375,7 +414,9 @@ def send_daily_survey_replies():
             'static': os.path.join(constants.BASE_DIR, 'templates') + '/'
         }
 
-        f_name = 'respostas-ao-inquerito-diario-' + TODAY.strftime('%Y_%m_%d') + '.pdf'
+        f_name = 'respostas-ao-inquerito-diario-' + \
+                 TODAY.strftime('%Y_%m_%d') + \
+                 '.pdf'
         common.generate_pdf('daily_survey_answers.html', context, f_name)
 
         # Send mail
@@ -384,7 +425,8 @@ def send_daily_survey_replies():
                 <head></head>
                 <body>
                 <p>Sauda&ccedil;&otilde;es!<br/><br/>
-                    Seguem em anexo as respostas aos inqu&eacute;ritos di&aacute;rios<br/><br/>
+                    Seguem em anexo as respostas aos inqu&eacute;ritos \
+                    di&aacute;rios<br/><br/>
                     Cumprimentos,<br/>
                     <em>Enviado automaticamente</em>
                 </p>
@@ -394,15 +436,21 @@ def send_daily_survey_replies():
         common.mail(
             constants.DAILY_ENQUIRY_REPORT_TO,
             constants.DAILY_REPORT_CC,
-            'MOPA - Respostas aos Inqueritos Diarios - ' + TODAY.strftime('%Y-%m-%d'),
+            'MOPA - Respostas aos Inqueritos Diarios - ' +
+            TODAY.strftime('%Y-%m-%d'),
             html,
             constants.REPORTS_DIR + '/' + f_name)
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error running Daily Survey Replies Report ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
+        app.logger.error("-- Error running Daily Survey Replies Report --\n" +
+                         str(ex) + ' ' +
+                         str(exc_type) + ' ' +
+                         str(fname) + ' ' +
+                         str(exc_tb.tb_lineno) + "\n" +
+                         traceback.format_exc())
     else:
-        app.logger.info("--- Succesfully run Daily Survey Replies Report ---")
+        app.logger.info("-- Succesfully run Daily Survey Replies Report --")
 
 
 def send_daily_survey():
@@ -422,7 +470,12 @@ def send_daily_survey():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error Sending daily G survey ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
+        app.logger.error("--- Error Sending daily G survey ---" + "\n" +
+                         str(ex) + ' ' +
+                         str(exc_type) + ' ' +
+                         str(fname) + ' ' +
+                         str(exc_tb.tb_lineno) + "\n" +
+                         traceback.format_exc())
     else:
         app.logger.info("--- Succesfully Sent daily G survey ---")
 
@@ -443,16 +496,22 @@ def check_if_answers_were_received():
 
             for phone in monitor_phones:
                 if ("258" + phone) not in monitors_who_answered:
-                    db_sms = SMS.static_send(phone,
-                                             constants.SMS_NO_FEEDBACK_RECEIVED)
+                    db_sms = SMS.static_send(
+                                phone,
+                                constants.SMS_NO_FEEDBACK_RECEIVED)
                     Uow.add(db_sms)
                     Uow.commit()
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error while Checking if monitors answered G survey ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
+        app.logger.error("Error while Checking if monitors answered G survey" +
+                         "\n" +
+                         str(ex) + ' ' +
+                         str(exc_type) + ' ' +
+                         str(fname) + ' ' +
+                         str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
     else:
-        app.logger.info("--- Succesfully Checked if monitors answered G survey ---")
+        app.logger.info("Succesfully Checked if monitors answered G survey")
 
 
 def notify_updates_on_requests():
@@ -474,23 +533,27 @@ def notify_updates_on_requests():
             updated_datetime = parse(request['updated_datetime'])
             status = request['status']
 
-            if (
-                    (requested_datetime >= HOUR_AGO and requested_datetime <= NOW) and
-                    status == 'open'
-               ):  # New request -> notify responsible company/people of interest
+            if (requested_datetime >= HOUR_AGO and
+                    requested_datetime <= NOW and
+                    status == 'open'):
+                # New request -> notify responsible company/people
                 location = Location.i().guess_location(request)
                 district = location['district']
                 location_name = location['location_name']
                 neighbourhood = location['neighbourhood']
                 if neighbourhood:
-                    phones = Location.i().get_notified_companies_phones(neighbourhood, request['service_code'])
+                    phones = Location.i().get_notified_companies_phones(
+                            neighbourhood, request['service_code'])
                     for phone in phones:
                         db_sms = SMS.static_send(
                                     phone,
-                                    'Novo problema reportado no mopa: Numero de Ocorrencia: %s - %s - %s em %s - %s - %s' % \
+                                    'Novo problema reportado no mopa: \
+                                     Numero de Ocorrencia: %s - %s - %s \
+                                     em %s - %s - %s' %
                                     (request['service_request_id'],
                                      request['service_name'],
-                                     request['description'].replace('Criado por USSD. ', ''),
+                                     request['description'].
+                                        replace('Criado porUSSD. ', ''),
                                      district,
                                      neighbourhood,
                                      location_name)
@@ -498,12 +561,15 @@ def notify_updates_on_requests():
                         Uow.add(db_sms)
                     Uow.commit()
                 else:
-                    app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + request['service_request_id'])
+                    app.logger.error("New request with no neighbourhood data \
+                                     found. Cannot notify companies. \
+                                     Request ID: " +
+                                     request['service_request_id'])
 
-            elif(
-                    (updated_datetime >= HOUR_AGO and updated_datetime <= NOW) and
-                    status != 'open'
-                 ):  # Update on request -> notify the person who reported
+            elif(updated_datetime >= HOUR_AGO and
+                 updated_datetime <= NOW and
+                 status != 'open'):
+                # Update on request -> notify the person who reported
                 phone = request.get('phone', '')
                 if phone:
                     db_sms = SMS.static_send(
@@ -521,7 +587,12 @@ def notify_updates_on_requests():
     except Exception, ex:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("--- Error while Notifying of updates on requests ---" + "\n" + str(ex) + ' ' + str(exc_type) + ' ' + str(fname) + ' ' + str(exc_tb.tb_lineno) + "\n" + traceback.format_exc())
+        app.logger.error("Error while Notifying of updates on requests \n " +
+                         str(ex) + ' ' +
+                         str(exc_type) + ' ' +
+                         str(fname) + ' ' +
+                         str(exc_tb.tb_lineno) + "\n" +
+                         traceback.format_exc())
     else:
         app.logger.info("--- Succesfully Notified of updates on requests ---")
 
