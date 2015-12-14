@@ -7,6 +7,7 @@ To support the project the following external libs have been used
 - [Schedule](https://github.com/mrhwick/schedule) - for scheduled tasks
 - [Jinja2](http://jinja.pocoo.org/) - For the report templating
 - [xhtml2pdf](http://www.xhtml2pdf.com/) - For convertion of html template to html5
+- [pudb](https://pypi.python.org/pypi/pudb/) - For debugging
 
 ## Installing and Running:
 1. For debian/linux deployment install python dev and setup tools - `apt-get install python-dev python-setuptools`
@@ -28,3 +29,6 @@ Yes, there are other alternatives so on, but this is the solution that worked fo
 The app uses gmail in order to send emails. Gmail by default disables sending email from scripts or programs in order to fix that you need to enable that feature.
 
 The following link shows how: [Allowing less secure apps to access your account](https://support.google.com/accounts/answer/6010255?hl=en)
+
+## Debugging and Testing
+python -m pudb.run test-run.py

@@ -9,3 +9,4 @@ nohup.out
 *.pdf
 *.log
 mopa/logs/mopa.log.1
+test-run.py
