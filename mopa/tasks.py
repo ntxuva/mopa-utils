@@ -404,7 +404,9 @@ def send_daily_survey_replies():
                     answer["geo_location"] = point.get('geo_location', "")
                     answer["neighbourhood"] = point.get('neighbourhood', "")
                     answer["district"] = point.get('district', "")
-                    answer["answer"] = point.get('answer', "")
+                    if answer.get('answer'):
+                        answer["answer"] = 'Nao' if \
+                            answer.get('answer') == 'N' else 'Sim'
 
         # Generate PDF
         del answers[0]
