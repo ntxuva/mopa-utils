@@ -108,8 +108,8 @@ class SMS(BaseModel):
         if(
             response and
             response.status_code == 200 and
-            response.text.strip() == "Message successfully forwarded from MOPA \
-                                      to SMSC"
+            response.text.strip() == "Message successfully forwarded from " +
+                                     "MOPA to SMSC"
         ):
             app.logger.info("SMS " +
                             self.__repr__() +
