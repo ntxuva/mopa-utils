@@ -157,7 +157,8 @@ def send_weekly_report():
             u"Lixeira informal",
             u"Lixo fora do contentor",
             u"Lixo na vala de drenagem",
-            u"Camião não passou"
+            u"Camião não passou",
+            u"Contentor a Arder" 
         ]
 
         problem_images = [
@@ -166,7 +167,8 @@ def send_weekly_report():
             "lixeira_informal",
             "lixo_fora_do_contentor",
             "lixo_na_vala_de_drenagem",
-            "camiao_nao_passou"
+            "camiao_nao_passou",
+            "contentor_a_arder"
         ]
 
         for row in t_report_rows:

@@ -31,7 +31,7 @@ NEIGHBOURHOODS_JSON_PATH = "static/neighbourhoods-live.json"
 API_BASE_URL = 'http://mopa.co.mz/georeport/v2/'
 
 API_RESPONSE_FORMATS = {
-    'xml' : 'xml',
+    'xml':  'xml',
     'json': 'json'
 }
 
