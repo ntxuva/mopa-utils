@@ -65,7 +65,7 @@ class SMSView(FlaskView):
             sms["text"] = request.form.get("text", "").encode('ascii', errors='backslashreplace')
 
         if not sms["from"] or not sms["to"] or not sms["text"]:
-            app.logger.error('Received sms in wrong format')
+            app.logger.error('Received sms in wrong format: ' + (sms["text"] if sms["text"] else " No text in message"))
             abort(400)  # bad request
 
         db_sms = SMS(direction="I",
