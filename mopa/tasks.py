@@ -35,7 +35,7 @@ def job(job_name):
                 ex_type, ex_obj, ex_tb = sys.exc_info()
                 fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
                 app.logger.error(
-                    "---\nError running job: {job_name}.\nError message:{ex_msg}.\nException Type: {ex_type}.\File name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(
+                    "---\nError running job: {job_name}.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(
                         job_name=job_name, ex_msg=str(ex), ex_type=str(ex_type),
                         file_name=str(fname), line_no=str(ex_tb.tb_lineno),
                         traceback=traceback.format_exc()
