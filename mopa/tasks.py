@@ -517,8 +517,7 @@ def notify_updates_on_requests():
                                  em %s - %s - %s' %
                                 (request['service_request_id'],
                                  request['service_name'],
-                                 request['description'].
-                                    replace('Criado porUSSD. ', ''),
+                                 request.get('description', '').replace('Criado por USSD.', ''),
                                  district,
                                  neighbourhood,
                                  location_name)
