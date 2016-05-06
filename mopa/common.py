@@ -76,8 +76,12 @@ def get_requests(start_date, end_date, include_phone):
                      constants.API_RESPONSE_FORMATS['json'],
                      params=payload,
                      allow_redirects=False)
-    z_json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
-    json_requests = json.loads(z_json)
+    _json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
+    json_requests = []
+    try:
+        json_requests = json.loads(_json)
+    except:
+        pass
 
     requests_list = []
     for request in json_requests:
