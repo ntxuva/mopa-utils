@@ -410,7 +410,8 @@ def send_daily_survey_replies():
                         answer.get('answer') == 'N' else 'Sim'
 
     # Generate PDF
-    del answers[0]
+    if answers:
+        del answers[0]  # remove table column labels
     context = {
         'today': TODAY.strftime('%d-%m-%Y'),
         'answers': answers,
