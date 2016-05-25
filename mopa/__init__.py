@@ -11,8 +11,6 @@ import sys
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 
-# from mopa.views import mod as surveysModule
-
 __version__ = '0.1'
 
 
@@ -54,6 +52,3 @@ if not app.config['DEBUG']:
 def not_found(error):
     # Setup HTTP error handling
     return render_template('404.html'), 404
-
-# Setup blueprint(s)
-# app.register_blueprint(surveysModule)

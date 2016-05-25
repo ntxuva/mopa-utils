@@ -7,13 +7,11 @@
 """
 from flask import Flask, Markup, abort, escape, request, render_template, \
                     jsonify, redirect, Response, make_response, current_app, \
-                    Blueprint, flash, g, session
-from flask.views import View
-
+                    Blueprint, flash, g, session, send_from_directory
 from flask.ext.classy import FlaskView, route
+from flask.ext.cors import CORS
 
 import datetime
-
 from time import strptime, strftime
 from urllib import quote_plus as urlquote
 import requests
@@ -21,16 +19,14 @@ import logging
 from logging.handlers import RotatingFileHandler
 import json
 from functools import update_wrapper
-from flask.ext.cors import CORS
-
+from os import listdir
+from os.path import isfile
 
 # Import module models
 from mopa.common import *
 from mopa.models import *
 from mopa.constants import *
 from mopa.common import MyJSONEncoder
-# Define the blueprint: 'survey', set its url prefix: app.url/
-mod = Blueprint('survey', __name__, url_prefix='/')
 
 
 class SMSView(FlaskView):
@@ -200,6 +196,14 @@ class SMSView(FlaskView):
 
         return Response(json.dumps(answers, cls=MyJSONEncoder))
 
+    @route("/reports/", methods=["GET"])
+    @route("/reports/<file_name>", methods=["GET"])
+    def get_reports(self, file_name=None):
+        if file_name:
+            return send_from_directory(constants.REPORTS_DIR, file_name, as_attachment=True)
+
+        files = [f for f in listdir(constants.REPORTS_DIR) if isfile(os.path.join(constants.REPORTS_DIR, f))]
+        return Response(json.dumps(files, cls=MyJSONEncoder))
 
 def setup_api():
     cors = CORS(app, resources={r"*": {"origins": "*"}}, allow_headers='*')

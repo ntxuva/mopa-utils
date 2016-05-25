@@ -96,9 +96,9 @@ def get_requests(start_date, end_date, include_phone):
 def generate_pdf(template, context, name):
     """Generates PDF files based on given input
 
-    template -- the template filename including the extension
-    context -- the context object to be used while rendering the template
-    name -- the name to be given to PDF file in disk including the extension
+    :param template: the template filename including the extension
+    :param context: the context object to be used while rendering the template
+    :param name: the name to be given to PDF file in disk including the extension
     """
 
     # Get jinja2 template
@@ -146,6 +146,13 @@ def mail(to, cc, subject, text, attach):
         # Should be mailServer.quit(), but that crashes...
         mailServer.close()
 
+def get_report_file_params(filename):
+    filepath = constants.REPORTS_DIR + "/" + filename
+    print filepath
+    if os.path.isfile(filepath):
+        return filename, "/reports/" + filename, os.path.getsize(filepath)
+
+    return None
 
 class MyJSONEncoder(json.JSONEncoder):
     """JSON Encoder Extensions"""
