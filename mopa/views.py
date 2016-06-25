@@ -8,8 +8,8 @@
 from flask import Flask, Markup, abort, escape, request, render_template, \
                     jsonify, redirect, Response, make_response, current_app, \
                     Blueprint, flash, g, session, send_from_directory
-from flask.ext.classy import FlaskView, route
-from flask.ext.cors import CORS
+from flask_classy import FlaskView, route
+from flask_cors import CORS
 
 import datetime
 from time import strptime, strftime
@@ -196,9 +196,10 @@ class SMSView(FlaskView):
 
         return Response(json.dumps(answers, cls=MyJSONEncoder))
 
-    @route("/reports/", methods=["GET"])
-    @route("/reports/<file_name>", methods=["GET"])
-    def get_reports(self, file_name=None):
+    @route("/reports/", methods=["GET"], defaults={'year': date.today().year, 'month': date.today().month, 'day': date.today().day})
+    @route("/reports/<year>/<month>/<day>", methods=["GET"])
+    def get_reports(self, year, month, day):
+        file_name = "relatorio-diario-{0}_{1:02d}_{2:02d}.pdf".format(year, month, day)
         if file_name:
             return send_from_directory(constants.REPORTS_DIR, file_name, as_attachment=True)
 

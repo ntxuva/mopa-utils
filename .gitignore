@@ -1,4 +1,5 @@
 env/
+venv/
 mopa/client/deps/
 mopa/client/backup/
 mopa/logs/

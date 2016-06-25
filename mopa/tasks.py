@@ -13,8 +13,10 @@ import time
 from datetime import datetime, date, timedelta
 from dateutil.parser import parse
 import requests
+from requests.exceptions import ConnectTimeout
 import traceback
 from functools import wraps
+from retry.api import retry_call
 
 from mopa import app
 import mopa.constants as constants
@@ -178,7 +180,7 @@ def send_weekly_report():
         u"Lixo fora do contentor",
         u"Lixo na vala de drenagem",
         u"Camião não passou",
-        u"Contentor a Arder" 
+        u"Contentor a Arder"
     ]
 
     problem_images = [
@@ -390,8 +392,18 @@ def send_daily_survey_replies():
     """Task to send daily survey answers as PDF"""
 
     TODAY = date.today()
-    response = requests.get('http://mopa.co.mz:5000/critical-points/' +
-                            TODAY.strftime('%Y-%m-%d'))
+
+    response = None
+
+    try:
+        response = retry_call(requests.get, fargs=['http://mopa.co.mz:5000/critical-points/' + TODAY.strftime('%Y-%m-%d')], exceptions=ConnectTimeout, tries=3)
+    except Exception, ex:
+        ex_type, ex_obj, ex_tb = sys.exc_info()
+        fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
+        app.logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}").format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc())
+
+    if not response:
+        return
 
     answers = response.json()
 

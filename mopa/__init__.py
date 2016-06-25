@@ -9,9 +9,9 @@ import os
 import sys
 
 from flask import Flask, render_template
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 
 # Define the WSGI application object and configure

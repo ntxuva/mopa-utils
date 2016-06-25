@@ -7,10 +7,14 @@
 """
 from datetime import *
 import os
+import sys
+import traceback
 import requests
+from requests.exceptions import ConnectTimeout
 import json
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import DeclarativeMeta
+from retry.api import retry_call
 
 # Import the database object (db) from the main application module
 # this is defined inside __init__.py
@@ -103,23 +107,25 @@ class SMS(BaseModel):
                             str(self))
 
         payload = {"from": "mopa", "to": self.sent_to, "text": self.text}
-        response = requests.get(SMS_END_POINT, params=payload)
+        response = None
+
+        # Retry sending request 3 times if safe-retry ConnectTimeout exception is thrown and trap & report other errors
+        try:
+            response = retry_call(requests.get, fargs=[SMS_END_POINT], fkwargs={"params": payload}, exceptions=ConnectTimeout, tries=3)
+        except Exception, ex:
+            ex_type, ex_obj, ex_tb = sys.exc_info()
+            fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
+            app.logger.error("Error delivering SMS to SMSC.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
+            return
 
         if(
             response and
             response.status_code == 200 and
-            response.text.strip() == "Message successfully forwarded from " +
-                                     "MOPA to SMSC"
+            response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
         ):
-            app.logger.info("SMS " +
-                            self.__repr__() +
-                            " delivered to Source Code Succesfully")
+            app.logger.info("SMS {0} delivered to Source Code Succesfully".format(self.__repr__()))
         else:
-            app.logger.error("Error while delivering SMS " +
-                             self.__repr__() +
-                             " to Source Code. Status code: " +
-                             str(response.status_code) +
-                             ", response text: " + response.text)
+            app.logger.error("Error while delivering SMS {0} to Source Code. Status code: {1}, response text: {2}".format(self.__repr__(), str(response.status_code), response.text))
 
     @staticmethod
     def static_send(to, text):

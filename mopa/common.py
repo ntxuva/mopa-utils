@@ -11,6 +11,9 @@ import os
 from decimal import Decimal
 from datetime import *
 import requests
+from requests.exceptions import ConnectTimeout
+from retry import retry
+from retry.api import retry_call
 import constants
 import pprint as _pprint
 import singleton
@@ -67,15 +70,17 @@ def get_requests(start_date, end_date, include_phone):
     if include_phone:
         phone_key = constants.API_PHONE_KEY
 
-    payload = {'start_date': start_date,
-               'end_date':   end_date,
-               'phone_key':  phone_key}
+    payload = {'start_date': start_date, 'end_date': end_date, 'phone_key': phone_key}
 
-    r = requests.get(constants.API_END_POINTS['requests'] +
-                     '.' +
-                     constants.API_RESPONSE_FORMATS['json'],
-                     params=payload,
-                     allow_redirects=False)
+    r = None
+    try:
+        r = retry_call(requests.get, fargs=[constants.API_END_POINTS['requests'] + '.' + constants.API_RESPONSE_FORMATS['json']], fkwargs={'params': payload, 'allow_redirects': False})
+    except:
+        pass
+
+    if not r:
+        return []
+
     _json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
     json_requests = []
     try:
@@ -117,7 +122,7 @@ def generate_pdf(template, context, name):
         pdf = f.read()
         return pdf
 
-
+@retry(delay=1, backoff=2, max_delay=10)
 def mail(to, cc, subject, text, attach):
         """Sends email to recepients using credentials provided in
            constants module
@@ -212,9 +217,13 @@ class Location(singleton.SingletonMixin):
         """loads the locations from the API and converts into a python list"""
         if self.ONLINE_LOCATIONS:
             return self.ONLINE_LOCATIONS
+        r = None
+        try:
+            r = retry_call(requests.get, fargs=[constants.API_BASE_URL + "locations.json"], exceptions=ConnectTimeout, tries=3)
+        except:
+            pass
 
-        r = requests.get(constants.API_BASE_URL + "locations.json")
-        if r.status_code == 200:
+        if r and r.status_code == 200:
             z_json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
             self.ONLINE_LOCATIONS = json.loads(z_json)
             return self.ONLINE_LOCATIONS
