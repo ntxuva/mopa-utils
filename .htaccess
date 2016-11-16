@@ -1,0 +1,13 @@
+AddHandler wsgi-script .wsgi .py
+AddHandler cgi-script .cgi
+
+DirectoryIndex index.wsgi index.cgi wsgi.py
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^wsgi\.py$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ wsgi.py/$1 [QSA,L]
+</IfModule>

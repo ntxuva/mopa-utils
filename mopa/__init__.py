@@ -1,54 +1,58 @@
 # -*- coding: utf-8 -*-
-"""
-    mopa
-    ----
 
-    Mopa external utitities
-"""
 import os
 import sys
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_reggie import Reggie
+from flask_cors import CORS
 
-__version__ = '0.1.1'
+from werkzeug.debug import DebuggedApplication
+from werkzeug.contrib.cache import SimpleCache
 
+import yaml
+import logging
+from logging.config import dictConfig
 
-# Define the WSGI application object and configure
-app = Flask(__name__)
-app.config.from_object('config')
+# dependencies / extensions
+db = SQLAlchemy()
+reggie = Reggie()
+cors = CORS()
+cache = SimpleCache()
 
-# Define the database object which are imported
-# by modules and controllers
-db = SQLAlchemy(app)
+from .infrastructure import (CustomJSONEncoder)
 
+def create_app(config_name=None, main=True):
+    """Create an application instance."""
+    cfg = os.path.join(os.getcwd(), 'config.py') if os.path.exists('config.py') else os.path.join(os.getcwd(), 'mopa/config.py')
 
-def install_secret_key(app, filename='secret_key'):
-    """Configure the SECRET_KEY from a file
-    in the instance directory.
-
-    If the file does not exist, print instructions
-    to create it from a shell with a random key,
-    then exit.
-    """
-    filename = os.path.join(app.instance_path, filename)
+    app = Flask(__name__)
+    app.json_encoder = CustomJSONEncoder
+    app.config['JSON_PRETTYPRINT_REGULAR'] = False
+    app.config.from_pyfile(cfg)
 
     try:
-        app.config['SECRET_KEY'] = open(filename, 'rb').read()
-    except IOError:
-        print('Error: No secret key. Create it with:')
-        full_path = os.path.dirname(filename)
-        if not os.path.isdir(full_path):
-            print('mkdir -p {filename}'.format(filename=full_path))
-        print('head -c 24 /dev/urandom > {filename}'.format(filename=filename))
-        sys.exit(1)
+        logging.config.dictConfig(yaml.load(file(os.path.join(app.config['BASE_DIR'], '../logging.yaml'),'r')))
+    except Exception, e:
+        pass
+        # print "Error configurating logger ", str(e)
 
-if not app.config['DEBUG']:
-    # install_secret_key(app)
-    pass
+    # initialize extensions
+    db.init_app(app)
+    reggie.init_app(app)
+    # logging.getLogger('flask_cors').level = logging.CRITICAL
+    # cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
+    # One line of code cut our Flask page load times by 60%
+    # https://blog.socratic.org/the-one-weird-trick-that-cut-our-flask-page-load-time-by-70-87145335f679#.8r14wvy5w
+    app.jinja_env.cache = {}
 
-@app.errorhandler(404)
-def not_found(error):
-    # Setup HTTP error handling
-    return render_template('404.html'), 404
+    # register blueprints
+    from .views import bp as api_blueprint
+    app.register_blueprint(api_blueprint)
+
+    from .tasks import bp as tasks_blueprint
+    app.register_blueprint(tasks_blueprint, url_prefix='/tasks')
+
+    return app

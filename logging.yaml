@@ -1,0 +1,47 @@
+version: 1
+disable_existing_loggers: true
+
+formatters:
+    simple:
+        format: '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+    full:
+        format: '
+            Message type:       %(levelname)s
+            Location:           %(pathname)s:%(lineno)d
+            Module:             %(module)s
+            Function:           %(funcName)s
+            Time:               %(asctime)s
+
+            Message:
+
+            %(message)s
+        '
+        datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        formatter: simple
+        level: DEBUG
+        stream: ext://sys.stdout
+    file:
+        class : logging.handlers.RotatingFileHandler
+        formatter: simple
+        level: WARNING
+        filename: mopa/data/logs/info.log
+        maxBytes: 10485760 # 10 MB
+        backupCount: 10
+        encoding: utf8
+
+loggers:
+    clogger:
+        level: DEBUG
+        handlers: [console]
+    flogger:
+        level: WARNING
+        handlers: [file]
+
+root:
+    level: INFO
+    handlers: [console, file]

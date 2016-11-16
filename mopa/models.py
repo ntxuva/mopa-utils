@@ -15,18 +15,19 @@ import json
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from retry.api import retry_call
-
+from logging import getLogger
+import re
 # Import the database object (db) from the main application module
 # this is defined inside __init__.py
 # For datetime comparisons w/ SQLAlchemy check
 # https://gist.github.com/Tukki/3953990
-from mopa import db, app
-from mopa.constants import *
-from mopa import common
-from mopa.common import Location
+from mopa import db
+from mopa.infrastructure import Location
 
-DB_TABLE_PREFIX = "mopa_"
-
+DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
+SMS_END_POINT = os.getenv('SMS_END_POINT')
+SMS_END_POINT = os.getenv('API_KEY')
+logger = getLogger(__name__)
 
 def setup_models():
     """Sets up our DB Models by Droping and creating the tables again.
@@ -67,7 +68,7 @@ class BaseModel(db.Model):
 
 
 class SMS(BaseModel):
-    __tablename__ = DB_TABLE_PREFIX + "sms"
+    __tablename__ = DB_PREFIX + "sms"
 
     direction = db.Column(db.String(1))  # I/O
     sent_by = db.Column(db.String(255))
@@ -106,26 +107,37 @@ class SMS(BaseModel):
             raise Exception("Invalid addressee for outgoing message" +
                             str(self))
 
-        payload = {"from": "mopa", "to": self.sent_to, "text": self.text}
+        to_ux_re = re.compile('^(\+258)8[6|7|4]\d{7}$', re.IGNORECASE)
+        is_to_ux = to_ux_re.match(self.sent_to)
+
+        payload = {}
+        if is_to_ux:
+            payload = {"to[]": self.sent_to, "message": self.text, "API_KEY": API_KEY}
+        else:
+            payload = {"from": "mopa", "to": self.sent_to, "text": self.text}
+
         response = None
 
         # Retry sending request 3 times if safe-retry ConnectTimeout exception is thrown and trap & report other errors
         try:
-            response = retry_call(requests.get, fargs=[SMS_END_POINT], fkwargs={"params": payload}, exceptions=ConnectTimeout, tries=3)
+            if is_to_ux:
+                response = retry.call(requests.post, fargs=[UX_SMS_END_POINT], fkwargs={"data": payload}, exceptions=ConnectTimeout, tries=3)
+            else:
+                response = retry_call(requests.get, fargs=[SC_SMS_END_POINT], fkwargs={"params": payload}, exceptions=ConnectTimeout, tries=3)
+            print response
         except Exception, ex:
             ex_type, ex_obj, ex_tb = sys.exc_info()
             fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
-            app.logger.error("Error delivering SMS to SMSC.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
+            logger.error("Error delivering SMS to SMSC.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
             return
 
         if(
             response and
-            response.status_code == 200 and
-            response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
+            response.status_code == 200 # and response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
         ):
-            app.logger.info("SMS {0} delivered to Source Code Succesfully".format(self.__repr__()))
+            logger.info("SMS {0} delivered Succesfully".format(self.__repr__()))
         else:
-            app.logger.error("Error while delivering SMS {0} to Source Code. Status code: {1}, response text: {2}".format(self.__repr__(), str(response.status_code), response.text))
+            logger.error("Error while delivering SMS {0}. Status code: {1}, response text: {2}".format(self.__repr__(), str(response.status_code), response.text))
 
     @staticmethod
     def static_send(to, text):
@@ -137,7 +149,7 @@ class SMS(BaseModel):
 
 class Survey(BaseModel):
     """Represents a survey in the Mopa ecosystem."""
-    __tablename__ = DB_TABLE_PREFIX + "survey"
+    __tablename__ = DB_PREFIX + "survey"
 
     survey_id = db.Column(db.String(255))
     survey_type = db.Column(db.String(1))  # S(ingle)/G(roup)
@@ -341,7 +353,7 @@ class SurveyAnswer(BaseModel):
     """Represents a survey which is sent to every monitor in Mopa
     automatically"""
 
-    __tablename__ = DB_TABLE_PREFIX + "survey_answers"
+    __tablename__ = DB_PREFIX + "survey_answers"
 
     # actual unique identifier for the survey
     survey_key = db.Column(db.Integer, ForeignKey(Survey.id))
@@ -412,7 +424,7 @@ class Report(db.Model):
 
         Used for reporting purposes only, not operation.
     """
-    __tablename__ = DB_TABLE_PREFIX + "reports"
+    __tablename__ = DB_PREFIX + "reports"
 
     # _id = db.Column(db.Integer, primary_key=True)
     id = db.Column(db.String(255), unique=True, primary_key=True)

@@ -7,49 +7,39 @@
 """
 import os
 import sys
-import schedule
+
 import json
-import time
 from datetime import datetime, date, timedelta
 from dateutil.parser import parse
 import requests
 from requests.exceptions import ConnectTimeout
-import traceback
+
 from functools import wraps
 from retry.api import retry_call
+from logging import getLogger
+import traceback
+from flask import Blueprint, current_app, request, abort
 
-from mopa import app
-import mopa.constants as constants
-import mopa.common as common
-from mopa.common import Location, MyJSONEncoder, xstr, ustr
+import mopa.config as config
+from mopa.infrastructure import Location, CustomJSONEncoder, xstr, ustr, get_requests, generate_pdf, send_mail, trap_errors, truncate
 from mopa.models import Uow, SMS, Survey, SurveyAnswer, Report
 
+logger = getLogger(__name__)
 
-def job(job_name):
-    """Wrapper for job functions that traps and logs errors"""
-    def job_decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            app.logger.info("--- Running job: {0} ---".format(job_name))
-            try:
-                return func(*args, **kwargs)
-            except Exception, ex:
-                ex_type, ex_obj, ex_tb = sys.exc_info()
-                fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
-                app.logger.error(
-                    "---\nError running job: {job_name}.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(
-                        job_name=job_name, ex_msg=str(ex), ex_type=str(ex_type),
-                        file_name=str(fname), line_no=str(ex_tb.tb_lineno),
-                        traceback=traceback.format_exc()
-                    )
-                )
-            else:
-                app.logger.info("--- Successfully run job: {0} ---".format(job_name))
-        return wrapper
-    return job_decorator
+bp = tasks = Blueprint('tasks', __name__)
 
 
-@job("Send weekly report")
+
+@tasks.before_request
+def before_request():
+    '''Checks if API_KEY is valid'''
+    API_KEY = request.headers.get('API_KEY', None)
+    if not API_KEY or API_KEY != current_app.config['API_KEY']:
+        abort(403) # Forbidden / Not Authorized
+
+
+
+@tasks.route('/send-weekly-report')
 def send_weekly_report():
     """Task to run weekly for report"""
 
@@ -64,41 +54,41 @@ def send_weekly_report():
     default = ''
     requests_list = []
 
-    for request in common.get_requests(start_date, end_date, True):
+    for _request in get_requests(start_date, end_date, True):
         location = Location.i().guess_location(request)
 
-        del request['zipcode']
-        del request['lat']
-        del request['long']
+        del _request['zipcode']
+        del _request['lat']
+        del _request['long']
 
         district = location['district']
         neighbourhood = location['neighbourhood']
         location_name = location['location_name']
 
         report = Report()
-        report.id = xstr(request['service_request_id'])
+        report.id = xstr(_request['service_request_id'])
         report.district = district
         report.neighbourhood = neighbourhood
         report.location_name = location_name
-        report.nature = xstr(request['service_name'])
+        report.nature = xstr(_request['service_name'])
         report.requested_datetime = (
-            xstr(request['requested_datetime'])[0:10] +
+            xstr(_request['requested_datetime'])[0:10] +
             " " +
-            xstr(request['requested_datetime'])[11:19])
+            xstr(_request['requested_datetime'])[11:19])
         report.updated_datetime = (
-            xstr(request['updated_datetime'])[0:10] +
+            xstr(_request['updated_datetime'])[0:10] +
             " " +
-            xstr(request['updated_datetime'])[11:19])
-        report.type = xstr(request['service_name'])
-        report.status = xstr(request['service_notice'])
-        report.status_notes = xstr(request.get('status_notes', ''))
+            xstr(_request['updated_datetime'])[11:19])
+        report.type = xstr(_request['service_name'])
+        report.status = xstr(_request['service_notice'])
+        report.status_notes = xstr(_request.get('status_notes', ''))
 
         Uow.add(report)
         try:
             Uow.commit()
         except Exception, ex:
             Uow.rollback()
-            app.logger.error("Error While Inserting Report in DB\n" + traceback.format_exc())
+            logger.error("Error While Inserting Report in DB\n" + traceback.format_exc())
 
     # Report by State
     # ---------------
@@ -281,10 +271,10 @@ def send_weekly_report():
             'neighbourhoods': t_neighbourhoods
         },
         'icons': dict(zip(problem_types, problem_images)),
-        'static': os.path.join(constants.BASE_DIR, 'templates') + '/'
+        'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
     f_name = 'relatorio-semanal-' + TODAY.strftime('%Y_%m_%d') + '.pdf'
-    common.generate_pdf('weekly_report.html', context, f_name)
+    generate_pdf('weekly_report.html', context, f_name)
 
     # Send mail
     html = '''\
@@ -299,21 +289,28 @@ def send_weekly_report():
             </body>
         </html>
             '''
-    common.mail(
-        constants.WEEKLY_REPORT_TO,
-        constants.DAILY_REPORT_CC,
+    send_mail(
+        config.WEEKLY_REPORT_TO,
         'MOPA - Relatorio Semanal - ' + TODAY.strftime('%Y-%m-%d'),
         html,
-        constants.REPORTS_DIR + '/' + f_name)
+        is_html=True,
+        cc=config.DAILY_REPORT_CC,
+        sender=(config.EMAIL_DEFAULT_NAME, config.SMTP_USERNAME),
+        attachments=[config.REPORTS_DIR + '/' + f_name]
+    )
+
+    return "Ok", 200
 
 
-@job("Send monthly report")
-def send_mothly_report():
+
+@tasks.route('/send-monthly-report')
+def send_monthly_report():
     """Task to prepare and send the monthly report"""
-    pass
+    return "Ok", 200
 
 
-@job("Send daily report")
+
+@tasks.route('/send-daily-report')
 def send_daily_report():
     """Task to run the Daily PDF Exporter"""
 
@@ -327,26 +324,26 @@ def send_daily_report():
     start_date = (TODAY + timedelta(days=-2)).strftime('%Y-%m-%d')
     end_date = TODAY.strftime('%Y-%m-%d')
 
-    for request in common.get_requests(start_date, end_date, None):
+    for _request in get_requests(start_date, end_date, None):
 
-        location = Location.i().guess_location(request)
+        location = Location.i().guess_location(_request)
 
         district = location['district']
         neighbourhood = location['neighbourhood']
         location_name = location['location_name']
 
         requests_list.append({
-                'id': xstr(request['service_request_id']),
+                'id': xstr(_request['service_request_id']),
                 'district': district,
                 'neighbourhood': neighbourhood,
                 'location_name': location_name,
-                'nature': xstr(request['service_name']),
-                'datetime': (xstr(request['requested_datetime'])[0:10] +
+                'nature': xstr(_request['service_name']),
+                'datetime': (xstr(_request['requested_datetime'])[0:10] +
                              " " +
-                             xstr(request['requested_datetime'])[11:19]),
-                'type': xstr(request['service_name']),
-                'status': xstr(request['service_notice']),
-                'status_notes': xstr(request.get('status_notes', ''))
+                             xstr(_request['requested_datetime'])[11:19]),
+                'type': xstr(_request['service_name']),
+                'status': xstr(_request['service_notice']),
+                'status_notes': xstr(_request.get('status_notes', ''))
             })
 
     # sorting
@@ -360,11 +357,11 @@ def send_daily_report():
     context = {
         'today': TODAY.strftime('%d-%m-%Y'),
         'requests_list': requests_list,
-        'static': os.path.join(constants.BASE_DIR, 'templates') + '/'
+        'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
     f_name = 'relatorio-diario-' + TODAY.strftime('%Y_%m_%d') + '.pdf'
-    common.generate_pdf('daily_report.html', context, f_name)
+    generate_pdf('daily_report.html', context, f_name)
 
     # Send mail
     html = '''\
@@ -379,15 +376,21 @@ def send_daily_report():
             </body>
         </html>
             '''
-    common.mail(
-        constants.DAILY_REPORT_TO,
-        constants.DAILY_REPORT_CC,
-        'MOPA - Relatorio Diario - ' + TODAY.strftime('%Y-%m-%d'),
+    send_mail(
+        config.DAILY_REPORT_TO,
+        '[MOPA] - Relatorio Diario - ' + TODAY.strftime('%Y-%m-%d'),
         html,
-        constants.REPORTS_DIR + '/' + f_name)
+        is_html=True,
+        cc=config.DAILY_REPORT_CC,
+        sender=(config.EMAIL_DEFAULT_NAME, config.SMTP_USERNAME),
+        attachments=[config.REPORTS_DIR + '/' + f_name]
+    )
+
+    return "Ok", 200
 
 
-@job("Send daily survey replies")
+
+@tasks.route('/send-daily-survey-replies')
 def send_daily_survey_replies():
     """Task to send daily survey answers as PDF"""
 
@@ -400,7 +403,7 @@ def send_daily_survey_replies():
     except Exception, ex:
         ex_type, ex_obj, ex_tb = sys.exc_info()
         fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
-        app.logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}").format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc())
+        logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}").format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc())
 
     if not response:
         return
@@ -427,13 +430,13 @@ def send_daily_survey_replies():
     context = {
         'today': TODAY.strftime('%d-%m-%Y'),
         'answers': answers,
-        'static': os.path.join(constants.BASE_DIR, 'templates') + '/'
+        'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
     f_name = 'respostas-ao-inquerito-diario-' + \
              TODAY.strftime('%Y_%m_%d') + \
              '.pdf'
-    common.generate_pdf('daily_survey_answers.html', context, f_name)
+    generate_pdf('daily_survey_answers.html', context, f_name)
 
     # Send mail
     html = '''\
@@ -449,30 +452,38 @@ def send_daily_survey_replies():
             </body>
         </html>
             '''
-    common.mail(
-        constants.DAILY_ENQUIRY_REPORT_TO,
-        constants.DAILY_REPORT_CC,
-        'MOPA - Respostas aos Inqueritos Diarios - ' +
-        TODAY.strftime('%Y-%m-%d'),
+    send_mail(
+        config.DAILY_ENQUIRY_REPORT_TO,
+        'MOPA - Respostas aos Inqueritos Diarios - ' + TODAY.strftime('%Y-%m-%d'),
         html,
-        constants.REPORTS_DIR + '/' + f_name)
+        is_html=True,
+        cc=config.DAILY_REPORT_CC,
+        sender=(config.EMAIL_DEFAULT_NAME, config.SMTP_USERNAME),
+        attachments = [config.REPORTS_DIR + '/' + f_name]
+    )
+
+    return "Ok", 200
 
 
-@job("Send daily survey")
+
+@tasks.route('/send-daily-survey')
 def send_daily_survey():
     """Task to send daily survey"""
-    survey = Survey(survey_type="G", question=constants.SMS_INTRO)
+    survey = Survey(survey_type="G", question=config.SMS_INTRO)
     Uow.add(survey)
     Uow.commit()
 
     monitor_phones = Location.i().get_monitors_phones()
     for phone in monitor_phones:
-        db_sms = SMS.static_send(phone, constants.SMS_INTRO)
+        db_sms = SMS.static_send(phone, config.SMS_INTRO)
         Uow.add(db_sms)
         Uow.commit()
 
+    return "Ok", 200
 
-@job("Check if answers were received")
+
+
+@tasks.route('/check-if-answers-were-received')
 def check_if_answers_were_received():
     """Task to check if monitor answered daily survey and alert them if they
         did not"""
@@ -488,12 +499,15 @@ def check_if_answers_were_received():
             if ("258" + phone) not in monitors_who_answered:
                 db_sms = SMS.static_send(
                             phone,
-                            constants.SMS_NO_FEEDBACK_RECEIVED)
+                            config.SMS_NO_FEEDBACK_RECEIVED)
                 Uow.add(db_sms)
                 Uow.commit()
 
+    return "Ok", 200
 
-@job("Notify of updates on requests")
+
+
+@tasks.route('/notify-updates-on-requests')
 def notify_updates_on_requests():
     """A scheduled task to check if there are any new requests or updated
     requests within the last hour and notify the involved parts"""
@@ -502,92 +516,60 @@ def notify_updates_on_requests():
 
     start_date = (TODAY).strftime('%Y-%m-%d')
     end_date = (TODAY + timedelta(days=1)).strftime('%Y-%m-%d')
-    requests = common.get_requests(start_date, end_date, True)
+    requests = get_requests(start_date, end_date, True)
 
-    HOUR_AGO = datetime.now(constants.TZ) + timedelta(seconds=-(60 * 10))
-    NOW = datetime.now(constants.TZ)
-    for request in requests:
-        requested_datetime = parse(request['requested_datetime'])
-        updated_datetime = parse(request['updated_datetime'])
-        status = request['status']
+    HOUR_AGO = datetime.now(config.TZ) + timedelta(seconds=-(60 * 10))
+    NOW = datetime.now(config.TZ)
+    for _request in requests:
+        requested_datetime = parse(_request['requested_datetime'])
+        updated_datetime = parse(_request['updated_datetime'])
+        status = _request['status']
 
         if (requested_datetime >= HOUR_AGO and
                 requested_datetime <= NOW and
                 status == 'open'):
             # New request -> notify responsible company/people
-            location = Location.i().guess_location(request)
+            location = Location.i().guess_location(_request)
             district = location['district']
             location_name = location['location_name']
+
             neighbourhood = location['neighbourhood']
             if neighbourhood:
                 phones = Location.i().get_notified_companies_phones(
-                        neighbourhood, request['service_code'])
+                        _request['neighbourhood'], _request['service_code'])
+
                 for phone in phones:
-                    db_sms = SMS.static_send(
-                                phone,
-                                'Novo problema reportado no mopa: \
-                                 Numero de Ocorrencia: %s - %s - %s \
-                                 em %s - %s - %s' %
-                                (request['service_request_id'],
-                                 request['service_name'],
-                                 request.get('description', '').replace('Criado por USSD.', ''),
-                                 district,
-                                 neighbourhood,
-                                 location_name)
+                    text = 'Novo problema reportado no mopa: No: %s - %s em %s. %s' % \
+                            (
+                                _request['service_request_id'],
+                                _request['service_name'],
+                                _request['neighbourhood'],
+                                _request.get('description', '').replace('Criado por USSD.', '')
                             )
+                    text = truncate(text, 160)
+                    db_sms = SMS.static_send(phone,text)
                     Uow.add(db_sms)
                 Uow.commit()
             else:
-                app.logger.error("New request with no neighbourhood data \
+                logger.error("New request with no neighbourhood data \
                                  found. Cannot notify companies. \
                                  Request ID: " +
-                                 request['service_request_id'])
+                                 _request['service_request_id'])
 
         elif(updated_datetime >= HOUR_AGO and
              updated_datetime <= NOW and
              status != 'open'):
             # Update on request -> notify the person who reported
-            phone = request.get('phone', '')
+            phone = _request.get('phone', '')
             if phone:
-                db_sms = SMS.static_send(
-                            phone,
-                            'Caro cidadao, o problema reportado por si: ' +
-                            request['service_request_id'] +
-                            ' foi actualizado. Novo estado: ' +
-                            request['service_notice'] +
-                            '. Comentario CMM: ' +
-                            request.get('status_notes', '') +
-                            '. Obrigado pelo seu contributo. Mopa'
+                text = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s . Comentario CMM:' % \
+                        (
+                            _request['service_request_id'],
+                            _request['service_notice'],
+                            _request.get('status_notes', '')
                         )
+                text = truncate(text, 160)
+                db_sms = SMS.static_send(phone,text)
                 Uow.add(db_sms)
                 Uow.commit()
-
-
-def setup_tasks():
-    """Sets up all scheduled tasks.
-    Note: The production server is in portugal so set tasks
-    to run one hour behind. What is meant to run at 20 must run at 19
-    """
-    if not app.debug:
-        # Production Schedule
-        schedule.every(10).minutes.do(notify_updates_on_requests)
-        schedule.every().day.at("17:30").do(send_daily_survey)
-        schedule.every().day.at("18:30").do(check_if_answers_were_received)
-        schedule.every().day.at("19:00").do(send_daily_report)
-        schedule.every().day.at("19:15").do(send_daily_survey_replies)
-        schedule.every().sunday.at("19:30").do(send_weekly_report)
-    else:
-        # Test Schedule
-        schedule.every(2).seconds.do(notify_updates_on_requests)
-        schedule.every(5).seconds.do(send_daily_survey)
-        schedule.every(7).seconds.do(check_if_answers_were_received)
-        schedule.every(9).seconds.do(send_daily_report)
-        schedule.every(10).seconds.do(send_daily_survey_replies)
-        schedule.every(20).seconds.do(send_weekly_report)
-
-
-def run_scheduler():
-    """Runs pending scheduled tasks."""
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    return "Ok", 200

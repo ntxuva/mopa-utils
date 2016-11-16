@@ -1,35 +1,27 @@
 # -*- coding: utf-8 -*-
-"""
-    mopa.common
-    -----------
 
-    Contains system wide common utilities for mopa
-"""
-# import simplejson as json
-import json
 import os
+import sys
+
+import json
 from decimal import Decimal
 from datetime import *
-import requests
-from requests.exceptions import ConnectTimeout
+
+import functools
 from retry import retry
 from retry.api import retry_call
-import constants
-import pprint as _pprint
-import singleton
 
-import smtplib
-import functools
-from xhtml2pdf import pisa
-from jinja2 import Template, Environment, PackageLoader
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEBase import MIMEBase
-from email.MIMEText import MIMEText
-from email import Encoders
+from threading import Thread, Lock
 
-from mopa import app
+from mopa import config
+
+
+###############################################################################
+# String ######################################################################
+###############################################################################
+import re
+
 default = ''
-
 
 def xstr(s):
     """empty string helper"""
@@ -42,6 +34,81 @@ def ustr(s):
         return u''
     return unicode(s, "utf-8")
 
+def truncate(s, length):
+    return s[:length]
+
+
+###############################################################################
+# HTTP ########################################################################
+###############################################################################
+
+from flask.json import JSONEncoder
+from decimal import Decimal
+
+class CustomJSONEncoder(JSONEncoder):
+
+    def default(self, obj):
+        if isinstance(obj, (date, datetime)):
+            return obj.isoformat()
+
+    def _iterencode(self, o, markers=None):
+        if isinstance(o, Decimal):
+            try:
+                return float(o)
+            except:
+                return super(DecimalEncoder, self)._iterencode(o, markers)
+
+        if isinstance(o, (date, datetime)):
+            return o.isoformat()
+
+        if isinstance(o, datetime.timedelta):
+            return str(o)
+
+        return super(JSONEncoder, self)._iterencode(o)
+
+###############################################################################
+# Util ########################################################################
+###############################################################################
+
+import time
+import traceback
+import logging
+def trap_errors(name):
+    """Wrapps a function within a try-catch-else to trap and report errors"""
+    def trap_errors_decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            logger = logging.getLogger()
+            logger.info("--- Running : {0} ---".format(job_name))
+            try:
+                return func(*args, **kwargs)
+            except Exception, ex:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                logger.error(
+                    "Error running -- " + name +  " in " + func.__name__ + " " + "\n" +
+                    str(ex) + ' ' +
+                    str(exc_type) + ' ' +
+                    str(fname) + ' ' +
+                    str(exc_tb.tb_lineno) + "\n" +
+                    traceback.format_exc()
+                )
+            else:
+                logger.info("--- Successfully run : {0} ---".format(name))
+        return wrapper
+    return trap_errors_decorator
+
+
+def async(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        thr = Thread(target=f, args=args, kwargs=kwargs)
+        thr.daemon = True # Daemonize thread to allow stopping with CTRL+C
+        thr.start() # Start the execution
+        # Calling join() on a thread tells the main thread to wait for this particular thread to finish before the main thread can execute the next instruction.
+        return thr
+    return wrapper
+
 
 def is_int(s):
     """Checks if a given string is a number of not."""
@@ -51,6 +118,9 @@ def is_int(s):
     except ValueError:
         return False
 
+
+
+import pprint as _pprint
 
 def pprint(o):
     """pretty prints a given object to stdout"""
@@ -63,40 +133,9 @@ def ppformat(o):
     return _pprint.pformat(o)
 
 
-def get_requests(start_date, end_date, include_phone):
-    """Gets the problems registered in the refered time stamp.
-    dates must be a string in YYYY-MM-dd format (eg. '2015-08-01')"""
-    phone_key = 'phone_key'
-    if include_phone:
-        phone_key = constants.API_PHONE_KEY
 
-    payload = {'start_date': start_date, 'end_date': end_date, 'phone_key': phone_key}
-
-    r = None
-    try:
-        r = retry_call(requests.get, fargs=[constants.API_END_POINTS['requests'] + '.' + constants.API_RESPONSE_FORMATS['json']], fkwargs={'params': payload, 'allow_redirects': False})
-    except:
-        pass
-
-    if not r:
-        return []
-
-    _json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
-    json_requests = []
-    try:
-        json_requests = json.loads(_json)
-    except:
-        pass
-
-    requests_list = []
-    for request in json_requests:
-        if u'code' in request and request.get('code', default) == 404:
-            break
-
-        requests_list.append(request)
-
-    return requests_list
-
+from xhtml2pdf import pisa
+from jinja2 import Template, Environment, PackageLoader
 
 def generate_pdf(template, context, name):
     """Generates PDF files based on given input
@@ -113,7 +152,7 @@ def generate_pdf(template, context, name):
     html = template.render(context)
 
     # Write PDF to file
-    f_name = os.path.join(constants.REPORTS_DIR, name)
+    f_name = os.path.join(config.REPORTS_DIR, name)
     with open(f_name, "w+b") as f:
         pisaStatus = pisa.CreatePDF(html, dest=f)
 
@@ -122,62 +161,243 @@ def generate_pdf(template, context, name):
         pdf = f.read()
         return pdf
 
-@retry(delay=1, backoff=2, max_delay=10)
-def mail(to, cc, subject, text, attach):
-        """Sends email to recepients using credentials provided in
-           constants module
-           TO-DO: change mailServer call to use with statement"""
-        msg = MIMEMultipart()
-        msg['From'] = 'MOPA'
-        msg['To'] = ', '.join(to)
-        msg['Cc'] = ', '.join(cc)
-        msg['Subject'] = subject
 
-        msg.attach(MIMEText(text, 'html'))
 
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload(open(attach, 'rb').read())
-        Encoders.encode_base64(part)
-        part.add_header('Content-Disposition',
-                        'attachment; filename="%s"' % os.path.basename(attach))
-        msg.attach(part)
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEBase import MIMEBase
+from email.MIMEText import MIMEText
+from email import Encoders
+from email.utils import COMMASPACE, formatdate, formataddr
+import html2text
 
-        mailServer = smtplib.SMTP(constants.GMAIL_SERVER, constants.GMAIL_PORT)
+mail_address_re = re.compile('^.+@([^.@][^@]+)$', re.IGNORECASE)
+html2text_converter = html2text.HTML2Text()
+
+def is_valid_mail_address(address):
+    if not address:
+        return False
+
+    if not isinstance(address, (str, unicode, tuple)):
+        return False
+
+    if isinstance(address, (str, unicode)) and not mail_address_re.match(address):
+        return False
+
+    if isinstance(address, tuple) and (
+        len(address) != 2
+        or not isinstance(address[0], (str, bool))
+        or not isinstance(address[1], str)
+        or not is_valid_mail_address(address[1])
+    ):
+        return False
+
+    return True
+
+
+def to_parseable_mail_address(address):
+    if not is_valid_mail_address(address):
+        raise Exception('cannot make parseable mail address: "%s" from invalid address' % address)
+
+    if isinstance(address, (str, unicode)):
+        return (False, address)
+
+    if isinstance(address, tuple):
+        return address
+
+
+# @async
+# @retry(delay=1, backoff=2, max_delay=10)
+def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=None, attachments=None, sender=None, text=None, custom_headers=None):
+    """Send an outgoing email with the given parameters.
+
+    single emails addresses can be provided a string `'email@example.com'` or typles of `(Example, email@example.com)`
+    multiple email addresses can be provided CSV `'email@example.com, email2@exmaple.com'` or lists mixing singular address style `['email@example.com', (Example, email@example.com)]`
+
+    By default emails are considered to be in plain-text format, but one can change
+    them to HTML by passing `is_html=True`.
+    When sending an HTML email a plain-text fallback can be provided with the
+    `text` parameter, and if a fallback is not provided the conversion will be
+    done for you based on the HTML message.
+
+    attachments can be passed as a CSV string with full paths to the desired files.
+    """
+    mail = MIMEMultipart()
+
+    logger = logging.getLogger()
+
+    if sender:
+        sender = to_parseable_mail_address(sender)
+
+    if reply_to:
+        reply_to = to_parseable_mail_address(reply_to)
+
+    to = to if isinstance(to, list) else map(str.strip, to.split(','))
+    for key, mail_address in enumerate(to):
+        if not is_valid_mail_address(mail_address):
+            raise Exception('Invalid Address "%s" in To' % mail_address)
+        else:
+            to[key] = to_parseable_mail_address(mail_address)
+
+    if cc:
+        cc = cc if isinstance(cc, list) else map(str.strip, cc.split(','))
+        for key, mail_address in enumerate(cc):
+            if not is_valid_mail_address(mail_address):
+                raise Exception('Invalid Address: "%s" in Cc' % mail_address)
+            else:
+                cc[key] = to_parseable_mail_address(mail_address)
+
+    if bcc:
+        bcc = bcc if isinstance(bcc, list) else map(str.strip, bcc.split(','))
+        for key, mail_address in enumerate(bcc):
+            if not is_valid_mail_address(mail_address):
+                raise Exception('Invalid Address: "%s" in Bcc' % mail_address)
+            else:
+                bcc[key] = to_parseable_mail_address(mail_address)
+
+    if sender:
+        mail['From'] = formataddr(sender)
+
+    if to:
+        mail['To'] = COMMASPACE.join(map(formataddr, to))
+
+    if cc:
+        mail['Cc'] = COMMASPACE.join(map(formataddr, cc))
+
+    if reply_to:
+        mail['Reply-To'] = formataddr(reply_to)
+
+    mail['Date'] = formatdate(localtime=True)
+    mail['Subject'] = subject
+    mail.preamble = subject
+
+    if not is_html:
+        mail.attach(MIMEText(message, 'plain', 'utf-8'))
+    else:
+        mail.attach(MIMEText(message, 'html', 'utf-8'))
+
+        if text:
+            mail.attach(MIMEText(text, 'plain', 'utf-8'))
+        else:
+            mail.attach(MIMEText(html2text_converter.handle(message), 'plain', 'utf-8'))
+
+    if attachments:
+        attachments = attachments if isinstance(attachments, list) else map(str.strip, attachments.split(','))
+        for f in attachments:
+            try:
+                if not os.path.isfile(f):
+                    raise Exception('File for attachment "%s" not found in file system' % str(f))
+                with open(f, 'rb') as file:
+                    attachment = MIMEBase('application', "octet-stream")
+                    attachment.set_payload(file.read())
+                    Encoders.encode_base64(attachment)
+                    attachment.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(f))
+                    mail.attach(attachment)
+            except Exception, ex:
+                logger.error("Unable to open one of the attachments. Error: %s" % str(ex))
+                raise
+
+    if custom_headers:
+        for k, v in custom_headers.iteritems():
+            mail.add_header(k, v)
+
+    all_destinations = []
+    if to:
+        all_destinations.extend(to)
+    if cc:
+        all_destinations.extend(cc)
+    if bcc:
+        all_destinations.extend(bcc)
+
+    try:
+        # this doesn't support `with` statement so we do `close` the old way.
+        mailServer = smtplib.SMTP(os.getenv('SMTP_HOST'), os.getenv('SMTP_PORT'))
         mailServer.ehlo()
-        mailServer.starttls()
+        if os.getenv('SMTP_USE_TLS'):
+            mailServer.starttls()
         mailServer.ehlo()
-        mailServer.login(constants.GMAIL_USER, constants.GMAIL_PASSWORD)
-        mailServer.sendmail('Mopa Notifications', to + cc, msg.as_string())
+        mailServer.login(os.getenv('SMTP_USERNAME'), os.getenv('SMTP_PASSWORD'))
+        mailServer.sendmail(subject, map(lambda x: x[1], all_destinations), mail.as_string())
         # Should be mailServer.quit(), but that crashes...
         mailServer.close()
+    except Exception, ex:
+        logger.error("Unable to send the email. Error: %s" % str(ex))
+        raise
+
+###############################################################################
+# Patterns ####################################################################
+###############################################################################
+
+class Singleton(object):
+    # Based on tornado.ioloop.IOLoop.instance() approach.
+    # See https://github.com/facebook/tornado
+    __singleton_lock = Lock()
+    __singleton_instance = None
+
+    @classmethod
+    def i(cls):
+        """the common sense method to retrieve the instance"""
+        if not cls.__singleton_instance:
+            with cls.__singleton_lock:
+                if not cls.__singleton_instance:
+                    cls.__singleton_instance = cls()
+        return cls.__singleton_instance
+
+
+###############################################################################
+# App #     ###################################################################
+###############################################################################
+
+import requests
+from requests.exceptions import ConnectTimeout
+
+def get_requests(start_date, end_date, include_phone):
+    """Gets the problems registered in the refered time stamp.
+    dates must be a string in YYYY-MM-dd format (eg. '2015-08-01')"""
+    logger = logging.getLogger()
+    phone_key = 'phone_key'
+    if include_phone:
+        phone_key = config.OPEN311_PHONE_KEY
+
+    payload = {'start_date': start_date, 'end_date': end_date, 'phone_key': phone_key}
+
+    r = None
+    try:
+        r = retry_call(requests.get, fargs=[config.OPEN311_END_POINTS['requests'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']], fkwargs={'params': payload, 'allow_redirects': False})
+    except:
+        pass
+
+    if not r:
+        return []
+
+    _json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
+
+    json_requests = []
+    try:
+        json_requests = json.loads(r.text)
+    except Exception, e:
+        logger.error(e)
+
+    requests_list = []
+    for request in json_requests:
+        if u'code' in request and request.get('code', default) == 404:
+            break
+
+        requests_list.append(request)
+
+    return requests_list
+
 
 def get_report_file_params(filename):
-    filepath = constants.REPORTS_DIR + "/" + filename
-    print filepath
+    filepath = config.REPORTS_DIR + "/" + filename
+
     if os.path.isfile(filepath):
         return filename, "/reports/" + filename, os.path.getsize(filepath)
 
     return None
 
-class MyJSONEncoder(json.JSONEncoder):
-    """JSON Encoder Extensions"""
 
-    def default(self, obj):
-        if isinstance(obj, (date, datetime)):
-            return obj.isoformat()
-
-    def _iterencode(self, o, markers=None):
-        if isinstance(o, Decimal):
-            try:
-                return float(o)
-            except:
-                return super(DecimalEncoder, self)._iterencode(o, markers)
-
-        if isinstance(o, (date, datetime)):
-            return o.isoformat()
-
-
-class Location(singleton.SingletonMixin):
+class Location(Singleton):
     """Helper class for all location needs.
     usage: Location.i().method()
     """
@@ -190,8 +410,8 @@ class Location(singleton.SingletonMixin):
             return self.NEIGHBOURHOODS
 
         data = ""
-        with open(name=os.path.join(constants.BASE_DIR,
-                                    constants.NEIGHBOURHOODS_JSON_PATH),
+        with open(name=os.path.join(config.BASE_DIR,
+                                    config.NEIGHBOURHOODS_JSON_PATH),
                   mode="r") as f:
             for line in f.readlines():
                 data = data + line
@@ -205,7 +425,7 @@ class Location(singleton.SingletonMixin):
             return self.LOCATIONS
 
         data = ""
-        with open(name=constants.BASE_DIR + '/static/locations.json',
+        with open(name=config.BASE_DIR + '/static/locations.json',
                   mode='r') as f:
             for line in f.readlines():
                 data = data + line
@@ -219,7 +439,7 @@ class Location(singleton.SingletonMixin):
             return self.ONLINE_LOCATIONS
         r = None
         try:
-            r = retry_call(requests.get, fargs=[constants.API_BASE_URL + "locations.json"], exceptions=ConnectTimeout, tries=3)
+            r = retry_call(requests.get, fargs=[config.OPEN311_BASE_URL + "locations.json"], exceptions=ConnectTimeout, tries=3)
         except:
             pass
 
