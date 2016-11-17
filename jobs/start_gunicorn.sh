@@ -23,3 +23,4 @@ exec gunicorn wsgi \
   --workers $WORKERS \
   --user=$USER --group=$GROUP \
   --log-level=info \
+  --reload \
