@@ -79,7 +79,7 @@ CSRF_ENABLED = True
 WTF_CSRF_ENABLED = True
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'secret')
-API_KEY = os.environ.get('SECRET_KEY', 'local')
+API_KEY = os.environ.get('API_KEY', 'local')
 CSRF_SESSION_KEY = os.environ.get('CSRF_SESSION_KEY', 'secret')
 WTF_CSRF_SECRET_KEY = os.environ.get('WTF_CSRF_SECRET_KEY', 'secret')
 

@@ -30,6 +30,9 @@ sudo service nginx reload
 
 # append and update path-to-mopa-utils/etc/supervisord.conf to /etc/supervisor/supervisord.conf
 sudo service supervisor restart
+
+copy .env.example .env
+# Edit .env then put API_KEY in /etc/environment
 ```
 
 ## Guidelines on Common usage of xhtml2pdf and errors
