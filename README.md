@@ -23,11 +23,13 @@ python manage.py runserver # run dev server
 
 gunicorn wsgi # run gunicorn
 
-sudo cp path-to-mopa-utils/etc/nginx.conf /etc/nginx/sites-available/mopa-utils.conf # make app available on nginx
-sudo ln -s /etc/nginx/sites-enabled/mopa-utils.conf /etc/nginx/sites-enabled/mopa-utils # deploy nginx
+sudo rm /etc/nginx/sites-enabled/default
+sudo cp path-to-mopa-utils/etc/nginx.conf /etc/nginx/sites-available/mopautils # make app available on nginx
+sudo ln -s /etc/nginx/sites-enabled/mopautils /etc/nginx/sites-enabled/mopautils # deploy nginx
 sudo service nginx reload
 
-# append and update path-to-mopa-utils/etc/supervisord.conf to /etc/supervisord.conf
+# append and update path-to-mopa-utils/etc/supervisord.conf to /etc/supervisor/supervisord.conf
+sudo service supervisor restart
 ```
 
 ## Guidelines on Common usage of xhtml2pdf and errors

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 NAME="mopa-utils"
-PROJECT_DIR=/srv/www/mopa-utils/
+PROJECT_DIR=/srv/www/mopa-utils
 VIRTUALENV_DIR=/srv/www/mopa-utils/venv
-LOG_DIR=/srv/www/mopa-utils/data/logs/gunicorn
+LOG_DIR=/srv/www/mopa-utils/mopa/data/logs/gunicorn
 USER=www-data
 GROUP=www-data
 IP=127.0.0.1
