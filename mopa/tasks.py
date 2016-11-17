@@ -525,9 +525,7 @@ def notify_updates_on_requests():
         updated_datetime = parse(_request['updated_datetime'])
         status = _request['status']
 
-        if (requested_datetime >= HOUR_AGO and
-                requested_datetime <= NOW and
-                status == 'open'):
+        if (requested_datetime >= HOUR_AGO and requested_datetime <= NOW and status == 'open'):
             # New request -> notify responsible company/people
             location = Location.i().guess_location(_request)
             district = location['district']
@@ -535,41 +533,24 @@ def notify_updates_on_requests():
 
             neighbourhood = location['neighbourhood']
             if neighbourhood:
-                phones = Location.i().get_notified_companies_phones(
-                        _request['neighbourhood'], _request['service_code'])
+                phones = Location.i().get_notified_companies_phones(_request['neighbourhood'], _request['service_code'])
 
                 for phone in phones:
-                    text = 'Novo problema reportado no mopa: No: %s - %s em %s. %s' % \
-                            (
-                                _request['service_request_id'],
-                                _request['service_name'],
-                                _request['neighbourhood'],
-                                _request.get('description', '').replace('Criado por USSD.', '')
-                            )
+                    text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
+                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', '').replace('Criado por USSD.', ''))
                     text = truncate(text, 160)
                     db_sms = SMS.static_send(phone,text)
                     Uow.add(db_sms)
                 Uow.commit()
             else:
-                logger.error("New request with no neighbourhood data \
-                                 found. Cannot notify companies. \
-                                 Request ID: " +
-                                 _request['service_request_id'])
+                logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
 
-        elif(updated_datetime >= HOUR_AGO and
-             updated_datetime <= NOW and
-             status != 'open'):
+        elif updated_datetime >= HOUR_AGO and updated_datetime <= NOW and status != 'open' and _request.get('phone', ''):
             # Update on request -> notify the person who reported
-            phone = _request.get('phone', '')
-            if phone:
-                text = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s . Comentario CMM:' % \
-                        (
-                            _request['service_request_id'],
-                            _request['service_notice'],
-                            _request.get('status_notes', '')
-                        )
-                text = truncate(text, 160)
-                db_sms = SMS.static_send(phone,text)
-                Uow.add(db_sms)
-                Uow.commit()
+            text_tpl = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s. Comentario CMM:'
+            text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
+            text = truncate(text, 160)
+            db_sms = SMS.static_send(_request.get('phone'), text)
+            Uow.add(db_sms)
+            Uow.commit()
     return "Ok", 200
