@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 NAME="mopa-utils"
 PROJECT_DIR=/srv/www/mopa-utils
@@ -24,3 +24,4 @@ exec gunicorn wsgi \
   --user=$USER --group=$GROUP \
   --log-level=info \
   --reload \
+
