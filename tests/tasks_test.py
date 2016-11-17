@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
 import unittest
-import tempfile
-import flask
-from mopa import create_app, db
+from mopa import create_app
+
 
 class TasksTestCase(unittest.TestCase):
 
@@ -35,20 +33,18 @@ class TasksTestCase(unittest.TestCase):
         rv = self.client.get('/tasks/notify-updates-on-requests', headers=headers)
         self.assertEqual(200, rv.status_code)
 
-    @unittest.skip("too slow")
+    @unittest.skip('Tests are slow')
     def test_should_send_daily_report(self):
         headers = [('API_KEY', 'local')]
         rv = self.client.get('/tasks/send-daily-report', headers=headers)
         self.assertEqual(200, rv.status_code)
 
-    @unittest.skip("too slow")
     def test_should_send_weekly_report(self):
         headers = [('API_KEY', 'local')]
-        rv = self.client.get('/tasks/send-monthly-report', headers=headers)
+        rv = self.client.get('/tasks/send-weekly-report', headers=headers)
         self.assertEqual(200, rv.status_code)
 
-    @unittest.skip("slow")
     def test_should_send_monthly_report(self):
         headers = [('API_KEY', 'local')]
-        rv = self.client.get('/tasks/send-weekly-report', headers=headers)
+        rv = self.client.get('/tasks/send-monthly-report', headers=headers)
         self.assertEqual(200, rv.status_code)

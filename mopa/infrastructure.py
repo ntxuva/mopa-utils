@@ -20,8 +20,14 @@ from mopa import config
 # String ######################################################################
 ###############################################################################
 import re
+import unicodedata
+import string
 
 default = ''
+
+FIRST_CAP_RE = re.compile('(.)([A-Z][a-z]+)')
+ALL_CAP_RE = re.compile('([a-z0-9])(A-Z)')
+
 
 def xstr(s):
     """empty string helper"""
@@ -34,9 +40,18 @@ def ustr(s):
         return u''
     return unicode(s, "utf-8")
 
+
 def truncate(s, length):
     return s[:length]
 
+
+def remove_accents(data):
+    return ''.join(x for x in unicodedata.normalize('NFKD', data) if x in string.ascii_letters).lower()
+
+
+def snake_case(string):
+    s1 = FIRST_CAP_RE.sub(r'\1_\2', string)
+    return ALL_CAP_RE.sub(r'\1_\2', s1).lower()
 
 ###############################################################################
 # HTTP ########################################################################
@@ -56,7 +71,7 @@ class CustomJSONEncoder(JSONEncoder):
             try:
                 return float(o)
             except:
-                return super(DecimalEncoder, self)._iterencode(o, markers)
+                return super(JSONEncoder, self)._iterencode(o, markers)
 
         if isinstance(o, (date, datetime)):
             return o.isoformat()
@@ -73,15 +88,18 @@ class CustomJSONEncoder(JSONEncoder):
 import time
 import traceback
 import logging
+
+
 def trap_errors(name):
     """Wrapps a function within a try-catch-else to trap and report errors"""
     def trap_errors_decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            logger = logging.getLogger()
-            logger.info("--- Running : {0} ---".format(job_name))
+            logger = logging.getLogger(__name__)
+            logger.info("--- Running : {0} ---".format(name))
+            rv = None
             try:
-                return func(*args, **kwargs)
+                rv = func(*args, **kwargs)
             except Exception, ex:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
                 fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -95,11 +113,14 @@ def trap_errors(name):
                 )
             else:
                 logger.info("--- Successfully run : {0} ---".format(name))
+
+            if rv:
+                return rv
         return wrapper
     return trap_errors_decorator
 
 
-def async(f):
+def asynchronously(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
         thr = Thread(target=f, args=args, kwargs=kwargs)
@@ -122,6 +143,7 @@ def is_int(s):
 
 import pprint as _pprint
 
+
 def pprint(o):
     """pretty prints a given object to stdout"""
     pp = _pprint.PrettyPrinter(indent=4)
@@ -136,6 +158,7 @@ def ppformat(o):
 
 from xhtml2pdf import pisa
 from jinja2 import Template, Environment, PackageLoader
+
 
 def generate_pdf(template, context, name):
     """Generates PDF files based on given input
@@ -173,6 +196,7 @@ import html2text
 
 mail_address_re = re.compile('^.+@([^.@][^@]+)$', re.IGNORECASE)
 html2text_converter = html2text.HTML2Text()
+
 
 def is_valid_mail_address(address):
     if not address:
@@ -328,6 +352,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
 # Patterns ####################################################################
 ###############################################################################
 
+
 class Singleton(object):
     # Based on tornado.ioloop.IOLoop.instance() approach.
     # See https://github.com/facebook/tornado
@@ -350,6 +375,7 @@ class Singleton(object):
 
 import requests
 from requests.exceptions import ConnectTimeout
+
 
 def get_requests(start_date, end_date, include_phone):
     """Gets the problems registered in the refered time stamp.

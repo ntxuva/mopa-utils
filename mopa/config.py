@@ -27,23 +27,23 @@ load_dotenv(dotenv_path)
 APP_ENV = os.getenv('APP_ENV', 'development')
 
 if APP_ENV == 'development':
-	DEBUG = True # General debug mode
-	DEBUG_LOG = True # causes all errors to also be saved to a debug.log
-	DEBUG_DISPLAY = False # controls whether debug messages are shown inside the HTML of pages or no
-	SCRIPT_DEBUG = True # SCRIPT_DEBUG is a related constant that will force WordPress to use the "dev" versions of core CSS and JavaScript files rather than the minified versions that are normally loaded
-	DEBUG_TB_PROFILER_ENABLED = True
-	DEBUG_TB_INTERCEPT_REDIRECTS = False
-	WTF_CSRF_ENABLED = False
+    DEBUG = True  # General debug mode
+    DEBUG_LOG = True  # causes all errors to also be saved to a debug.log
+    DEBUG_DISPLAY = False  # controls whether debug messages are shown inside the HTML of pages or no
+    SCRIPT_DEBUG = True  # SCRIPT_DEBUG is a related constant that will force WordPress to use the "dev" versions of core CSS and JavaScript files rather than the minified versions that are normally loaded
+    DEBUG_TB_PROFILER_ENABLED = True
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    WTF_CSRF_ENABLED = False
 elif APP_ENV == 'staging':
-	DEBUG = True
-	DEBUG_LOG = True
-	DEBUG_DISPLAY = False
-	SCRIPT_DEBUG = False
+    DEBUG = True
+    DEBUG_LOG = True
+    DEBUG_DISPLAY = False
+    SCRIPT_DEBUG = False
 elif APP_ENV == 'production':
-	DEBUG = False
-	DEBUG_LOG = False
-	DEBUG_DISPLAY = False
-	SCRIPT_DEBUG = False
+    DEBUG = False
+    DEBUG_LOG = False
+    DEBUG_DISPLAY = False
+    SCRIPT_DEBUG = False
 
 
 # DB settings
@@ -72,11 +72,11 @@ SMTP_USE_SSL = bool(os.getenv('SMTP_USE_SSL', "false"))
 SMTP_USERNAME = os.getenv('SMTP_USERNAME')
 SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
 EMAIL_DEFAULT_NAME = 'Mopa'
+EMAIL_DEFAULT_SENDER = 'info@mopa.co.mz'
 EMAIL_TEMPLATES_DIR = join(APP_ROOT, '/templates/email/')
 
 # Authentication Unique Keys and Salts
 CSRF_ENABLED = True
-WTF_CSRF_ENABLED = True
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'secret')
 API_KEY = os.environ.get('API_KEY', 'local')

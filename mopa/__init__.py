@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -22,6 +21,7 @@ cors = CORS()
 cache = SimpleCache()
 
 from .infrastructure import (CustomJSONEncoder)
+
 
 def create_app(config_name=None, main=True):
     """Create an application instance."""
@@ -44,7 +44,7 @@ def create_app(config_name=None, main=True):
     # logging.getLogger('flask_cors').level = logging.CRITICAL
     # cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
-    # One line of code cut our Flask page load times by 60%
+    # One line of code to cut our Flask page load times by 60%
     # https://blog.socratic.org/the-one-weird-trick-that-cut-our-flask-page-load-time-by-70-87145335f679#.8r14wvy5w
     app.jinja_env.cache = {}
 

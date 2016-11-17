@@ -8,46 +8,40 @@
 import os
 import sys
 
-import json
 from datetime import datetime, date, timedelta
 from dateutil.parser import parse
 import requests
 from requests.exceptions import ConnectTimeout
 
-from functools import wraps
 from retry.api import retry_call
-from logging import getLogger
 import traceback
 from flask import Blueprint, current_app, request, abort
 
 import mopa.config as config
-from mopa.infrastructure import Location, CustomJSONEncoder, xstr, ustr, get_requests, generate_pdf, send_mail, trap_errors, truncate
-from mopa.models import Uow, SMS, Survey, SurveyAnswer, Report
+from mopa.infrastructure import Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
+from mopa.models import Uow, SMS, Survey, Report
 
-logger = getLogger(__name__)
 
 bp = tasks = Blueprint('tasks', __name__)
 
 
-
 @tasks.before_request
 def before_request():
-    '''Checks if API_KEY is valid'''
-    API_KEY = request.headers.get('API_KEY', None)
-    if not API_KEY or API_KEY != current_app.config['API_KEY']:
-        abort(403) # Forbidden / Not Authorized
-
+    """Checks if API_KEY is valid"""
+    api_key = request.headers.get('API_KEY', None)
+    if not api_key or api_key != current_app.config['API_KEY']:
+        abort(403)  # Forbidden / Not Authorized
 
 
 @tasks.route('/send-weekly-report')
 def send_weekly_report():
     """Task to run weekly for report"""
 
-    TODAY = date.today()
-    start_date = TODAY + timedelta(days=-7)  # -7
-    end_date = TODAY
+    today = date.today()
+    start_date = today + timedelta(days=-7)
+    end_date = today
 
-    old_start_date = start_date + timedelta(days=-7)  # -7
+    old_start_date = start_date + timedelta(days=-7)
     old_end_date = start_date
 
     # Get requests
@@ -55,7 +49,7 @@ def send_weekly_report():
     requests_list = []
 
     for _request in get_requests(start_date, end_date, True):
-        location = Location.i().guess_location(request)
+        location = Location.i().guess_location(_request)
 
         del _request['zipcode']
         del _request['lat']
@@ -71,14 +65,8 @@ def send_weekly_report():
         report.neighbourhood = neighbourhood
         report.location_name = location_name
         report.nature = xstr(_request['service_name'])
-        report.requested_datetime = (
-            xstr(_request['requested_datetime'])[0:10] +
-            " " +
-            xstr(_request['requested_datetime'])[11:19])
-        report.updated_datetime = (
-            xstr(_request['updated_datetime'])[0:10] +
-            " " +
-            xstr(_request['updated_datetime'])[11:19])
+        report.requested_datetime = (xstr(_request['requested_datetime'])[0:10] + " " + xstr(_request['requested_datetime'])[11:19])
+        report.updated_datetime = (xstr(_request['updated_datetime'])[0:10] + " " + xstr(_request['updated_datetime'])[11:19])
         report.type = xstr(_request['service_name'])
         report.status = xstr(_request['service_notice'])
         report.status_notes = xstr(_request.get('status_notes', ''))
@@ -88,7 +76,7 @@ def send_weekly_report():
             Uow.commit()
         except Exception, ex:
             Uow.rollback()
-            logger.error("Error While Inserting Report in DB\n" + traceback.format_exc())
+            current_app.logger.error("Error While Inserting Report in DB\n" + traceback.format_exc())
 
     # Report by State
     # ---------------
@@ -104,8 +92,7 @@ def send_weekly_report():
         total_occurencies += estado["no_occorencias"]
         total_pct += estado["pct_do_total"]
         total_tempo_medio_resolucao += estado["tempo_medio_resolucao"]
-        total_variacao += \
-            estado.get("variacao") if estado.get("variacao") else 0
+        total_variacao += estado.get("variacao") if estado.get("variacao") else 0
 
     estados_report_rows.append({
         'type': 'TOTAL',
@@ -138,14 +125,10 @@ def send_weekly_report():
                 "variacao": 0
             }
 
-        district_totals[row["district"]]["no_occorencias"] += \
-            row["no_occorencias"]
-        district_totals[row["district"]]["pct_do_total"] += \
-            row["pct_do_total"]
-        district_totals[row["district"]]["tempo_medio_resolucao"] += \
-            row["tempo_medio_resolucao"]
-        district_totals[row["district"]]["variacao"] += \
-            row.get("variacao", 0)
+        district_totals[row["district"]]["no_occorencias"] += row["no_occorencias"]
+        district_totals[row["district"]]["pct_do_total"] += row["pct_do_total"]
+        district_totals[row["district"]]["tempo_medio_resolucao"] += row["tempo_medio_resolucao"]
+        district_totals[row["district"]]["variacao"] += row.get("variacao", 0)
 
     for district in district_names:
         districts[district] = {
@@ -173,15 +156,7 @@ def send_weekly_report():
         u"Contentor a Arder"
     ]
 
-    problem_images = [
-        "tchova_nao_passou",
-        "contentor_esta_cheio",
-        "lixeira_informal",
-        "lixo_fora_do_contentor",
-        "lixo_na_vala_de_drenagem",
-        "camiao_nao_passou",
-        "contentor_a_arder"
-    ]
+    problem_images = map(lambda x: snake_case(remove_accents(x)), problem_types)
 
     for row in t_report_rows:
         t_neighbourhood_names.append(row["bairro"])
@@ -231,36 +206,25 @@ def send_weekly_report():
 
     for neighbourhood in t_neighbourhood_names:
         if t_neighbourhoods[neighbourhood]["rows"][0]["total"] > 0:
-            t_neighbourhoods[neighbourhood]["most_frequent_problem"] = \
-                t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
+            t_neighbourhoods[neighbourhood]["most_frequent_problem"] = t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
         else:
             t_neighbourhoods[neighbourhood]["most_frequent_problem"] = None
 
-        t_neighbourhoods[neighbourhood]["rows"] = sorted(
-            t_neighbourhoods[neighbourhood]["rows"],
-            key=lambda i: (-1 * i['resolvido'])
-        )
+        t_neighbourhoods[neighbourhood]["rows"] = sorted(t_neighbourhoods[neighbourhood]["rows"], key=lambda i: (-1 * i['resolvido']))
 
         if t_neighbourhoods[neighbourhood]["rows"][0]["resolvido"] > 0:
-            t_neighbourhoods[neighbourhood]["most_solved_problem"] = \
-                t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
+            t_neighbourhoods[neighbourhood]["most_solved_problem"] = t_neighbourhoods[neighbourhood]["rows"][0]["problema"]
         else:
             t_neighbourhoods[neighbourhood]["most_solved_problem"] = None
 
-        t_neighbourhoods[neighbourhood]["rows"] = sorted(
-            t_neighbourhoods[neighbourhood]["rows"],
-            key=lambda i: (-1 * i['total'])
-        )
+        t_neighbourhoods[neighbourhood]["rows"] = sorted(t_neighbourhoods[neighbourhood]["rows"], key=lambda i: (-1 * i['total']))
 
     for neighbourhood in t_neighbourhood_names:
-        t_neighbourhoods[neighbourhood]["worst_critical_points"] = \
-            Report.get_worst_critical_points(neighbourhood,
-                                             start_date,
-                                             end_date)
+        t_neighbourhoods[neighbourhood]["worst_critical_points"] = Report.get_worst_critical_points(neighbourhood, start_date, end_date)
 
     # Generate PDF
     context = {
-        'today': TODAY.strftime('%d-%m-%Y'),
+        'today': today.strftime('%d-%m-%Y'),
         'sumario': {
             'estados': estados_report_rows,
             'district_names': district_names,
@@ -273,7 +237,7 @@ def send_weekly_report():
         'icons': dict(zip(problem_types, problem_images)),
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
-    f_name = 'relatorio-semanal-' + TODAY.strftime('%Y_%m_%d') + '.pdf'
+    f_name = 'relatorio-semanal-' + today.strftime('%Y_%m_%d') + '.pdf'
     generate_pdf('weekly_report.html', context, f_name)
 
     # Send mail
@@ -291,23 +255,21 @@ def send_weekly_report():
             '''
     send_mail(
         config.WEEKLY_REPORT_TO,
-        'MOPA - Relatorio Semanal - ' + TODAY.strftime('%Y-%m-%d'),
+        '[MOPA] - Relatorio Semanal - ' + today.strftime('%Y-%m-%d'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
-        sender=(config.EMAIL_DEFAULT_NAME, config.SMTP_USERNAME),
+        sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
         attachments=[config.REPORTS_DIR + '/' + f_name]
     )
 
     return "Ok", 200
 
 
-
 @tasks.route('/send-monthly-report')
 def send_monthly_report():
     """Task to prepare and send the monthly report"""
     return "Ok", 200
-
 
 
 @tasks.route('/send-daily-report')
@@ -382,28 +344,27 @@ def send_daily_report():
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
-        sender=(config.EMAIL_DEFAULT_NAME, config.SMTP_USERNAME),
+        sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
         attachments=[config.REPORTS_DIR + '/' + f_name]
     )
 
     return "Ok", 200
 
 
-
 @tasks.route('/send-daily-survey-replies')
 def send_daily_survey_replies():
     """Task to send daily survey answers as PDF"""
 
-    TODAY = date.today()
+    today = date.today()
 
     response = None
 
     try:
-        response = retry_call(requests.get, fargs=['http://mopa.co.mz:5000/critical-points/' + TODAY.strftime('%Y-%m-%d')], exceptions=ConnectTimeout, tries=3)
+        response = retry_call(requests.get, fargs=['http://mopa.co.mz:5000/critical-points/' + today.strftime('%Y-%m-%d')], exceptions=ConnectTimeout, tries=3)
     except Exception, ex:
         ex_type, ex_obj, ex_tb = sys.exc_info()
         fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
-        logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}").format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc())
+        current_app.logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}").format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc())
 
     if not response:
         return
@@ -428,14 +389,12 @@ def send_daily_survey_replies():
     if answers:
         del answers[0]  # remove table column labels
     context = {
-        'today': TODAY.strftime('%d-%m-%Y'),
+        'today': today.strftime('%d-%m-%Y'),
         'answers': answers,
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
-    f_name = 'respostas-ao-inquerito-diario-' + \
-             TODAY.strftime('%Y_%m_%d') + \
-             '.pdf'
+    f_name = 'respostas-ao-inquerito-diario-' + today.strftime('%Y_%m_%d') + '.pdf'
     generate_pdf('daily_survey_answers.html', context, f_name)
 
     # Send mail
@@ -454,16 +413,15 @@ def send_daily_survey_replies():
             '''
     send_mail(
         config.DAILY_ENQUIRY_REPORT_TO,
-        'MOPA - Respostas aos Inqueritos Diarios - ' + TODAY.strftime('%Y-%m-%d'),
+        '[MOPA] - Respostas aos Inqueritos Diarios - ' + today.strftime('%Y-%m-%d'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
-        sender=(config.EMAIL_DEFAULT_NAME, config.SMTP_USERNAME),
+        sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
         attachments = [config.REPORTS_DIR + '/' + f_name]
     )
 
     return "Ok", 200
-
 
 
 @tasks.route('/send-daily-survey')
@@ -482,29 +440,23 @@ def send_daily_survey():
     return "Ok", 200
 
 
-
 @tasks.route('/check-if-answers-were-received')
 def check_if_answers_were_received():
-    """Task to check if monitor answered daily survey and alert them if they
-        did not"""
+    """Task to check if monitor answered daily survey and alert them if they did not"""
     monitor_phones = Location.i().get_monitors_phones()
-    monitors_who_answered = []
 
     survey = Survey.todays()
 
     if survey:
-        monitors_who_answered = Survey.get_answerers(survey.id)
+        monitors_who_answered = Survey.get_answerers(survey.id) or []
 
         for phone in monitor_phones:
             if ("258" + phone) not in monitors_who_answered:
-                db_sms = SMS.static_send(
-                            phone,
-                            config.SMS_NO_FEEDBACK_RECEIVED)
+                db_sms = SMS.static_send(phone, config.SMS_NO_FEEDBACK_RECEIVED)
                 Uow.add(db_sms)
                 Uow.commit()
 
     return "Ok", 200
-
 
 
 @tasks.route('/notify-updates-on-requests')
@@ -512,20 +464,20 @@ def notify_updates_on_requests():
     """A scheduled task to check if there are any new requests or updated
     requests within the last hour and notify the involved parts"""
 
-    TODAY = date.today()
+    today = date.today()
 
-    start_date = (TODAY).strftime('%Y-%m-%d')
-    end_date = (TODAY + timedelta(days=1)).strftime('%Y-%m-%d')
+    start_date = (today).strftime('%Y-%m-%d')
+    end_date = (today + timedelta(days=1)).strftime('%Y-%m-%d')
     requests = get_requests(start_date, end_date, True)
 
-    HOUR_AGO = datetime.now(config.TZ) + timedelta(seconds=-(60 * 10))
-    NOW = datetime.now(config.TZ)
+    hour_ago = datetime.now(config.TZ) + timedelta(seconds=-(60 * 10))
+    now = datetime.now(config.TZ)
     for _request in requests:
         requested_datetime = parse(_request['requested_datetime'])
         updated_datetime = parse(_request['updated_datetime'])
         status = _request['status']
 
-        if (requested_datetime >= HOUR_AGO and requested_datetime <= NOW and status == 'open'):
+        if hour_ago <= requested_datetime <= now and status == 'open':
             # New request -> notify responsible company/people
             location = Location.i().guess_location(_request)
             district = location['district']
@@ -543,9 +495,9 @@ def notify_updates_on_requests():
                     Uow.add(db_sms)
                 Uow.commit()
             else:
-                logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
+                current_app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
 
-        elif updated_datetime >= HOUR_AGO and updated_datetime <= NOW and status != 'open' and _request.get('phone', ''):
+        elif (hour_ago <= updated_datetime <= now) and status != 'open' and _request.get('phone', ''):
             # Update on request -> notify the person who reported
             text_tpl = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s. Comentario CMM:'
             text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
@@ -553,4 +505,5 @@ def notify_updates_on_requests():
             db_sms = SMS.static_send(_request.get('phone'), text)
             Uow.add(db_sms)
             Uow.commit()
+
     return "Ok", 200

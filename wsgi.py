@@ -3,6 +3,8 @@
 import os
 import sys
 
+sys.dont_write_bytecode = True
+
 if os.environ.get('WORKER_CLASS') in ('greenlet', 'gevent'):
     # Monkey-patching for gevent.
     from gevent import monkey; monkey.patch_all()

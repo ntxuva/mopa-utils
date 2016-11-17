@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
 import unittest
-import tempfile
+from mopa import create_app
 
-import flask
-from mopa import create_app, db
 
 class APITestCase(unittest.TestCase):
 

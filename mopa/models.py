@@ -25,9 +25,11 @@ from mopa import db
 from mopa.infrastructure import Location
 
 DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
-SMS_END_POINT = os.getenv('SMS_END_POINT')
-SMS_END_POINT = os.getenv('API_KEY')
+SC_SMS_END_POINT = os.getenv('SC_SMS_END_POINT')
+UX_SMS_END_POINT = os.getenv('UX_SMS_END_POINT')
+API_KEY = os.getenv('API_KEY')
 logger = getLogger(__name__)
+
 
 def setup_models():
     """Sets up our DB Models by Droping and creating the tables again.
@@ -193,12 +195,7 @@ class Survey(BaseModel):
     def todays():
         """Gets the today's survey"""
 
-        sql = """
-SELECT id
-FROM mopa_survey
-WHERE survey_type='G' AND DATE(created_at) = DATE(NOW())
-LIMIT 1;
-    """
+        sql = "SELECT id FROM mopa_survey WHERE survey_type='G' AND DATE(created_at) = DATE(NOW()) LIMIT 1;"
         results = db.engine.execute(sql)
         survey_id = None
         for row in results:
@@ -260,11 +257,7 @@ GROUP BY a.question, a.neighbourhood, a.point;
     def get_answerers(key):
         """Gets the phonenumbers of monitors who answered the given survey"""
 
-        sql = """
-    SELECT answered_by
-    FROM mopa_survey_answers
-    WHERE survey_key = %s
-        """ % (key)
+        sql = "SELECT answered_by FROM mopa_survey_answers WHERE survey_key = %s" % (key)
         rows = []
         results = db.engine.execute(sql)
         for row in results:

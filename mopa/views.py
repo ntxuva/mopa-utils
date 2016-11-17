@@ -9,13 +9,7 @@ from flask import Flask, Markup, abort, escape, request, render_template, \
                     jsonify, redirect, Response, make_response, current_app, \
                     Blueprint, flash, g, session, send_from_directory
 
-import datetime
-from time import strptime, strftime
-from urllib import quote_plus as urlquote
-import requests
-from logging import getLogger
 import json
-from functools import update_wrapper
 from os import listdir
 from os.path import isfile
 
@@ -25,13 +19,13 @@ from mopa.models import *
 import mopa.config as config
 
 bp = api = Blueprint('api', __name__)
-logger  = getLogger(__name__)
 
 
 @api.errorhandler(404)
 def not_found(error):
     # Setup HTTP error handling
     return render_template('404.html'), 404
+
 
 @api.route('/')
 def index():
@@ -41,91 +35,77 @@ def index():
     }
     return "Hello Mopa", 200
 
+
 @api.route("/receive-sms", methods=["GET", "POST"])
 def receive_sms():
     """End point used by valter to post SMS to us"""
-    sms = {
+    incoming_sms = {
         "from": "",
         "to"  : "",
         "text": ""
     }
+    outgoing_sms = config.SMS_INVALID_FEEDBACK
 
     if request.method == "GET":
-        sms["from"] = request.args.get("from", "")
-        sms["to"]   = request.args.get("to", "")
-        sms["text"] = request.args.get("text", "").encode('ascii', errors='backslashreplace')
-    elif request.method == "POST":
-        sms["from"] = request.form.get("from", "")
-        sms["to"]   = request.form.get("to", "")
-        sms["text"] = request.form.get("text", "").encode('ascii', errors='backslashreplace')
+        incoming_sms["from"] = request.args.get("from", "")
+        incoming_sms["to"]   = request.args.get("to", "")
+        incoming_sms["text"] = request.args.get("text", "").encode('ascii', errors='backslashreplace')
 
-    if not sms["from"] or not sms["to"] or not sms["text"]:
-        logger.error('Received sms in wrong format: ' + (sms["text"] if sms["text"] else " No text in message"))
+    if request.method == "POST":
+        incoming_sms["from"] = request.form.get("from", "")
+        incoming_sms["to"]   = request.form.get("to", "")
+        incoming_sms["text"] = request.form.get("text", "").encode('ascii', errors='backslashreplace')
+
+    if not incoming_sms["from"] or not incoming_sms["to"] or not incoming_sms["text"]:
+        current_app.logger.error('Received sms in wrong format: ' + (incoming_sms["text"] if incoming_sms["text"] else " No text in message"))
         abort(400)  # bad request
 
-    db_sms = SMS(direction="I",
-                    text=sms["text"],
-                    sent_by=sms["from"],
-                    sent_to="Mopa")
-    Uow.add(db_sms)
+    stored_incoming_sms = SMS(direction="I", text=incoming_sms["text"], sent_by=incoming_sms["from"], sent_to="Mopa")
+    Uow.add(stored_incoming_sms)
     Uow.commit()
 
-    """Right now incoming SMS are only for surveys so check sms for answer
-        of survey"""
-    sms_answer_parts = sms["text"].split("|")
-    if (len(sms_answer_parts) == 1 and
-            sms_answer_parts[0].lower() in SMS_VALID_ANSWERS):
+    # Right now incoming SMS are only for surveys so check sms for answer of survey
+    incoming_sms_parts = incoming_sms["text"].split("|")
+
+    if len(incoming_sms_parts) == 1 and incoming_sms_parts[0].lower() in config.SMS_VALID_ANSWERS:
         # Group survey answer
         today_survey = Survey.todays()
+
         if today_survey:
-            answer = SurveyAnswer(today_survey.survey_id,
-                                    sms_answer_parts[0],
-                                    sms["from"],
-                                    db_sms.id,
-                                    survey_key=today_survey.id)
+            answer = SurveyAnswer(today_survey.survey_id,  incoming_sms_parts[0], incoming_sms["from"],
+                                  stored_incoming_sms.id, survey_key=today_survey.id)
             Uow.add(answer)
             Uow.commit()
-            SMS.static_send(sms["from"], SMS_THANK_YOU)
-        else:
-            SMS.static_send(sms["from"], SMS_INVALID_FEEDBACK)
-    elif (len(sms_answer_parts) == 2 and is_int(sms_answer_parts[0]) and
-            sms_answer_parts[1] in SMS_VALID_ANSWERS):
+            outgoing_sms = config.SMS_THANK_YOU
+
+    elif len(incoming_sms_parts) == 2 and is_int(incoming_sms_parts[0]) and incoming_sms_parts[1] in config.SMS_VALID_ANSWERS:
         # Single survey answer
-        survey = Survey.get_by_id(sms_answer_parts[0])
-        if not survey:
-            SMS.static_send(sms["from"], SMS_INVALID_FEEDBACK)
-        else:
-            answer = SurveyAnswer(survey.survey_id,
-                                    sms_answer_parts[1],
-                                    sms["from"],
-                                    db_sms.id,
-                                    survey_key=survey.id)
+        _survey = Survey.get_by_id(incoming_sms_parts[0])
+
+        if _survey:
+            answer = SurveyAnswer(_survey.survey_id, incoming_sms_parts[1], incoming_sms["from"], stored_incoming_sms.id, survey_key=_survey.id)
             Uow.add(answer)
             Uow.commit()
-            SMS.static_send(sms["from"], SMS_THANK_YOU)
-    else:
-        SMS.static_send(sms["from"], SMS_INVALID_FEEDBACK)
+            outgoing_sms = config.SMS_THANK_YOU
+
+    SMS.static_send(incoming_sms["from"], outgoing_sms)
 
     return "Ok", 200
+
 
 @api.route("/survey", methods=["GET", "POST"])
 def survey():
     if request.method == "GET":
         return Response(json.dumps(Survey.get_stats(), cls=CustomJSONEncoder))
 
-    elif request.method == "POST":
+    if request.method == "POST":
         survey_data = {
-            "district":      "",
-            "neighbourhood": "",
-            "point":         "",
+            "district":      request.form.get("district", ""),
+            "neighbourhood": request.form.get("neighbourhood", ""),
+            "point":         request.form.get("point", ""),
             "question_id":   "",
-            "question":      ""
+            "question":      escape(request.form.get("question", ""))
         }
-        survey_data["district"] = request.form.get("district", "")
-        survey_data["neighbourhood"] = \
-            request.form.get("neighbourhood", "")
-        survey_data["point"] = request.form.get("point", "")
-        survey_data["question"] = escape(request.form.get("question", ""))
 
         to = request.form.get("to", "")
 
@@ -138,25 +118,21 @@ def survey():
         ):
             abort(400)  # bad request
 
-        survey = Survey(survey_type="I",
-                        district=survey_data["district"],
-                        neighbourhood=survey_data["neighbourhood"],
-                        point=survey_data["point"],
-                        question=survey_data["question"])
+        _survey = Survey(survey_type="I", district=survey_data["district"], neighbourhood=survey_data["neighbourhood"],
+                         point=survey_data["point"], question=survey_data["question"])
 
         Uow.add(survey)
         Uow.commit()
 
-        sms = SMS.static_send(to,
-                                survey_data["question"] + " responda " +
-                                survey.survey_id + "| s ou n")
-        survey.question_sms = sms
+        sms = SMS.static_send(to, survey_data["question"] + " responda " + _survey.survey_id + "| s ou n")
+        _survey.question_sms = sms
 
         Uow.add(sms)
 
         Uow.commit()
 
         return "Ok", 200
+
 
 @api.route("/critical-points", methods=["GET"])
 def critical_points():
@@ -177,9 +153,10 @@ def critical_points():
 
     return Response(json.dumps(the_answers, cls=CustomJSONEncoder))
 
-@api.route("/critical-points/<_date>", methods=["GET"])
-def critical_points_by_day(_date):
-    answers = Survey.get_day_answers(_date)
+
+@api.route("/critical-points/<day>", methods=["GET"])
+def get_critical_points_by_day(day):
+    answers = Survey.get_day_answers(day)
     for answer in answers:
         monitor = Location.i().get_monitor_by_phone(answer["sent_to"])
         point = Location.i().get_monitor_point(monitor["id"])
@@ -195,10 +172,11 @@ def critical_points_by_day(_date):
 
     return Response(json.dumps(answers, cls=CustomJSONEncoder))
 
+
 @api.route("/reports/", methods=["GET"], defaults={'year': date.today().year, 'month': date.today().month, 'day': date.today().day})
 @api.route("/reports/<year>/<month>/<day>", methods=["GET"])
 def get_reports(year, month, day):
-    logger.info("%s %s %s" % (year, month, day))
+    current_app.logger.info("%s %s %s" % (year, month, day))
     file_name = "relatorio-diario-{0}_{1:02d}_{2:02d}.pdf".format(int(year), int(month), int(day))
     if file_name:
         return send_from_directory(config.REPORTS_DIR, file_name, as_attachment=True)

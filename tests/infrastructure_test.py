@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import unittest
 import os
-import tempfile
+import unittest
+from mopa import create_app
+from mopa.infrastructure import send_mail, asynchronously
 
-import flask
-from mopa import create_app, db
-from mopa.infrastructure import send_mail, async
 
 @unittest.skip('Tests are slow')
 class MailTestCase(unittest.TestCase):
@@ -49,11 +47,10 @@ class MailTestCase(unittest.TestCase):
             attachments = [os.path.abspath(os.path.dirname(__file__)) + '/mail_test.py', os.path.abspath(os.path.dirname(__file__)) + '/__init__.py']
         )
 
-
     def test_full_email_is_sent_async(self):
         jobs = []
 
-        send_mail = async(send_mail)
+        send_mail = asynchronously(send_mail)
         jobs.append(
             send_mail(
                 [('To Example', 'to@example.com'), 'you@example.com'],
@@ -81,7 +78,6 @@ class MailTestCase(unittest.TestCase):
 
         for j in jobs:
             j.join()
-
 
     def test_view_on_browser(self):
         pass
