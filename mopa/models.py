@@ -115,7 +115,7 @@ class SMS(BaseModel):
         # Retry sending request 3 times if safe-retry ConnectTimeout exception is thrown and trap & report other errors
         try:
             if is_to_ux:
-                response = retry.call(requests.post, fargs=[UX_SMS_END_POINT], fkwargs={"data": payload}, exceptions=ConnectTimeout, tries=3)
+                response = retry_call(requests.post, fargs=[UX_SMS_END_POINT], fkwargs={"data": payload}, exceptions=ConnectTimeout, tries=3)
             else:
                 response = retry_call(requests.get, fargs=[SC_SMS_END_POINT], fkwargs={"params": payload}, exceptions=ConnectTimeout, tries=3)
             print response
