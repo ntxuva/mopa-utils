@@ -101,7 +101,7 @@ class SMS(BaseModel):
         if self.direction == 'O' and self.sent_to == 'Mopa':
             raise Exception("Invalid addressee for outgoing message" + str(self))
 
-        to_ux_re = re.compile('^(\+258)8[6|7|4]\d{7}$', re.IGNORECASE)
+        to_ux_re = re.compile('^(\+?)(258)?8[467]\d{7}$$', re.IGNORECASE)
         is_to_ux = to_ux_re.match(self.sent_to)
 
         payload = {}
