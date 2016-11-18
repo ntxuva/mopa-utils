@@ -27,7 +27,7 @@ from mopa.infrastructure import Location, remove_accents, ustr
 DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
 SC_SMS_END_POINT = os.getenv('SC_SMS_END_POINT')
 UX_SMS_END_POINT = os.getenv('UX_SMS_END_POINT')
-UX_SMS_API_KEY = os.getenv('API_KEY', 'local')
+UX_SMS_API_KEY = os.getenv('UX_SMS_API_KEY', 'local')
 
 def setup_models():
     """Sets up our DB Models by Dropping and creating the tables again.
