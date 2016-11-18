@@ -3,10 +3,9 @@
 import os
 import unittest
 from mopa import create_app
-from mopa.infrastructure import send_mail, asynchronously
+from mopa.infrastructure import send_mail, asynchronously, snake_case, remove_accents
 
 
-@unittest.skip('Tests are slow')
 class MailTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -22,6 +21,15 @@ class MailTestCase(unittest.TestCase):
         os.environ['USER_ID'] = user_id or ''
         os.environ['USER_IS_ADMIN'] = '1' if is_admin else '0'
 
+
+    def test_snake_case(self):
+        self.assertEqual('snake_case', snake_case('SnakeCase'))
+
+
+    def test_remove_accents(self):
+        self.assertEqual('uo', remove_accents(u'úõ'))
+
+    @unittest.skip('Tests are slow')
     def test_full_email_is_sent(self):
 
         send_mail(
@@ -47,6 +55,7 @@ class MailTestCase(unittest.TestCase):
             attachments = [os.path.abspath(os.path.dirname(__file__)) + '/mail_test.py', os.path.abspath(os.path.dirname(__file__)) + '/__init__.py']
         )
 
+    @unittest.skip('Tests are slow')
     def test_full_email_is_sent_async(self):
         jobs = []
 

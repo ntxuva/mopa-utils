@@ -15,24 +15,22 @@ import json
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from retry.api import retry_call
-from logging import getLogger
 import re
+from flask import current_app
 # Import the database object (db) from the main application module
 # this is defined inside __init__.py
 # For datetime comparisons w/ SQLAlchemy check
 # https://gist.github.com/Tukki/3953990
 from mopa import db
-from mopa.infrastructure import Location
+from mopa.infrastructure import Location, remove_accents, ustr
 
 DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
 SC_SMS_END_POINT = os.getenv('SC_SMS_END_POINT')
 UX_SMS_END_POINT = os.getenv('UX_SMS_END_POINT')
-API_KEY = os.getenv('API_KEY')
-logger = getLogger(__name__)
-
+API_KEY = os.getenv('API_KEY', 'local')
 
 def setup_models():
-    """Sets up our DB Models by Droping and creating the tables again.
+    """Sets up our DB Models by Dropping and creating the tables again.
     """
     db.drop_all()
     db.create_all()
@@ -40,7 +38,7 @@ def setup_models():
 
 class Uow():
     """Unit of work like class. Here we use it as a wrapper around db,
-    so we don't leak db into other app layers. The ideia is to keep all db
+    so we don't leak db into other app layers. The idea is to keep all db
     things in the models layer. Should any component require something from the
     db it should ask to the models layer
     """
@@ -55,7 +53,7 @@ class Uow():
     @staticmethod
     def rollback():
         db.session.rollback()
-        db.session.flush()  # for resetting non-commited .add()
+        db.session.flush()  # for resetting non-committed .add()
 
 
 class BaseModel(db.Model):
@@ -64,9 +62,7 @@ class BaseModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    updated_at = db.Column(db.DateTime,
-                           default=db.func.current_timestamp(),
-                           onupdate=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
 
 class SMS(BaseModel):
@@ -93,10 +89,7 @@ class SMS(BaseModel):
 
     def __repr__(self):
         """String representation"""
-        return '<SMS %r %r %r %r>' % (self.direction,
-                                      self.text,
-                                      self.sent_by,
-                                      self.created_at)
+        return '<SMS %r %r %r %r %r>' % (self.direction, self.text, self.sent_by, self.sent_to, self.created_at)
 
     def send(self):
         """
@@ -106,8 +99,7 @@ class SMS(BaseModel):
         """
         # probably save before sending
         if self.direction == 'O' and self.sent_to == 'Mopa':
-            raise Exception("Invalid addressee for outgoing message" +
-                            str(self))
+            raise Exception("Invalid addressee for outgoing message" + str(self))
 
         to_ux_re = re.compile('^(\+258)8[6|7|4]\d{7}$', re.IGNORECASE)
         is_to_ux = to_ux_re.match(self.sent_to)
@@ -130,16 +122,13 @@ class SMS(BaseModel):
         except Exception, ex:
             ex_type, ex_obj, ex_tb = sys.exc_info()
             fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
-            logger.error("Error delivering SMS to SMSC.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
+            current_app.logger.error("Error delivering SMS to SMSC.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
             return
 
-        if(
-            response and
-            response.status_code == 200 # and response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
-        ):
-            logger.info("SMS {0} delivered Succesfully".format(self.__repr__()))
+        if response and response.status_code == 200: # and response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
+            current_app.logger.info("SMS {0} delivered Successfully".format(self.__repr__()))
         else:
-            logger.error("Error while delivering SMS {0}. Status code: {1}, response text: {2}".format(self.__repr__(), str(response.status_code), response.text))
+            current_app.logger.error("Error while delivering SMS {0}. Status code: {1}, response text: {2}".format(self.__repr__(), str(response.status_code), response.text))
 
     @staticmethod
     def static_send(to, text):
@@ -162,8 +151,7 @@ class Survey(BaseModel):
 
     question = db.Column(db.String(255))
 
-    def __init__(self, survey_type="I", district=None, neighbourhood=None,
-                 point=None, question=None):
+    def __init__(self, survey_type="I", district=None, neighbourhood=None, point=None, question=None):
         """Constructor"""
         self.survey_id = self.get_next_survey_id()
         self.survey_type = survey_type
@@ -179,8 +167,7 @@ class Survey(BaseModel):
         return "<Survey> " + self.survey_id
 
     def get_next_survey_id(self):
-        """The survey id is daily auto-incremental, meaning that each
-            day it will reset to 1 and keep counting till next reset."""
+        """The survey id is daily auto-incremental, meaning that each day it will reset to 1 and keep counting till next reset."""
         last_survey = self.get_last_survey()
         today = date.today()
         if not last_survey or (last_survey.created_at.date() < today):
@@ -207,12 +194,7 @@ class Survey(BaseModel):
     def get_by_id(id):
         """Get the survey survey_id as given. Note that this is the day ID"""
 
-        sql = """
-SELECT id
-FROM mopa_survey
-WHERE survey_id = %s AND DATE(created_at)  = DATE(NOW())
-LIMIT 1;
-              """
+        sql = "SELECT id FROM mopa_survey WHERE survey_id = %s AND DATE(created_at)  = DATE(NOW()) LIMIT 1;"
         results = db.engine.execute(sql % (id))
         survey_id = None
         for row in results:
@@ -266,7 +248,7 @@ GROUP BY a.question, a.neighbourhood, a.point;
 
     @staticmethod
     def get_todays_answers():
-        """Gets todays answers"""
+        """Gets today's answers"""
         sql = """
 SELECT a.*
 FROM mopa_survey_answers a JOIN mopa_survey b
@@ -351,20 +333,13 @@ class SurveyAnswer(BaseModel):
     # actual unique identifier for the survey
     survey_key = db.Column(db.Integer, ForeignKey(Survey.id))
     survey_id = db.Column(db.String(255))
-    survey = db.relationship("Survey",
-                             foreign_keys="SurveyAnswer.survey_key",
-                             backref=db.backref("answers", lazy="dynamic"))
+    survey = db.relationship("Survey", foreign_keys="SurveyAnswer.survey_key", backref=db.backref("answers", lazy="dynamic"))
 
     answer = db.Column(db.String(255))
     answered_at = db.Column(db.DateTime)
     answered_by = db.Column(db.String(255))
-    answer_sms_id = db.Column(db.Integer,
-                              ForeignKey(SMS.id),
-                              primary_key=False)
-    answer_sms = db.relationship("SMS",
-                                 foreign_keys="SurveyAnswer.answer_sms_id",
-                                 backref=db.backref("answer_smsz",
-                                                    lazy="dynamic"))
+    answer_sms_id = db.Column(db.Integer, ForeignKey(SMS.id), primary_key=False)
+    answer_sms = db.relationship("SMS",  foreign_keys="SurveyAnswer.answer_sms_id", backref=db.backref("answer_smsz",lazy="dynamic"))
 
     neighbourhood = db.Column(db.String(255))
     quarter = db.Column(db.String(255))
@@ -372,8 +347,7 @@ class SurveyAnswer(BaseModel):
 
     NEIGHBOURHOODS = []
 
-    def __init__(self, survey_id, answer, answered_by, answer_sms_id=None,
-                 survey_key=None):
+    def __init__(self, survey_id, answer, answered_by, answer_sms_id=None, survey_key=None):
         """Constructor. TO-DO: The logic to know from which neighbourhood
         is the monitor is faulty as sometimes a monitor is responsible for 2
         points. Meaning that the logic here will get the first or last
@@ -436,9 +410,7 @@ class Report(db.Model):
 
     @staticmethod
     def get_summary_report(start_date, end_date, old_start_date, old_end_date):
-        """Gets the report summary report
-        Aka Louis' report 1
-        """
+        """Gets the report summary report Aka Louis' report 1"""
         sql = """
 SELECT recent.*, recent.tempo_medio_resolucao - old.tempo_medio_resolucao as variacao
 FROM
@@ -467,8 +439,7 @@ GROUP BY type
 ON recent.type=old.type
         """.format(start_date, end_date, old_start_date, old_end_date)
 
-        keys = ["type", "no_occorencias", "pct_do_total",
-                "tempo_medio_resolucao", "variacao"]
+        keys = ["type", "no_occorencias", "pct_do_total", "tempo_medio_resolucao", "variacao"]
         query_result = db.engine.execute(sql)
         rows = []
         for row in query_result:
@@ -477,12 +448,8 @@ ON recent.type=old.type
         return rows
 
     @staticmethod
-    def get_summary_by_district_report(start_date, end_date, old_start_date,
-                                       old_end_date):
-        """Gets the report summary broken down by district according to the
-        provided mode: Weekly or Monthly
-        Aka Louis' report 2
-        """
+    def get_summary_by_district_report(start_date, end_date, old_start_date, old_end_date):
+        """Gets the report summary broken down by district according to the provided mode: Weekly or Monthly Aka Louis' report 2"""
         sql = """
 SELECT recent.*, recent.tempo_medio_resolucao - old.tempo_medio_resolucao as variacao_do_tempo_medio
 FROM
@@ -516,8 +483,7 @@ GROUP BY district, neighbourhood
 ) as old
 ON recent.district=old.district AND recent.neighbourhood=old.neighbourhood
         """.format(start_date, end_date, old_start_date, old_end_date)
-        keys = ["district", "neighbourhood", "no_occorencias",
-                "pct_do_total", "tempo_medio_resolucao", "variacao_do_tempo_medio"]
+        keys = ["district", "neighbourhood", "no_occorencias", "pct_do_total", "tempo_medio_resolucao", "variacao_do_tempo_medio"]
         query_result = db.engine.execute(sql)
         rows = []
         for row in query_result:
@@ -545,8 +511,7 @@ FROM mopa_reports
 WHERE requested_datetime BETWEEN '{0}' AND '{1}'
 GROUP BY neighbourhood, nature;
 """.format(start_date, end_date)
-        keys = ["bairro", "problema", "registado", "em_processo", "resolvido",
-                "arquivado", "invalido", "total"]
+        keys = ["bairro", "problema", "registado", "em_processo", "resolvido", "arquivado", "invalido", "total"]
         query_result = db.engine.execute(sql)
         rows = []
         for row in query_result:
@@ -559,7 +524,8 @@ GROUP BY neighbourhood, nature;
         """Get the worst critical points for a certain neighbourhood.
         The worst point will be the one with more reports during the period.
         """
-        sql = """
+        neighbourhood = ustr(neighbourhood)
+        sql = u"""
 SELECT a.*, @curRank := @curRank + 1 AS rank
 FROM
 (

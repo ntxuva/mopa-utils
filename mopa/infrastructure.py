@@ -13,6 +13,8 @@ from retry.api import retry_call
 
 from threading import Thread, Lock
 
+import six
+
 from mopa import config
 
 
@@ -26,7 +28,7 @@ import string
 default = ''
 
 FIRST_CAP_RE = re.compile('(.)([A-Z][a-z]+)')
-ALL_CAP_RE = re.compile('([a-z0-9])(A-Z)')
+ALL_CAP_RE = re.compile('([a-z0-9])([A-Z])')
 
 
 def xstr(s):
@@ -36,8 +38,11 @@ def xstr(s):
 
 def ustr(s):
     """Converts a string to unicode"""
+    # return six.text_type(s)
     if not s:
         return u''
+    if isinstance(s, unicode):
+        return s
     return unicode(s, "utf-8")
 
 
@@ -46,7 +51,8 @@ def truncate(s, length):
 
 
 def remove_accents(data):
-    return ''.join(x for x in unicodedata.normalize('NFKD', data) if x in string.ascii_letters).lower()
+    data = ustr(data)
+    return ''.join(x for x in unicodedata.normalize('NFKD', data) if x in string.ascii_letters or x == " ")
 
 
 def snake_case(string):
@@ -175,13 +181,18 @@ def generate_pdf(template, context, name):
     html = template.render(context)
 
     # Write PDF to file
-    f_name = os.path.join(config.REPORTS_DIR, name)
-    with open(f_name, "w+b") as f:
-        pisaStatus = pisa.CreatePDF(html, dest=f)
+    file_name = os.path.join(config.REPORTS_DIR, name)
+
+    with open(file_name + '.html', "w+b") as f_html:
+        f_html.write(html.encode('utf-8'))
+
+    with open(file_name, "w+b") as f_pdf:
+        pisaStatus = pisa.CreatePDF(html.encode('utf-8'), dest=f_pdf)
 
         # Return PDF document for mail sending
-        f.seek(0)
-        pdf = f.read()
+        f_pdf.seek(0)
+        pdf = f_pdf.read()
+        f_pdf.close()
         return pdf
 
 
@@ -380,7 +391,6 @@ from requests.exceptions import ConnectTimeout
 def get_requests(start_date, end_date, include_phone):
     """Gets the problems registered in the refered time stamp.
     dates must be a string in YYYY-MM-dd format (eg. '2015-08-01')"""
-    logger = logging.getLogger()
     phone_key = 'phone_key'
     if include_phone:
         phone_key = config.OPEN311_PHONE_KEY
@@ -393,21 +403,14 @@ def get_requests(start_date, end_date, include_phone):
     except:
         pass
 
-    if not r:
-        return []
-
-    _json = str(r.text.decode("utf-8").encode("ascii", "ignore")).strip("'<>()\"` ").replace('\'', '\"')
-
-    json_requests = []
-    try:
-        json_requests = json.loads(r.text)
-    except Exception, e:
-        logger.error(e)
-
     requests_list = []
-    for request in json_requests:
+
+    if not r:
+        return requests_list
+
+    for request in r.json():
         if u'code' in request and request.get('code', default) == 404:
-            break
+            return requests_list
 
         requests_list.append(request)
 

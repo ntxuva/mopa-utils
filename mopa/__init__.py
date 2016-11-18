@@ -22,7 +22,6 @@ cache = SimpleCache()
 
 from .infrastructure import (CustomJSONEncoder)
 
-
 def create_app(config_name=None, main=True):
     """Create an application instance."""
     cfg = os.path.join(os.getcwd(), 'config.py') if os.path.exists('config.py') else os.path.join(os.getcwd(), 'mopa/config.py')
@@ -36,7 +35,7 @@ def create_app(config_name=None, main=True):
         logging.config.dictConfig(yaml.load(file(os.path.join(app.config['BASE_DIR'], '../logging.yaml'),'r')))
     except Exception, e:
         pass
-        # print "Error configurating logger ", str(e)
+        # print "Error configuring logger ", str(e)
 
     # initialize extensions
     db.init_app(app)

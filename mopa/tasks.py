@@ -16,6 +16,7 @@ from requests.exceptions import ConnectTimeout
 from retry.api import retry_call
 import traceback
 from flask import Blueprint, current_app, request, abort
+from sqlalchemy import exc
 
 import mopa.config as config
 from mopa.infrastructure import Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
@@ -74,6 +75,8 @@ def send_weekly_report():
         Uow.add(report)
         try:
             Uow.commit()
+        except exc.IntegrityError:
+            Uow.rollback()
         except Exception, ex:
             Uow.rollback()
             current_app.logger.error("Error While Inserting Report in DB\n" + traceback.format_exc())
@@ -149,14 +152,14 @@ def send_weekly_report():
     problem_types = [
         u"Tchova não passou",
         u"Contentor está cheio",
-        u"Lixeira informal",
+        u"Amontoado de lixo",
         u"Lixo fora do contentor",
         u"Lixo na vala de drenagem",
         u"Camião não passou",
         u"Contentor a Arder"
     ]
 
-    problem_images = map(lambda x: snake_case(remove_accents(x)), problem_types)
+    problem_images = map(lambda x: remove_accents(x).lower().replace(' ', '_'), problem_types)
 
     for row in t_report_rows:
         t_neighbourhood_names.append(row["bairro"])
@@ -470,7 +473,7 @@ def notify_updates_on_requests():
     end_date = (today + timedelta(days=1)).strftime('%Y-%m-%d')
     requests = get_requests(start_date, end_date, True)
 
-    hour_ago = datetime.now(config.TZ) + timedelta(seconds=-(60 * 10))
+    hour_ago = datetime.now(config.TZ) + timedelta(seconds=-(1 * 60 * 10))
     now = datetime.now(config.TZ)
     for _request in requests:
         requested_datetime = parse(_request['requested_datetime'])
@@ -499,7 +502,7 @@ def notify_updates_on_requests():
 
         elif (hour_ago <= updated_datetime <= now) and status != 'open' and _request.get('phone', ''):
             # Update on request -> notify the person who reported
-            text_tpl = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s. Comentario CMM:'
+            text_tpl = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s. Comentario CMM: %s'
             text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
             text = truncate(text, 160)
             db_sms = SMS.static_send(_request.get('phone'), text)

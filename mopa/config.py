@@ -6,6 +6,15 @@ import pytz
 from os.path import join, dirname
 from dotenv import load_dotenv, find_dotenv
 
+
+def cheap_dot_env(path):
+    if os.path.exists('.env'):
+        # print('Importing environment from .env...')
+        for line in open(path):
+            var = line.strip().split('=')
+            if len(var) == 2:
+                os.environ[var[0]] = var[1]
+
 BASE_DIR = APP_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # Admin Emails
@@ -59,8 +68,7 @@ DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
 
 SQLALCHEMY_ECHO = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = "mysql+mysqldb://%s:%s@%s:%s/%s" % \
-    (DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME)
+SQLALCHEMY_DATABASE_URI = "mysql+mysqldb://%s:%s@%s:%s/%s" % (DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME)
 DATABASE_CONNECT_OPTIONS = {}
 
 
