@@ -124,6 +124,7 @@ OPEN311_END_POINTS = {
 }
 
 OPEN311_PHONE_KEY = os.getenv('OPEN311_PHONE_KEY', 'OPEN311_PHONE_KEY')
+UX_SMS_API_KEY = os.getenv('UX_SMS_API_KEY', '')
 
 DAILY_REPORT_TO = map(lambda x: x.strip(), os.getenv('DAILY_REPORT_TO', 'admin@xample.com').rsplit(','))
 DAILY_REPORT_CC = map(lambda x: x.strip(), os.getenv('DAILY_REPORT_CC', 'admin@xample.com').rsplit(','))

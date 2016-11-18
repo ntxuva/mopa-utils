@@ -27,7 +27,7 @@ from mopa.infrastructure import Location, remove_accents, ustr
 DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
 SC_SMS_END_POINT = os.getenv('SC_SMS_END_POINT')
 UX_SMS_END_POINT = os.getenv('UX_SMS_END_POINT')
-API_KEY = os.getenv('API_KEY', 'local')
+UX_SMS_API_KEY = os.getenv('API_KEY', 'local')
 
 def setup_models():
     """Sets up our DB Models by Dropping and creating the tables again.
@@ -106,7 +106,7 @@ class SMS(BaseModel):
 
         payload = {}
         if is_to_ux:
-            payload = {"to[]": self.sent_to, "message": self.text, "API_KEY": API_KEY}
+            payload = {"to[]": self.sent_to, "message": self.text, "API_KEY": UX_SMS_API_KEY}
         else:
             payload = {"from": "mopa", "to": self.sent_to, "text": self.text}
 
@@ -118,14 +118,13 @@ class SMS(BaseModel):
                 response = retry_call(requests.post, fargs=[UX_SMS_END_POINT], fkwargs={"data": payload}, exceptions=ConnectTimeout, tries=3)
             else:
                 response = retry_call(requests.get, fargs=[SC_SMS_END_POINT], fkwargs={"params": payload}, exceptions=ConnectTimeout, tries=3)
-            print response
         except Exception, ex:
             ex_type, ex_obj, ex_tb = sys.exc_info()
             fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
             current_app.logger.error("Error delivering SMS to SMSC.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
             return
 
-        if response and response.status_code == 200: # and response.text.strip() == "Message successfully forwarded from MOPA to SMSC"
+        if response and response.status_code == 200:
             current_app.logger.info("SMS {0} delivered Successfully".format(self.__repr__()))
         else:
             current_app.logger.error("Error while delivering SMS {0}. Status code: {1}, response text: {2}".format(self.__repr__(), str(response.status_code), response.text))

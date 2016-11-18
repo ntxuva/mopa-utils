@@ -473,14 +473,14 @@ def notify_updates_on_requests():
     end_date = (today + timedelta(days=1)).strftime('%Y-%m-%d')
     requests = get_requests(start_date, end_date, True)
 
-    hour_ago = datetime.now(config.TZ) + timedelta(seconds=-(1 * 60 * 10))
+    time_ago = datetime.now(config.TZ) + timedelta(seconds=-(1 * 60 * 10))
     now = datetime.now(config.TZ)
     for _request in requests:
         requested_datetime = parse(_request['requested_datetime'])
         updated_datetime = parse(_request['updated_datetime'])
         status = _request['status']
 
-        if hour_ago <= requested_datetime <= now and status == 'open':
+        if time_ago <= requested_datetime <= now and status == 'open':
             # New request -> notify responsible company/people
             location = Location.i().guess_location(_request)
             district = location['district']
@@ -500,7 +500,7 @@ def notify_updates_on_requests():
             else:
                 current_app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
 
-        elif (hour_ago <= updated_datetime <= now) and status != 'open' and _request.get('phone', ''):
+        elif (time_ago <= updated_datetime <= now) and status != 'open' and _request.get('phone', ''):
             # Update on request -> notify the person who reported
             text_tpl = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s. Comentario CMM: %s'
             text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
