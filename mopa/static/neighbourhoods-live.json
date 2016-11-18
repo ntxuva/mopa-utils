@@ -267,6 +267,433 @@
             "institution" : "CMM",
             "department": "-",
             "name": "-"
+        },
+        {
+        "id": 35,
+        "phone": "823089550",
+        "institution": "ASS. Kuthunga",
+        "departmemt": "Anonymous",
+        "name": "Laila Sulemene"
+        },
+        {
+            "id": 36,
+            "phone": "827469770",
+            "institution": "Bomga Mbilo",
+            "departmemt": "Anonymous",
+            "name": "Paulo Cossa"
+        },
+        {
+            "id": 37,
+            "phone": "845529418",
+            "institution": "Uniao Laboral",
+            "departmemt": "Anonymous",
+            "name": "Edgar Magaia"
+        },
+        {
+            "id": 38,
+            "phone": "846713749",
+            "institution": "MODAC",
+            "departmemt": "Anonymous",
+            "name": "Silva Pfumo"
+        },
+        {
+            "id": 39,
+            "phone": "847721996",
+            "institution": "OR.Mufundisse",
+            "departmemt": "Anonymous",
+            "name": "Benjamim Muiane"
+        },
+        {
+            "id": 40,
+            "phone": "840116068",
+            "institution": "Visabela",
+            "departmemt": "Anonymous",
+            "name": "Isabel Matola"
+        },
+        {
+            "id": 41,
+            "phone": "848743777",
+            "institution": "Proj General Limpeza",
+            "departmemt": "Anonymous",
+            "name": "Cardoso Nhapau"
+        },
+        {
+            "id": 42,
+            "phone": "847894173",
+            "institution": "Merelixoc",
+            "departmemt": "Anonymous",
+            "name": "Alberto Cumaio"
+        },
+        {
+            "id": 43,
+            "phone": "844794747",
+            "institution": "FMAC",
+            "departmemt": "Anonymous",
+            "name": "Cumaio Junior"
+        },
+        {
+            "id": 44,
+            "phone": "847518560",
+            "institution": "Asscodecha",
+            "departmemt": "Anonymous",
+            "name": "Denis Cumbe"
+        },
+        {
+            "id": 45,
+            "phone": "847322816",
+            "institution": "ACADEC",
+            "departmemt": "Anonymous",
+            "name": "Paulo Foloco"
+        },
+        {
+            "id": 46,
+            "phone": "845819584",
+            "institution": "Panhatan Clean Company",
+            "departmemt": "Anonymous",
+            "name": "Salfina Macave"
+        },
+        {
+            "id": 47,
+            "phone": "823954010",
+            "institution": "Panhatan Clean Company",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 48,
+            "phone": "849526200",
+            "institution": "UGSM",
+            "departmemt": "Anonymous",
+            "name": "Paulino Uaene"
+        },
+        {
+            "id": 49,
+            "phone": "829247820",
+            "institution": "Kutenga",
+            "departmemt": "Anonymous",
+            "name": "Reginaldo Manuel"
+        },
+        {
+            "id": 50,
+            "phone": "828498110",
+            "institution": "Kutenga",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 51,
+            "phone": "845855770",
+            "institution": "A.D.S.M.D",
+            "departmemt": "Anonymous",
+            "name": "Joao Taimo"
+        },
+        {
+            "id": 52,
+            "phone": "844412460",
+            "institution": "ADASBU",
+            "departmemt": "Anonymous",
+            "name": "Delfina Sive"
+        },
+        {
+            "id": 53,
+            "phone": "825797342",
+            "institution": "Associacao Cultural Dambo",
+            "departmemt": "Anonymous",
+            "name": "Gulamo Issufo"
+        },
+        {
+            "id": 54,
+            "phone": "826272070",
+            "institution": "Associacao Cultural Dambo",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 55,
+            "phone": "822824130",
+            "institution": "Berma Servicos",
+            "departmemt": "Anonymous",
+            "name": "Isabel Manhica"
+        },
+        {
+            "id": 56,
+            "phone": "847563497",
+            "institution": "Berma Servicos",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 57,
+            "phone": "845385689",
+            "institution": "Txova Ngolovane",
+            "departmemt": "Anonymous",
+            "name": "Esperanca Nguenha"
+        },
+        {
+            "id": 58,
+            "phone": "828972210",
+            "institution": "Maktel Bacissa",
+            "departmemt": "Anonymous",
+            "name": "Duarte Nascimento"
+        },
+        {
+            "id": 59,
+            "phone": "847909888",
+            "institution": "Xivoningo",
+            "departmemt": "Anonymous",
+            "name": "Alexandre Fandela"
+        },
+        {
+            "id": 60,
+            "phone": "847282204",
+            "institution": "Xivoningo",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 61,
+            "phone": "845896850",
+            "institution": "Khateta",
+            "departmemt": "Anonymous",
+            "name": "Domingos Matavele"
+        },
+        {
+            "id": 62,
+            "phone": "844818650",
+            "institution": "ILC Imobiliaria",
+            "departmemt": "Anonymous",
+            "name": "Daniel Cumbane"
+        },
+        {
+            "id": 63,
+            "phone": "827056219",
+            "institution": "Bejoel",
+            "departmemt": "Anonymous",
+            "name": "Bernardo Matsinhe"
+        },
+        {
+            "id": 64,
+            "phone": "848282146",
+            "institution": "Bejoel",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 65,
+            "phone": "827060358",
+            "institution": "ACODA",
+            "departmemt": "Anonymous",
+            "name": "Antonio Magaia"
+        },
+        {
+            "id": 66,
+            "phone": "842349109",
+            "institution": "Serlimpes",
+            "departmemt": "Anonymous",
+            "name": "Armindo Boque"
+        },
+        {
+            "id": 67,
+            "phone": "845458736",
+            "institution": "Serlimpes",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 68,
+            "phone": "823938733",
+            "institution": "Acodecos",
+            "departmemt": "Anonymous",
+            "name": "Juca Rodrigues"
+        },
+        {
+            "id": 69,
+            "phone": "845942822",
+            "institution": "Luas Limpezas",
+            "departmemt": "Anonymous",
+            "name": "Herminia Macause"
+        },
+        {
+            "id": 70,
+            "phone": "846006060",
+            "institution": "Luas Limpezas",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 71,
+            "phone": "825924928",
+            "institution": "Paraiso Higiene ",
+            "departmemt": "Anonymous",
+            "name": "Julio Nhalungo"
+        },
+        {
+            "id": 72,
+            "phone": "824069807",
+            "institution": "Paraiso Higiene ",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 73,
+            "phone": "822730820",
+            "institution": "Quemhas",
+            "departmemt": "Anonymous",
+            "name": "Alberto Simbine"
+        },
+        {
+            "id": 74,
+            "phone": "844415339",
+            "institution": "Quemhas",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 75,
+            "phone": "823089550",
+            "institution": "Org. Lalita",
+            "departmemt": "Anonymous",
+            "name": "Laila Sulemane"
+        },
+        {
+            "id": 77,
+            "phone": "844556868",
+            "institution": "Empresa de Lmpeza Magoanine",
+            "departmemt": "Anonymous",
+            "name": "Eugenio Fernando"
+        },
+        {
+            "id": 78,
+            "phone": "829001820",
+            "institution": "Kipamuzaia",
+            "departmemt": "Anonymous",
+            "name": "Pedro M. Muchave"
+        },
+        {
+            "id": 79,
+            "phone": "844863377",
+            "institution": "Kipamuzaia",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 80,
+            "phone": "845215403",
+            "institution": "Associacao AHitirhene Maxaka",
+            "departmemt": "Anonymous",
+            "name": "Preciosa Serafina"
+        },
+        {
+            "id": 81,
+            "phone": "846841766",
+            "institution": "Associacao AHitirhene Maxaka",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 82,
+            "phone": "827614850",
+            "institution": "Oliveira Multiservice Lda",
+            "departmemt": "Anonymous",
+            "name": "Oliveira Rodrigues"
+        },
+        {
+            "id": 83,
+            "phone": "842588595",
+            "institution": "Oliveira Multiservice Lda",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 84,
+            "phone": "842588124",
+            "institution": "Donga Limpeza Servicos",
+            "departmemt": "Anonymous",
+            "name": "Joao Fenias"
+        },
+        {
+            "id": 85,
+            "phone": "845910227",
+            "institution": "Donga Limpeza Servicos",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 86,
+            "phone": "828113030",
+            "institution": "Associacao Urbe Limpa",
+            "departmemt": "Anonymous",
+            "name": "Diogo Magaia"
+        },
+        {
+            "id": 87,
+            "phone": "828269540",
+            "institution": "Associacao Urbe Limpa",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 88,
+            "phone": "847163425",
+            "institution": "Baptista Alfredo Fumo Prestacao de Servicos",
+            "departmemt": "Anonymous",
+            "name": "Baptista Alfredo"
+        },
+        {
+            "id": 89,
+            "phone": "828955619",
+            "institution": "Baptista Alfredo Fumo Prestacao de Servicos",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 90,
+            "phone": "841452768",
+            "institution": "Salomao Mucare",
+            "departmemt": "Anonymous",
+            "name": "Sara Mucare"
+        },
+        {
+            "id": 91,
+            "phone": "841858923",
+            "institution": "Salomao Mucare",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 92,
+            "phone": "845808645",
+            "institution": "Limpezas Jacinta",
+            "departmemt": "Anonymous",
+            "name": "Maria Jeque"
+        },
+        {
+            "id": 93,
+            "phone": "824909880",
+            "institution": "Sisema Lda",
+            "departmemt": "Anonymous",
+            "name": "Simione Manhango"
+        },
+        {
+            "id": 94,
+            "phone": "824280335",
+            "institution": "Sisema Lda",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
+        },
+        {
+            "id": 95,
+            "phone": "826717427",
+            "institution": "Pontus Consultoria",
+            "departmemt": "Anonymous",
+            "name": "Ernestino Nhabinde"
+        },
+        {
+            "id": 96,
+            "phone": "826217427",
+            "institution": "Pontus Consultoria",
+            "departmemt": "Anonymous",
+            "name": "Anonymous"
         }
     ],
 
@@ -391,6 +818,298 @@
     "districts" : [
         {
             "id": 1,
+            "name": "Nlhamankulu",
+            "neighbourhoods": [
+                {
+                    "id": 1,
+                    "name": "Xipamanine",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [35]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [35]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [35]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [35]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [35]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Minkadjuine",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [36]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [36]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [36]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [36]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [36]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Unidade 7",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [37]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [37]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [37]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [37]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [37]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Munhuana",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [38]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [38]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [38]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [38]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [38]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Aeroporto A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [39]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [39]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [39]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [39]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [39]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Aeroporto B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [40]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [40]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [40]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [40]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [40]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Malanga",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [41]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [41]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [41]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [41]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [41]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Chamanculo A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [42]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [42]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [42]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [42]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [42]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Chamanculo B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [43]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [43]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [43]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [43]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [43]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Chamanculo C",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [44]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [44]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [44]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [44]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [44]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Chamanculo D",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [45]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [45]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [45]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [45]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [45]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
             "name": "Ka Maxaquene",
             "neighbourhoods": [
                 {
@@ -399,23 +1118,23 @@
                     "notified_people_by_problem": [
                         {
                             "service_code": "01",
-                            "people": [5, 2, 6, 25, 12, 18, 17, 11, 15, 27, 28, 33, 34]
+                            "people": [5, 2, 6, 25, 12, 18, 17, 11, 15, 27, 28, 33, 34, 46, 47]
                         },
                         {
                             "service_code": "02",
-                            "people": [5, 2, 26, 25, 12, 18, 17, 11, 15, 27, 28, 33, 34]
+                            "people": [5, 2, 26, 25, 12, 18, 17, 11, 15, 27, 28, 33, 34, 46, 47]
                         },
                         {
                             "service_code": "03",
-                            "people": [5, 24, 25, 1, 12, 18, 17, 11, 15, 27, 28, 33, 34]
+                            "people": [5, 24, 25, 1, 12, 18, 17, 11, 15, 27, 28, 33, 34, 46, 47]
                         },
                         {
                             "service_code": "04",
-                            "people": [24, 25, 26, 5, 1, 6, 14, 33, 34]
+                            "people": [24, 25, 26, 5, 1, 6, 14, 33, 34, 46, 47]
                         },
                         {
                             "service_code": "05",
-                            "people": [5, 24, 25, 26, 19, 3, 6, 1, 16, 33, 34]
+                            "people": [5, 24, 25, 26, 19, 3, 6, 1, 16, 33, 34, 46, 47]
                         }
                     ],
                     "points": [
@@ -499,28 +1218,184 @@
                     ]
                 },
                 {
+                    "id": 1,
+                    "name": "Maxaquene B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [48]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [48]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [48]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [48]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [48]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Maxaquene C",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [49, 50]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [49, 50]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [49, 50]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [49, 50]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [49, 50]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Maxaquene D",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [51]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [51]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [51]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [51]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [51]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Urbanizacao",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [52]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [52]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [52]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [52]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [52]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Mafalala",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [53, 54]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [53, 54]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [53, 54]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [53, 54]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [53, 54]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Polana Canico A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [55, 56]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [55, 56]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [55, 56]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [55, 56]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [55, 56]
+                        }
+                    ]
+                },
+                {
                     "id": 2,
                     "name": "Polana Canico B",
                     "notified_people_by_problem": [
                         {
                             "service_code": "01",
-                            "people": [5, 2, 32, 31, 12, 18, 17, 11, 15, 27, 28]
+                            "people": [5, 2, 32, 31, 12, 18, 17, 11, 15, 27, 28, 57]
                         },
                         {
                             "service_code": "02",
-                            "people": [5, 2, 32, 12, 18, 17, 11, 15,27, 28]
+                            "people": [5, 2, 32, 12, 18, 17, 11, 15,27, 28, 57]
                         },
                         {
                             "service_code": "03",
-                            "people": [5, 30, 31, 6, 1, 14, 18, 17, 11, 15, 27, 28]
+                            "people": [5, 30, 31, 6, 1, 14, 18, 17, 11, 15, 27, 28, 57]
                         },
                         {
                             "service_code": "04",
-                            "people": [30, 31, 32, 5, 1, 6, 14]
+                            "people": [30, 31, 32, 5, 1, 6, 14, 57]
                         },
                         {
                             "service_code": "05",
-                            "people": [5, 30, 31, 32, 19, 3, 6, 1, 16]
+                            "people": [5, 30, 31, 32, 19, 3, 6, 1, 16, 57]
                         }
                     ],
                     "points": [
@@ -617,32 +1492,350 @@
             ]
         },
         {
-            "id": 2,
+            "id": 3,
+            "name": "KaMavota",
+            "neighbourhoods": [
+                {
+                    "id": 1,
+                    "name": "Hulene A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [58]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [58]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [58]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [58]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [58]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Hulene B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [59, 60]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [59, 60]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [59, 60]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [59, 60]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [59, 60]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Mavalane A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [61]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [61]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [61]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [61]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [61]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Mavalane B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [62]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [62]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [62]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [62]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [62]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Ferroviario",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [63, 64]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [63, 64]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [63, 64]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [63, 64]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [63, 64]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Albazine",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [65]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [65]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [65]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [65]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [65]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "FPLM",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [66, 67]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [66, 67]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [66, 67]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [66, 67]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [66, 67]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Costa do Sol",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [68]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [68]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [68]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [68]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [68]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "3 de Fevereiro",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [69, 70]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [69, 70]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [69, 70]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [69, 70]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [69, 70]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Laulane",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [71, 72]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [71, 72]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [71, 72]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [71, 72]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [71, 72]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Mahotas",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [73, 74]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [73, 74]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [73, 74]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [73, 74]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [73, 74]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
             "name": "Ka Mubukwana",
             "neighbourhoods": [
+                {
+                    "id": 1,
+                    "name": "Inhagoia A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [75]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [75]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [75]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [75]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [75]
+                        }
+                    ]
+                },
                 {
                     "id": 1,
                     "name": "Inhagoia B",
                     "notified_people_by_problem": [
                         {
                             "service_code": "01",
-                            "people": [5, 2, 8, 7, 12, 18, 17, 11, 15, 10, 13, 9]
+                            "people": [5, 2, 8, 7, 12, 18, 17, 11, 15, 10, 13, 9, 75]
                         },
                         {
                             "service_code": "02",
-                            "people": [5, 2, 4, 7, 12, 18, 17, 11, 15, 10, 13, 9]
+                            "people": [5, 2, 4, 7, 12, 18, 17, 11, 15, 10, 13, 9, 75]
                         },
                         {
                             "service_code": "03",
-                            "people": [5, 4, 7, 6, 1, 12, 18, 17, 11, 15, 10, 13, 9]
+                            "people": [5, 4, 7, 6, 1, 12, 18, 17, 11, 15, 10, 13, 9, 75]
                         },
                         {
                             "service_code": "04",
-                            "people": [4, 7, 8, 5, 1, 6, 14]
+                            "people": [4, 7, 8, 5, 1, 6, 14, 75]
                         },
                         {
                             "service_code": "05",
-                            "people": [5, 4, 7, 8, 19, 3, 1, 16]
+                            "people": [5, 4, 7, 8, 19, 3, 1, 16, 75]
                         }
                     ],
                     "points": [
@@ -704,28 +1897,80 @@
                     ]
                 },
                 {
+                    "id": 1,
+                    "name": "Magoanine A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [77]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [77]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [77]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [77]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [77]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Magoanine B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [78, 79]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [78, 79]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [78, 79]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [78, 79]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [78, 79]
+                        }
+                    ]
+                },
+                {
                     "id": 2,
                     "name": "Magoanine C",
                     "notified_people_by_problem": [
                         {
                             "service_code": "01",
-                            "people": [22, 21, 12, 18, 17, 11, 15, 10, 13, 9]
+                            "people": [22, 21, 12, 18, 17, 11, 15, 10, 13, 9, 80, 81]
                         },
                         {
                             "service_code": "02",
-                            "people": [2, 22, 21, 12, 18, 17, 11, 15, 10, 13, 9]
+                            "people": [2, 22, 21, 12, 18, 17, 11, 15, 10, 13, 9, 80, 81]
                         },
                         {
                             "service_code": "03",
-                            "people": [20, 21, 6, 1, 14, 18, 17, 11, 15, 10, 13, 9]
+                            "people": [20, 21, 6, 1, 14, 18, 17, 11, 15, 10, 13, 9, 80, 81]
                         },
                         {
                             "service_code": "04",
-                            "people": [20, 21, 22, 23, 1, 6, 14]
+                            "people": [20, 21, 22, 23, 1, 6, 14, 80, 81]
                         },
                         {
                             "service_code": "05",
-                            "people": [20, 21, 22, 19, 3, 6, 1, 16]
+                            "people": [20, 21, 22, 19, 3, 6, 1, 16, 80, 81]
                         }
                     ],
                     "points": [
@@ -827,6 +2072,214 @@
                                 "longitude": 32.60240666666667
                             },
                             "monitors": [22]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Zimpeto",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [82, 83]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [82, 83]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [82, 83]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [82, 83]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [82, 83]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Malhazine",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [84, 85]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [84, 85]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [84, 85]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [84, 85]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [84, 85]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "George Dimitrov (Benfica)",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [86, 87]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [86, 87]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [86, 87]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [86, 87]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [86, 87]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Nsalene",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [88, 89]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [88, 89]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [88, 89]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [88, 89]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [88, 89]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Luis Cabral",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [90, 91]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [90, 91]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [90, 91]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [90, 91]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [90, 91]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "25 de Junho A",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [92]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [92]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [92]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [92]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [92]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "25 de Junho B",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [93, 94]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [93, 94]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [93, 94]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [93, 94]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [93, 94]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "name": "Bagamoyo",
+                    "notified_people_by_problem": [
+                        {
+                            "service_code": "01",
+                            "people": [95, 96]
+                        },
+                        {
+                            "service_code": "02",
+                            "people": [95, 96]
+                        },
+                        {
+                            "service_code": "03",
+                            "people": [95, 96]
+                        },
+                        {
+                            "service_code": "04",
+                            "people": [95, 96]
+                        },
+                        {
+                            "service_code": "05",
+                            "people": [95, 96]
                         }
                     ]
                 }
