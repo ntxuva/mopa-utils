@@ -433,31 +433,15 @@ class Location(Singleton):
 
     NEIGHBOURHOODS = LOCATIONS = ONLINE_LOCATIONS = None
 
-    def get_locations_tree(self):
-        """loads neighbourhoods.json file and returns as a python object."""
-        if self.NEIGHBOURHOODS:
-            return self.NEIGHBOURHOODS
-
-        data = ""
-        with open(name=os.path.join(config.BASE_DIR,
-                                    config.NEIGHBOURHOODS_JSON_PATH),
-                  mode="r") as f:
-            for line in f.readlines():
-                data = data + line
-        self.NEIGHBOURHOODS = json.loads(data)
-
-        return self.NEIGHBOURHOODS
-
     def get_locations_offline(self):
         """loads locations.json file and converts into a python list"""
         if self.LOCATIONS:
             return self.LOCATIONS
 
         data = ""
-        with open(name=config.BASE_DIR + '/static/locations.json',
-                  mode='r') as f:
+        with open(name=config.BASE_DIR + '/static/locations.json', mode='r') as f:
             for line in f.readlines():
-                data = data + line
+                data += line
         self.LOCATIONS = json.loads(data)
 
         return self.LOCATIONS
@@ -490,9 +474,7 @@ class Location(Singleton):
         }
 
         for location in self.get_locations_offline():
-            if location[u'location_type'] in [u'container',
-                                              u'quarter',
-                                              u'critical point']:
+            if location[u'location_type'] in [u'container', u'quarter', u'critical point']:
 
                 f_latitude  = float(location[u'lat'].strip(u'\u200b'))
                 f_longitude = float(location[u'long'].strip(u'\u200b'))
@@ -591,10 +573,7 @@ class Location(Singleton):
 
         # No textual location so get it from offline locations
         if len(district) == 0 or len(location_name) == 0:
-            location = self.get_location_offline(
-                latitude=request.get('lat', default),
-                longitude=request.get('long', default)
-            )
+            location = self.get_location_offline(latitude=request.get('lat', default), longitude=request.get('long', default))
 
             district = location['district']
             if not district:
@@ -606,10 +585,7 @@ class Location(Singleton):
 
         # No textual description so finally get from online from latitude and longitude
         if len(district) == 0 or len(location_name) == 0:
-            location = self.get_location_online(
-                latitude=request.get('lat', default),
-                longitude=request.get('long', default)
-            )
+            location = self.get_location_online(latitude=request.get('lat', default), longitude=request.get('long', default))
 
             district = location['district']
             if not district:
@@ -624,19 +600,33 @@ class Location(Singleton):
         _return['neighbourhood'] = neighbourhood
         return _return
 
+    ##################
+
+    def get_notifications_mapping(self):
+        """loads neighbourhoods.json file and returns as a python object."""
+        if self.NEIGHBOURHOODS:
+            return self.NEIGHBOURHOODS
+
+        data = ""
+        with open(name=os.path.join(config.BASE_DIR, config.NEIGHBOURHOODS_JSON_PATH), mode="r") as f:
+            for line in f.readlines():
+                data += line
+        self.NEIGHBOURHOODS = json.loads(data)
+
+        return self.NEIGHBOURHOODS
+
     def get_monitor(self, _id):
         """Gets a specific monitors details"""
-        neighbourhoods = self.get_locations_tree()
+        neighbourhoods = self.get_notifications_mapping()
         for monitor in neighbourhoods['monitors']:
-            if (str(monitor['id']) == str(_id) or
-                    int(monitor['id']) == int(_id)):
+            if str(monitor['id']) == str(_id) or int(monitor['id']) == int(_id):
                 return monitor
         return None
 
     def get_monitors_phones(self):
         """Get the list of all monitors phone numbers"""
         monitor_phones = []
-        neighbourhoods = self.get_locations_tree()
+        neighbourhoods = self.get_notifications_mapping()
         for monitor in neighbourhoods['monitors']:
             if monitor['phone']:
                 monitor_phones.append(monitor['phone'])
@@ -644,7 +634,7 @@ class Location(Singleton):
 
     def get_notified_person(self, _id):
         """Gets the details of one to be notified"""
-        neighbourhoods = self.get_locations_tree()
+        neighbourhoods = self.get_notifications_mapping()
         for person in neighbourhoods["notified_people"]:
             if str(person["id"]) == str(_id):
                 return person
@@ -652,7 +642,7 @@ class Location(Singleton):
 
     def get_monitor_by_phone(self, phone):
         """Gets the details of a monitor using his phone number"""
-        neighbourhoods = self.get_locations_tree()
+        neighbourhoods = self.get_notifications_mapping()
         for monitor in neighbourhoods["monitors"]:
             if str(monitor["phone"]) == str(phone):
                 return monitor
@@ -661,12 +651,11 @@ class Location(Singleton):
     def get_monitor_point(self, monitor_id):
         """Gets the point data a given monitor"""
         point_data = {}
-        neighbourhoods = self.get_locations_tree()
+        neighbourhoods = self.get_notifications_mapping()
         for district in neighbourhoods["districts"]:
             for neighbourhood in district["neighbourhoods"]:
                 for point in neighbourhood["points"]:
-                    if (monitor_id in point["monitors"] or
-                            str(monitor_id) in point["monitors"]):
+                    if monitor_id in point["monitors"] or str(monitor_id) in point["monitors"]:
                         point_data["name"] = point["name"]
                         point_data["location"] = point["location"]
                         point_data["geo_location"] = point["geo_location"]
@@ -679,7 +668,7 @@ class Location(Singleton):
         """Gets the list of phone numbers which must be notified for problems
         with the given service_code in the given neighbourhood"""
         notified_phones = []
-        neighbourhoods = self.get_locations_tree()
+        neighbourhoods = self.get_notifications_mapping()
         for district in neighbourhoods['districts']:
             for _neighbourhood in district['neighbourhoods']:
                 if _neighbourhood['name'] == neighbourhood:

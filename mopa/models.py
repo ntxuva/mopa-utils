@@ -358,7 +358,7 @@ class SurveyAnswer(BaseModel):
         self.survey_key = survey_key
 
         if not self.NEIGHBOURHOODS:
-            self.NEIGHBOURHOODS = Location.i().get_locations_tree()
+            self.NEIGHBOURHOODS = Location.i().get_notifications_mapping()
 
         for district in self.NEIGHBOURHOODS["districts"]:
             for neighbourhood in district['neighbourhoods']:
