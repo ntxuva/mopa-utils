@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 NAME="mopa-utils"
 PROJECT_DIR=/srv/www/mopa-utils
