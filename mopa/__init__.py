@@ -57,14 +57,18 @@ def setup_logging(app):
     # logging.config.dictConfig(yaml.load(file(os.path.join(app.config['BASE_DIR'], '../logging.yaml'),'r')))
     flask_cors_logger = logging.getLogger('flask_cors')
     flask_cors_logger.level = logging.CRITICAL
-    loggers = [app.logger, flask_cors_logger, logging.getLogger('root')]
+
+    sqlalchemy_logger = logging.getLogger('sqlalchemy.engine')
+    sqlalchemy_logger.setLevel(logging.ERROR)
+
+    loggers = [app.logger, flask_cors_logger, sqlalchemy_logger, logging.getLogger('root')]
     for logger in loggers:
         logger.addHandler(file_handler)
         if not app.debug:
             logger.addHandler(mail_handler)
 
 
-def create_app(config_name=None, main=True):
+def create_app():
     """Create an application instance."""
     cfg = os.path.join(os.getcwd(), 'config.py') if os.path.exists('config.py') else os.path.join(os.getcwd(), 'mopa/config.py')
 

@@ -24,6 +24,7 @@ sys.path.append(path + '/vendor')
 sys.path.append(path + '/mopa')
 from mopa import create_app
 
+
 def wsgi_app(environ, start_response):
     import sys
     output = sys.version.encode('utf8')
