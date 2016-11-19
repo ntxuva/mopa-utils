@@ -363,11 +363,11 @@ def send_daily_survey_replies():
     response = None
 
     try:
-        response = retry_call(requests.get, fargs=['http://mopa.co.mz:5000/critical-points/' + today.strftime('%Y-%m-%d')], exceptions=ConnectTimeout, tries=3)
+        response = retry_call(requests.get, fargs=['http://mopa.co.mz:8080/critical-points/' + today.strftime('%Y-%m-%d')], exceptions=ConnectTimeout, tries=3)
     except Exception, ex:
         ex_type, ex_obj, ex_tb = sys.exc_info()
         fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
-        current_app.logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}").format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc())
+        current_app.logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
 
     if not response:
         return
