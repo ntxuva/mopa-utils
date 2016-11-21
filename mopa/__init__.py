@@ -44,7 +44,7 @@ def setup_logging(app):
     file_handler.setFormatter(simple_formatter)
 
     mail_handler = SMTPHandler(
-        (config['SMTP_USERNAME'], config['SMTP_PASSWORD']),
+        (config['SMTP_HOST'], config['SMTP_PORT']),
         config['SMTP_USERNAME'],
         config['ADMINS'],
         '[Mopa] Bug log',
