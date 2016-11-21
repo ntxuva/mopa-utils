@@ -258,7 +258,7 @@ def send_weekly_report():
             '''
     send_mail(
         config.WEEKLY_REPORT_TO,
-        '[MOPA] - Relatorio Semanal - ' + today.strftime('%Y-%m-%d'),
+        '[MOPA] Relatorio Semanal - ' + today.strftime('%Y-%m-%d'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
@@ -343,7 +343,7 @@ def send_daily_report():
             '''
     send_mail(
         config.DAILY_REPORT_TO,
-        '[MOPA] - Relatorio Diario - ' + TODAY.strftime('%Y-%m-%d'),
+        '[MOPA] Relatorio Diario - ' + TODAY.strftime('%Y-%m-%d'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
@@ -416,7 +416,7 @@ def send_daily_survey_replies():
             '''
     send_mail(
         config.DAILY_ENQUIRY_REPORT_TO,
-        '[MOPA] - Respostas aos Inqueritos Diarios - ' + today.strftime('%Y-%m-%d'),
+        '[MOPA] Respostas aos Inqueritos Diarios - ' + today.strftime('%Y-%m-%d'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
