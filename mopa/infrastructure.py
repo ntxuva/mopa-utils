@@ -258,6 +258,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
     attachments can be passed as a CSV string with full paths to the desired files.
     """
     mail = MIMEMultipart()
+    body = MIMEMultipart('alternative')
 
     logger = logging.getLogger()
 
@@ -307,14 +308,16 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
     mail.preamble = subject
 
     if not is_html:
-        mail.attach(MIMEText(message, 'plain', 'utf-8'))
+        body.attach(MIMEText(message, 'plain', 'utf-8'))
     else:
         if text:
-            mail.attach(MIMEText(text, 'plain', 'utf-8'))
+            body.attach(MIMEText(text, 'plain', 'utf-8'))
         else:
-            mail.attach(MIMEText(html2text_converter.handle(message), 'plain', 'utf-8'))
+            body.attach(MIMEText(html2text_converter.handle(message), 'plain', 'utf-8'))
 
-        mail.attach(MIMEText(message, 'html', 'utf-8'))
+        body.attach(MIMEText(message, 'html', 'utf-8'))
+
+    mail.attach(body)
 
     if attachments:
         attachments = attachments if isinstance(attachments, list) else map(str.strip, attachments.split(','))
