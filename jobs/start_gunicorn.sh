@@ -12,8 +12,12 @@ WORKERS=5
 
 echo "Starting $NAME"
 
-# activate the virtualenv
 cd $PROJECT_DIR
+
+# clear *.pyc files
+find . -name \*.pyc -delete
+
+# activate the virtualenv
 source $VIRTUALENV_DIR/bin/activate
 
 # Start your unicorn
