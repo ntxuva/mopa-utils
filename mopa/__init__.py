@@ -47,7 +47,7 @@ def setup_logging(app):
         (config['SMTP_HOST'], config['SMTP_PORT']),
         config['SMTP_USERNAME'],
         config['ADMINS'],
-        '[Mopa] Bug log',
+        '[MOPA] Bug log',
         credentials=(config['SMTP_USERNAME'], config['SMTP_PASSWORD']),
         secure=()
     )
