@@ -16,7 +16,7 @@ from requests.exceptions import ConnectTimeout
 from retry.api import retry_call
 import traceback
 from flask import Blueprint, current_app, request, abort
-from sqlalchemy import exc
+from sqlalchemy.exc import IntegrityError, DisconnectionError
 
 import mopa.config as config
 from mopa.infrastructure import Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
@@ -75,7 +75,7 @@ def send_weekly_report():
         Uow.add(report)
         try:
             Uow.commit()
-        except exc.IntegrityError:
+        except IntegrityError:
             Uow.rollback()
         except Exception, ex:
             Uow.rollback()
@@ -303,20 +303,14 @@ def send_daily_report():
                 'neighbourhood': neighbourhood,
                 'location_name': location_name,
                 'nature': xstr(_request['service_name']),
-                'datetime': (xstr(_request['requested_datetime'])[0:10] +
-                             " " +
-                             xstr(_request['requested_datetime'])[11:19]),
+                'datetime': xstr(_request['requested_datetime'])[0:10] + " " + xstr(_request['requested_datetime'])[11:19],
                 'type': xstr(_request['service_name']),
                 'status': xstr(_request['service_notice']),
                 'status_notes': xstr(_request.get('status_notes', ''))
             })
 
     # sorting
-    requests_list = sorted(requests_list,
-                           key=lambda i: (i['district'],
-                                          i['neighbourhood'],
-                                          i['nature'],
-                                          i['datetime']))
+    requests_list = sorted(requests_list, key=lambda i: (i['district'], i['neighbourhood'], i['nature'], i['datetime']))
 
     # Generate PDF
     context = {
