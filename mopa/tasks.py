@@ -34,11 +34,12 @@ def before_request():
         abort(403)  # Forbidden / Not Authorized
 
 
+@tasks.route('/send-weekly-report/<regex("\d{4}-\d{2}-\d{2}"):today>')
 @tasks.route('/send-weekly-report')
-def send_weekly_report():
+def send_weekly_report(today=None):
     """Task to run weekly for report"""
 
-    today = date.today()
+    today = date.today() if today is None else datetime.strptime(today, '%Y-%m-%d')
     start_date = today + timedelta(days=-7)
     end_date = today
 
