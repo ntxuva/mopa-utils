@@ -271,7 +271,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
     to = to if isinstance(to, list) else map(str.strip, to.split(','))
     for key, mail_address in enumerate(to):
         if not is_valid_mail_address(mail_address):
-            raise Exception('Invalid Address "%s" in To' % mail_address)
+            raise Exception('Invalid Address "%s" in To' % str(mail_address))
         else:
             to[key] = to_parseable_mail_address(mail_address)
 
@@ -279,7 +279,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
         cc = cc if isinstance(cc, list) else map(str.strip, cc.split(','))
         for key, mail_address in enumerate(cc):
             if not is_valid_mail_address(mail_address):
-                raise Exception('Invalid Address: "%s" in Cc' % mail_address)
+                raise Exception('Invalid Address: "%s" in Cc' % str(mail_address))
             else:
                 cc[key] = to_parseable_mail_address(mail_address)
 
@@ -287,7 +287,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
         bcc = bcc if isinstance(bcc, list) else map(str.strip, bcc.split(','))
         for key, mail_address in enumerate(bcc):
             if not is_valid_mail_address(mail_address):
-                raise Exception('Invalid Address: "%s" in Bcc' % mail_address)
+                raise Exception('Invalid Address: "%s" in Bcc' % str(mail_address))
             else:
                 bcc[key] = to_parseable_mail_address(mail_address)
 
