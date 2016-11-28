@@ -544,9 +544,9 @@ class Location(Singleton):
             'neighbourhood': ""
         }
 
-        district      = xstr(request.get('neighbourhood', default))
+        district = ''
         location_name = xstr(request.get('address', default))
-        neighbourhood = ''
+        neighbourhood = xstr(request.get('neighbourhood', default))
 
         # get location online with address_id
         if not district:
@@ -561,19 +561,14 @@ class Location(Singleton):
                 if not neighbourhood:
                     neighbourhood = location['neighbourhood']
 
-        # No textual location get it from Valter.
+        # No textual location so get it from the description.
         if len(district) == 0 or len(location_name) == 0:
             description = request.get('description', default)
             if description and description.startswith('Criado por USSD'):
-                description = description.replace('Criado por USSD. ', '')
-                location_name = description
-
-                neighbourhood_text = description.replace('Bairro:', '').strip()
-                for c in neighbourhood_text:
-                    if c == '.':
-                        break
-                    neighbourhood = neighbourhood + c
-
+                description = description.replace('Criado por USSD. ', '').replace('Criado por App. ', '')
+                district = description.partition(', Bairro: ')[0].replace('Distrito: ', '')
+                location_name = (description.partition(neighbourhood)[2]).strip(',')
+        """
         # No textual location so get it from offline locations
         if len(district) == 0 or len(location_name) == 0:
             location = self.get_location_offline(latitude=request.get('lat', default), longitude=request.get('long', default))
@@ -597,7 +592,7 @@ class Location(Singleton):
                 location_name = location['location_name']
             if not neighbourhood:
                 neighbourhood = location['neighbourhood']
-
+        """
         _return['district'] = district
         _return['location_name'] = location_name
         _return['neighbourhood'] = neighbourhood

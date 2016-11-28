@@ -166,7 +166,7 @@ class Survey(BaseModel):
 
     def __repr__(self):
         """String representation """
-        return "<Survey> " + self.survey_id
+        return "<Survey> " + str(self.survey_id)
 
     def get_next_survey_id(self):
         """The survey id is daily auto-incremental, meaning that each day it will reset to 1 and keep counting till next reset."""
@@ -417,7 +417,7 @@ class Report(db.Model):
 SELECT recent.*, recent.tempo_medio_resolucao - old.tempo_medio_resolucao as variacao
 FROM
 (
-SELECT type,
+SELECT `type`,
     COUNT(*) as no_occorencias,
     ROUND((COUNT(*)/b.total_reports * 100),2) as `pct_do_total`,
     AVG(a.time_diff) `tempo_medio_resolucao`
