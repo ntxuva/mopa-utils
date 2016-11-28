@@ -275,12 +275,12 @@ def send_monthly_report():
     return "Ok", 200
 
 
+@tasks.route('/send-daily-report/<regex("\d{4}-\d{2}-\d{2}"):today>')
 @tasks.route('/send-daily-report')
-def send_daily_report():
+def send_daily_report(today=None):
     """Task to run the Daily PDF Exporter"""
 
-    today = date.today()
-    locations = Location.i().get_locations_offline()
+    today = date.today() if today is None else datetime.strptime(today, '%Y-%m-%d')
 
     # Get requests
     default = ''
