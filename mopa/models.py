@@ -11,9 +11,7 @@ import sys
 import traceback
 import requests
 from requests.exceptions import ConnectTimeout
-import json
 from sqlalchemy import *
-from sqlalchemy.ext.declarative import DeclarativeMeta
 from retry.api import retry_call
 import re
 from flask import current_app
@@ -22,12 +20,13 @@ from flask import current_app
 # For datetime comparisons w/ SQLAlchemy check
 # https://gist.github.com/Tukki/3953990
 from mopa import db
-from mopa.infrastructure import Location, remove_accents, ustr
+from mopa.infrastructure import Location, ustr
 
 DB_PREFIX = os.getenv('DB_PREFIX', 'mopa_')
 SC_SMS_END_POINT = os.getenv('SC_SMS_END_POINT')
 UX_SMS_END_POINT = os.getenv('UX_SMS_END_POINT')
 UX_SMS_API_KEY = os.getenv('UX_SMS_API_KEY', 'local')
+
 
 def setup_models():
     """Sets up our DB Models by Dropping and creating the tables again.
@@ -42,6 +41,10 @@ class Uow():
     things in the models layer. Should any component require something from the
     db it should ask to the models layer
     """
+
+    def __init__(self):
+        pass
+
     @staticmethod
     def add(m):
         db.session.add(m)

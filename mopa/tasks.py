@@ -279,15 +279,15 @@ def send_monthly_report():
 def send_daily_report():
     """Task to run the Daily PDF Exporter"""
 
-    TODAY = date.today()
-    LOCATIONS = Location.i().get_locations_offline()
+    today = date.today()
+    locations = Location.i().get_locations_offline()
 
     # Get requests
     default = ''
     requests_list = []
 
-    start_date = (TODAY + timedelta(days=-2)).strftime('%Y-%m-%d')
-    end_date = TODAY.strftime('%Y-%m-%d')
+    start_date = (today + timedelta(days=-2)).strftime('%Y-%m-%d')
+    end_date = today.strftime('%Y-%m-%d')
 
     for _request in get_requests(start_date, end_date, None):
 
@@ -314,12 +314,12 @@ def send_daily_report():
 
     # Generate PDF
     context = {
-        'today': TODAY.strftime('%d-%m-%Y'),
+        'today': today.strftime('%d-%m-%Y'),
         'requests_list': requests_list,
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
-    f_name = 'relatorio-diario-' + TODAY.strftime('%Y_%m_%d') + '.pdf'
+    f_name = 'relatorio-diario-' + today.strftime('%Y_%m_%d') + '.pdf'
     generate_pdf('daily_report.html', context, f_name)
 
     # Send mail
@@ -337,7 +337,7 @@ def send_daily_report():
             '''
     send_mail(
         config.DAILY_REPORT_TO,
-        '[MOPA] Relatorio Diario - ' + TODAY.strftime('%Y-%m-%d'),
+        '[MOPA] Relatorio Diario - ' + today.strftime('%Y-%m-%d'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
