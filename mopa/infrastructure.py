@@ -222,7 +222,7 @@ def is_valid_mail_address(address):
     if isinstance(address, tuple) and (
         len(address) != 2
         or not isinstance(address[0], (str, bool))
-        or not isinstance(address[1], str)
+        or not isinstance(address[1], (str, unicode))
         or not is_valid_mail_address(address[1])
     ):
         return False
