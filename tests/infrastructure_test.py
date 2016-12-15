@@ -3,7 +3,37 @@
 import os
 import unittest
 from mopa import create_app
-from mopa.infrastructure import send_mail, asynchronously, snake_case, remove_accents
+from mopa.infrastructure import (send_mail, asynchronously, snake_case,
+    remove_accents, Location)
+
+
+class LocationsTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = app = create_app()
+        app.testing = True
+        self.client = app.test_client()
+
+    def tearDown(self):
+        pass
+
+    def test_gets_notified_people(self):
+        people = Location.i().get_notified_companies_phones('Magoanine B', '04')
+        self.assertTrue(len(people) >= 1)
+
+        people = Location.i().get_notified_companies_phones('25 de Junho A', '04')
+        self.assertTrue(len(people) >= 1)
+
+        people = Location.i().get_notified_companies_phones('Luis Cabral', '04')
+        self.assertTrue(len(people) >= 1)
+
+        people = Location.i().get_notified_companies_phones('Nsalane', '04')
+        self.assertTrue(len(people) == 0)
+
+        people = Location.i().get_notified_companies_phones('Malhazine', '04')
+        self.assertTrue(len(people) >= 1)
+
+        people = Location.i().get_notified_companies_phones('Magoanine C', '04')
+        self.assertTrue(len(people) >= 1)
 
 
 class MailTestCase(unittest.TestCase):
@@ -21,10 +51,8 @@ class MailTestCase(unittest.TestCase):
         os.environ['USER_ID'] = user_id or ''
         os.environ['USER_IS_ADMIN'] = '1' if is_admin else '0'
 
-
     def test_snake_case(self):
         self.assertEqual('snake_case', snake_case('SnakeCase'))
-
 
     def test_remove_accents(self):
         self.assertEqual('uo', remove_accents(u'úõ'))

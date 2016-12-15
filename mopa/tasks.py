@@ -18,6 +18,8 @@ import traceback
 from flask import Blueprint, current_app, request, abort
 from sqlalchemy.exc import IntegrityError, DisconnectionError
 
+from slugify import slugify
+
 import mopa.config as config
 from mopa.infrastructure import Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
 from mopa.models import Uow, SMS, Survey, Report
@@ -286,6 +288,7 @@ def send_daily_report(today=None):
     # Get requests
     default = ''
     requests_list = []
+    districts = []
 
     start_date = (today + timedelta(days=-2)).strftime('%Y-%m-%d')
     end_date = today.strftime('%Y-%m-%d')
@@ -295,6 +298,7 @@ def send_daily_report(today=None):
         location = Location.i().guess_location(_request)
 
         district = location['district']
+        districts.append(district)
         neighbourhood = location['neighbourhood']
         location_name = location['location_name']
 
@@ -313,38 +317,44 @@ def send_daily_report(today=None):
     # sorting
     requests_list = sorted(requests_list, key=lambda i: (i['district'], i['neighbourhood'], i['nature'], i['datetime']))
 
-    # Generate PDF
-    context = {
-        'today': today.strftime('%d-%m-%Y'),
-        'requests_list': requests_list,
-        'static': os.path.join(config.BASE_DIR, 'templates') + '/'
-    }
+    # per district export
+    districts = set(districts)
 
-    f_name = 'relatorio-diario-' + today.strftime('%Y_%m_%d') + '.pdf'
-    generate_pdf('daily_report.html', context, f_name)
+    for district in districts:
+        district_requests = filter(lambda x: x['district'] == district, requests_list)
 
-    # Send mail
-    html = '''\
-        <html>
-            <head></head>
-            <body>
-            <p>Sauda&ccedil;&otilde;es!<br/><br/>
-                Segue em anexo o relat&oacute;rio MOPA<br/><br/>
-                Cumprimentos,<br/>
-                <em>Enviado automaticamente</em>
-            </p>
-            </body>
-        </html>
-            '''
-    send_mail(
-        config.DAILY_REPORT_TO,
-        '[MOPA] Relatorio Diario - ' + today.strftime('%Y-%m-%d'),
-        html,
-        is_html=True,
-        cc=config.DAILY_REPORT_CC,
-        sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
-        attachments=[config.REPORTS_DIR + '/' + f_name]
-    )
+        # Generate PDF
+        context = {
+            'today': today.strftime('%d-%m-%Y'),
+            'requests_list': district_requests,
+            'static': os.path.join(config.BASE_DIR, 'templates') + '/'
+        }
+
+        f_name = 'relatorio-diario-' + slugify(district) + today.strftime('%Y_%m_%d') + '.pdf'
+        generate_pdf('daily_report.html', context, f_name)
+
+        # Send mail
+        html = '''\
+            <html>
+                <head></head>
+                <body>
+                <p>Sauda&ccedil;&otilde;es!<br/><br/>
+                    Segue em anexo o relat&oacute;rio MOPA<br/><br/>
+                    Cumprimentos,<br/>
+                    <em>Enviado automaticamente</em>
+                </p>
+                </body>
+            </html>
+                '''
+        send_mail(
+            config.DAILY_REPORT_TO,
+            '[MOPA] Relatorio Diario - ' + district + ' - ' + today.strftime('%Y-%m-%d'),
+            html,
+            is_html=True,
+            cc=config.DAILY_REPORT_CC,
+            sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
+            attachments=[config.REPORTS_DIR + '/' + f_name]
+        )
 
     return "Ok", 200
 
@@ -416,7 +426,7 @@ def send_daily_survey_replies():
         is_html=True,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
-        attachments = [config.REPORTS_DIR + '/' + f_name]
+        attachments=[config.REPORTS_DIR + '/' + f_name]
     )
 
     return "Ok", 200
@@ -464,13 +474,13 @@ def notify_updates_on_requests():
 
     today = date.today()
 
-    start_date = (today).strftime('%Y-%m-%d')
+    start_date = today.strftime('%Y-%m-%d')
     end_date = (today + timedelta(days=1)).strftime('%Y-%m-%d')
-    requests = get_requests(start_date, end_date, True)
+    _requests = get_requests(start_date, end_date, True)
 
     time_ago = datetime.now(config.TZ) + timedelta(seconds=-(1 * 60 * 10))
     now = datetime.now(config.TZ)
-    for _request in requests:
+    for _request in _requests:
         requested_datetime = parse(_request['requested_datetime'])
         updated_datetime = parse(_request['updated_datetime'])
         status = _request['status']
@@ -479,9 +489,9 @@ def notify_updates_on_requests():
             # New request -> notify responsible company/people
             location = Location.i().guess_location(_request)
             district = location['district']
+            neighbourhood = location['neighbourhood']
             location_name = location['location_name']
 
-            neighbourhood = location['neighbourhood']
             if neighbourhood:
                 phones = Location.i().get_notified_companies_phones(_request['neighbourhood'], _request['service_code'])
 
