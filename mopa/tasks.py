@@ -499,7 +499,7 @@ def notify_updates_on_requests():
                     text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
                     text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', '').replace('Criado por USSD.', ''))
                     text = truncate(text, 160)
-                    db_sms = SMS.static_send(phone,text)
+                    db_sms = SMS.static_send(phone, text)
                     Uow.add(db_sms)
                 Uow.commit()
             else:
