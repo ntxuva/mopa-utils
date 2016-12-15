@@ -33,6 +33,10 @@ sudo service supervisor restart
 
 copy .env.example .env
 # Edit .env then put API_KEY in /etc/environment
+
+# Nuke *.pyc files
+find . -name "*.pyc" -exec rm -rf {} \;
+find . -name \*.pyc -delete
 ```
 
 ## Guidelines on Common usage of xhtml2pdf and errors

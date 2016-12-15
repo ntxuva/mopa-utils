@@ -37,7 +37,7 @@ def setup_logging(app):
     simple_formatter = logging.Formatter(simple_format, date_format)
     complex_formatter = logging.Formatter(complex_format, date_format)
 
-    log_file_path = os.path.join(app.config['APP_ROOT'],'data/logs/mopa.log')
+    log_file_path = os.path.join(app.config['APP_ROOT'], 'data/logs/mopa.log')
 
     file_handler = RotatingFileHandler(log_file_path, maxBytes=10485760, backupCount=10)
     file_handler.setLevel(logging.DEBUG)
@@ -60,6 +60,8 @@ def setup_logging(app):
 
     sqlalchemy_logger = logging.getLogger('sqlalchemy.engine')
     sqlalchemy_logger.setLevel(logging.ERROR)
+
+    app.logger.setLevel(logging.INFO)
 
     loggers = [app.logger, flask_cors_logger, sqlalchemy_logger, logging.getLogger('root')]
     for logger in loggers:

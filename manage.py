@@ -53,6 +53,7 @@ def profile(length=25, profile_dir=None):
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length], profile_dir=profile_dir)
     app.run()
 
+
 @manager.command
 def runserver_secure():
     app.run('0.0.0.0', ssl_context='adhoc')
