@@ -298,7 +298,7 @@ def send_daily_report(today=None):
         location = Location.i().guess_location(_request)
 
         district = location['district']
-        districts.append(district)
+        districts.append(district.lower())
         neighbourhood = location['neighbourhood']
         location_name = location['location_name']
 
@@ -321,7 +321,7 @@ def send_daily_report(today=None):
     districts = set(districts)
 
     for district in districts:
-        district_requests = filter(lambda x: x['district'] == district, requests_list)
+        district_requests = filter(lambda x: x['district'].lower() == district, requests_list)
 
         # Generate PDF
         context = {
@@ -330,7 +330,7 @@ def send_daily_report(today=None):
             'static': os.path.join(config.BASE_DIR, 'templates') + '/'
         }
 
-        f_name = 'relatorio-diario-' + slugify(district) + today.strftime('%Y_%m_%d') + '.pdf'
+        f_name = 'relatorio-diario-' + slugify(district) + '-' + today.strftime('%Y_%m_%d') + '.pdf'
         generate_pdf('daily_report.html', context, f_name)
 
         # Send mail
@@ -348,7 +348,7 @@ def send_daily_report(today=None):
                 '''
         send_mail(
             config.DAILY_REPORT_TO,
-            '[MOPA] Relatorio Diario - ' + district + ' - ' + today.strftime('%Y-%m-%d'),
+            '[MOPA] Relatorio Diario - ' + district.title() + ' - ' + today.strftime('%Y-%m-%d'),
             html,
             is_html=True,
             cc=config.DAILY_REPORT_CC,
