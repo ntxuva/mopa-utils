@@ -104,23 +104,13 @@ class SMS(BaseModel):
         if self.direction == 'O' and self.sent_to == 'Mopa':
             raise Exception("Invalid addressee for outgoing message" + str(self))
 
-        to_ux_re = re.compile('^(\+?)(258)?8[467]\d{7}$', re.IGNORECASE)
-        is_to_ux = to_ux_re.match(self.sent_to)
-
-        payload = {}
-        if is_to_ux:
-            payload = {"to[]": self.sent_to, "message": self.text, "API_KEY": UX_SMS_API_KEY}
-        else:
-            payload = {"from": "mopa", "to": self.sent_to, "text": self.text}
+        payload = {"to[]": self.sent_to, "message": self.text, "API_KEY": UX_SMS_API_KEY}
 
         response = None
 
         # Retry sending request 3 times if safe-retry ConnectTimeout exception is thrown and trap & report other errors
         try:
-            if is_to_ux:
-                response = retry_call(requests.post, fargs=[UX_SMS_END_POINT], fkwargs={"data": payload, 'allow_redirects': True}, exceptions=ConnectTimeout, tries=3, logger=current_app.logger)
-            else:
-                response = retry_call(requests.get, fargs=[SC_SMS_END_POINT], fkwargs={"params": payload, 'allow_redirects': True}, exceptions=ConnectTimeout, tries=3, logger=current_app.logger)
+            response = retry_call(requests.post, fargs=[UX_SMS_END_POINT], fkwargs={"data": payload, 'allow_redirects': True}, exceptions=ConnectTimeout, tries=3, logger=current_app.logger)
         except Exception, ex:
             ex_type, ex_obj, ex_tb = sys.exc_info()
             fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
