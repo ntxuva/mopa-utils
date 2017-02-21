@@ -7,7 +7,7 @@
 	}
 
 	@frame content_frame {
-		left: 50pt; width: 512pt; top: 100pt; height: 622pt;
+		left: 50pt; width: 512pt; top: 100pt; height: 722pt;
 		margin-top: 20pt;
 	}
 
@@ -17,28 +17,28 @@
 	}
 }
 
-p { 
-	margin: 0; 
-	-pdf-keep-with-next: true; 
+p {
+	margin: 0;
+	-pdf-keep-with-next: true;
 }
 
-p .separator { 
-	-pdf-keep-with-next: false; 
-	font-size: 6pt; 
+p .separator {
+	-pdf-keep-with-next: false;
+	font-size: 6pt;
 }
 
 h1 {
-  -pdf-outline: true;  
+  -pdf-outline: true;
   -pdf-level: 0;
   -pdf-open: false;
 }
 
 h2 {
-  -pdf-outline: true;  
+  -pdf-outline: true;
   -pdf-level: 1;
 }
 
 h3 {
-  -pdf-outline: true;  
+  -pdf-outline: true;
   -pdf-level: 2;
 }
