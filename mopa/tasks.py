@@ -288,9 +288,12 @@ def send_monthly_report():
     lastMonth = first - timedelta(days=1)
     lastMonth_first = lastMonth.replace(day=1)
 
-    all_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json')
+    districts = pd.read_csv(os.path.join(config.BASE_DIR, 'static/neighbourhoods.csv'))
+
+    all_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?end_date=' + lastMonth.strftime('%Y-%m-%d'))
     all_reports['requested_datetime'] = pd.to_datetime(all_reports['requested_datetime'])
     all_reports['requested_month'] = all_reports['requested_datetime'].apply(lambda t: t.strftime('%Y-%m'))
+    all_reports = all_reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
     all_reports = translate_column_names(all_reports)
 
     reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date='  + lastMonth_first.strftime('%Y-%m-%d') + '&end_date=' + lastMonth.strftime('%Y-%m-%d') + '&phone_key=666554')
@@ -299,13 +302,18 @@ def send_monthly_report():
     reports['updated_datetime'] = pd.to_datetime(reports['updated_datetime'])
     reports['requested_month'] = reports['requested_datetime'].apply(lambda t: t.strftime('%y/%m'))
     reports['response_time'] = (reports['updated_datetime'] - reports['requested_datetime']).dt.days
-
-    districts = pd.read_csv(os.path.join(config.BASE_DIR, 'static/neighbourhoods.csv'))
     reports = reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
-
     reports = translate_column_names(reports)
 
     # prepare tables
+
+    table_problems_per_district_per_month = pd.crosstab(all_reports['Distrito'], all_reports['Mes'])
+    table_problems_per_district_per_month['Total'] = table_problems_per_district_per_month.sum(axis = 1)
+    table_problems_per_district_per_month = table_problems_per_district_per_month.to_html()
+
+    table_problems_per_month = pd.crosstab(all_reports['Categoria'], all_reports['Mes'])
+    table_problems_per_month['Total'] = table_problems_per_month.sum(axis = 1)
+    table_problems_per_month = table_problems_per_month.to_html()
 
     table_service_per_month = pd.crosstab(reports['Categoria'], reports['Estado'])
     table_service_per_month['Total'] = table_service_per_month.sum(axis = 1)
@@ -323,17 +331,34 @@ def send_monthly_report():
     table_unique_citizens_per_district = reports\
         .pivot_table(index='Categoria', columns='Distrito', values='phone',
                      fill_value=0,
-                     aggfunc = pd.Series.nunique)\
-        .to_html()
+                     aggfunc = pd.Series.nunique)
+    table_unique_citizens_per_district['Total'] = table_unique_citizens_per_district.sum(axis = 1)
+    table_unique_citizens_per_district = table_unique_citizens_per_district.to_html()
 
     ## prepare figures
 
     fig0 = plt.figure()
+    image0_table = all_reports['Mes'].value_counts().sort_index(ascending = True)
+    ax = image0_table.plot(kind='bar')
+    plt.xticks(rotation=0)
+
+    for spine in plt.gca().spines.values():
+        spine.set_visible(False)
+
+    for bar in ax.patches:
+        height = bar.get_height()
+        plt.gca().text(bar.get_x() + bar.get_width()/2, bar.get_height() - 100 , str('{:d}'.format(int(height))),
+                 ha='center', color='w', fontsize=12)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot0.png'), dpi=65)
+
+    fig00 = plt.figure()
     image0_table = pd.crosstab(all_reports['Mes'], all_reports['Categoria'])
-    image0_table.plot(kind='bar')
+    ax = image0_table.plot()
     plt.xticks(rotation=0)
     plt.tight_layout()
-    plt.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot0.png'), dpi=68)
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot00.png'), dpi=65)
 
     fig1_1 = plt.figure()
     ax1_1 = fig1_1.add_subplot(111)
@@ -342,7 +367,7 @@ def send_monthly_report():
     plt.tight_layout()
     ax1_1.set_aspect('equal')
     plt.ylabel('')
-    plt.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot1_1.png'), dpi=65)
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot1_1.png'), dpi=65)
 
     fig1_2 = plt.figure()
     ax1_2 = fig1_2.add_subplot(111)
@@ -351,7 +376,7 @@ def send_monthly_report():
     ax1_2.set_aspect('equal')
     plt.ylabel('')
     plt.tight_layout()
-    plt.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot1_2.png'), dpi=65)
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot1_2.png'), dpi=76)
 
     fig1_3 = plt.figure()
     ax1_3 = fig1_3.add_subplot(111)
@@ -360,14 +385,14 @@ def send_monthly_report():
     ax1_3.set_aspect('equal')
     plt.ylabel('')
     plt.tight_layout()
-    plt.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot1_3.png'), dpi=65)
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot1_3.png'), dpi=75)
 
     fig3 = plt.figure()
     image3_table = pd.crosstab(reports['Categoria'], reports['requested_datetime'].dt.weekday)
     image3_table.columns = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
     sns.heatmap(image3_table, annot=True, linewidths=.5, annot_kws={"size": 8}, fmt='g', cmap='Reds', cbar=False)
     plt.tight_layout()
-    fig3.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot3.png'), dpi=70)
+    fig3.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot3.png'), dpi=75)
 
     fig4 = plt.figure()
     image4_table = pd.crosstab(reports['Categoria'], reports['requested_datetime'].dt.hour)
@@ -375,7 +400,7 @@ def send_monthly_report():
     plt.xlabel('Horas')
     plt.yticks(rotation=0)
     plt.tight_layout()
-    fig4.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot4.png'), dpi=65)
+    fig4.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot4.png'), dpi=75)
 
     fig5 = plt.figure()
     image5_table = pd.crosstab(reports['Categoria'], reports['updated_datetime'].dt.hour+2)
@@ -383,7 +408,7 @@ def send_monthly_report():
     plt.yticks(rotation=0)
     plt.xlabel('Horas')
     plt.tight_layout()
-    fig5.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot5.png'), dpi=65)
+    fig5.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot5.png'), dpi=75)
 
     fig6 = plt.figure()
     ax6 = fig6.add_subplot(111)
@@ -394,14 +419,16 @@ def send_monthly_report():
     plt.legend(labels = image6_labels, loc="best")
     plt.ylabel('')
     plt.tight_layout()
-    plt.savefig(os.path.join(config.BASE_DIR, 'static/report_images/plot6.png'), dpi=80)
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot6.png'), dpi=80)
 
     locale.setlocale(locale.LC_ALL, 'pt_PT.UTF-8')
 
     # Generate PDF
     context = {
         'today': today.strftime('%d-%m-%Y'),
-        'month': lastMonth.strftime('%B de %Y'),
+        'month': lastMonth.strftime('%m/%Y'),
+        'table_problems_per_month' : table_problems_per_month,
+        'table_problems_per_district_per_month' : table_problems_per_district_per_month,
         'table1': table_service_per_month,
         'table2': table_problems_per_district,
         'table3': table_response_time_per_service,

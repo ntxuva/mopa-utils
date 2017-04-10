@@ -131,14 +131,20 @@ a {
 }
 h1 {
   font-size: 2em;
+  margin-top: 2em;
+  margin-botom: 2em;
   /* 2*16 = 32 */
 }
 h2 {
   font-size: 1.5em;
+  margin-top: 2em;
+  margin-botom: 2em;
   /* 1.5*16 = 24 */
 }
 h3 {
   font-size: 1.17em;
+  margin-top: 2em;
+  margin-botom: 2em;
   /* 1.17*16 = 18.72 */
 }
 h4 {
