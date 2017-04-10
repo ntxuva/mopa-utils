@@ -22,4 +22,5 @@ crontab -e
 0 17 * * * /srv/www/mopa-utils/jobs/send_daily_report.sh >> /srv/www/mopa-utils/mopa/data/logs/jobs.log 2>&1
 # 15 17 * * * /srv/www/mopa-utils/jobs/send_daily_survey_replies.sh >> /srv/www/mopa-utils/mopa/data/logs/jobs.log 2>&1
 30 17 * * 7 /srv/www/mopa-utils/jobs/send_weekly_report.sh >> /srv/www/mopa-utils/mopa/data/logs/jobs.log 2>&1
+30 18 1 * * /srv/www/mopa-utils/jobs/send_monthly_report.sh >> /srv/www/mopa-utils/mopa/data/logs/jobs.log 2>&1
 ```
