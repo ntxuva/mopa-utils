@@ -355,7 +355,7 @@ class SurveyAnswer(BaseModel):
 
         for district in self.NEIGHBOURHOODS["districts"]:
             for neighbourhood in district['neighbourhoods']:
-                for point in neighbourhood['points']:
+                for point in (neighbourhood['points'] if neighbourhood.has_key('points') else []):
                     for monitor_id in (point['monitors'] if point.has_key('monitors') else []):
                         monitor = Location.i().get_monitor(monitor_id)
                         if (monitor['phone'] == answered_by or
