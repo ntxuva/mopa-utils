@@ -647,7 +647,7 @@ def notify_updates_on_requests():
         status = _request['status']
         service_notice = _request['service_notice']
 
-        if time_ago <= requested_datetime <= now and service_notice == 'Registado':
+        if (time_ago <= requested_datetime <= now) and service_notice == 'Registado':
             # New request -> notify responsible company/people
             location = Location.i().guess_location(_request)
             district = location['district']
@@ -659,8 +659,8 @@ def notify_updates_on_requests():
 
                 for phone in phones:
                     text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
-                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', '')
-                    text = text.replace('Criado por USSD.', '').replace('Criado por App.', ''))
+                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', ''))
+                    text = text.replace('Criado por USSD.', '').replace('Criado por App.', '')
                     db_sms = SMS.static_send(phone, text)
                     Uow.add(db_sms)
                 Uow.commit()
