@@ -13,6 +13,11 @@ import json
 from os import listdir
 from os.path import isfile
 
+from retry import retry
+from retry.api import retry_call
+import requests
+from requests.exceptions import ConnectTimeout
+
 # Import module models
 from mopa.infrastructure import *
 from mopa.models import *
@@ -65,31 +70,42 @@ def receive_sms():
     Uow.add(stored_incoming_sms)
     Uow.commit()
 
-    # Right now incoming SMS are only for surveys so check sms for answer of survey
-    incoming_sms_parts = incoming_sms["text"].split("|")
+    monitor_phone_numbers = [] # TODO(dareenzo): replace this fake with read data
 
-    if len(incoming_sms_parts) == 1 and incoming_sms_parts[0].lower() in config.SMS_VALID_ANSWERS:
-        # Group survey answer
-        today_survey = Survey.todays()
+    if incoming_sms['from'] in monitor_phone_numbers:
+        incoming_sms_parts = incoming_sms["text"].split("|")
 
-        if today_survey:
-            answer = SurveyAnswer(today_survey.survey_id,  incoming_sms_parts[0], incoming_sms["from"],
-                                  stored_incoming_sms.id, survey_key=today_survey.id)
-            Uow.add(answer)
-            Uow.commit()
-            outgoing_sms = config.SMS_THANK_YOU
+        if len(incoming_sms_parts) == 1 and incoming_sms_parts[0].lower() in config.SMS_VALID_ANSWERS:
+            # Group survey answer
+            today_survey = Survey.todays()
 
-    elif len(incoming_sms_parts) == 2 and is_int(incoming_sms_parts[0]) and incoming_sms_parts[1] in config.SMS_VALID_ANSWERS:
-        # Single survey answer
-        _survey = Survey.get_by_id(incoming_sms_parts[0])
+            if today_survey:
+                answer = SurveyAnswer(today_survey.survey_id,  incoming_sms_parts[0], incoming_sms["from"], stored_incoming_sms.id, survey_key=today_survey.id)
+                Uow.add(answer)
+                Uow.commit()
+                outgoing_sms = config.SMS_THANK_YOU
 
-        if _survey:
-            answer = SurveyAnswer(_survey.survey_id, incoming_sms_parts[1], incoming_sms["from"], stored_incoming_sms.id, survey_key=_survey.id)
-            Uow.add(answer)
-            Uow.commit()
-            outgoing_sms = config.SMS_THANK_YOU
+        elif len(incoming_sms_parts) == 2 and is_int(incoming_sms_parts[0]) and incoming_sms_parts[1] in config.SMS_VALID_ANSWERS:
+            # Single survey answer
+            _survey = Survey.get_by_id(incoming_sms_parts[0])
 
-    SMS.static_send(incoming_sms["from"], outgoing_sms)
+            if _survey:
+                answer = SurveyAnswer(_survey.survey_id, incoming_sms_parts[1], incoming_sms["from"], stored_incoming_sms.id, survey_key=_survey.id)
+                Uow.add(answer)
+                Uow.commit()
+                outgoing_sms = config.SMS_THANK_YOU
+
+        SMS.static_send(incoming_sms["from"], outgoing_sms)
+    else:
+        try:
+            r = retry_call(requests.put, fargs=[config.OPEN311_END_POINTS['requests'] + '/' + incoming_sms['from'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']])
+            if r.status_code == 200:
+                issue = r.json()
+                SMS.static_send(incoming_sms["from"], config.SMS_ISSUE_REOPEN_SUCCESS % (issue.get('service_request_id', default)))
+            else:
+                SMS.static_send(incoming_sms["from"], config.SMS_ISSUE_REOPEN_FAIL)
+        except:
+            pass
 
     return "Ok", 200
 
