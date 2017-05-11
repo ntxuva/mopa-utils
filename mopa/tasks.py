@@ -484,8 +484,9 @@ def notify_updates_on_requests():
         requested_datetime = parse(_request['requested_datetime'])
         updated_datetime = parse(_request['updated_datetime'])
         status = _request['status']
+        service_notice = _request['service_notice']
 
-        if time_ago <= requested_datetime <= now and status == 'open':
+        if time_ago <= requested_datetime <= now and service_notice == 'Registado':
             # New request -> notify responsible company/people
             location = Location.i().guess_location(_request)
             district = location['district']
@@ -497,19 +498,21 @@ def notify_updates_on_requests():
 
                 for phone in phones:
                     text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
-                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', '').replace('Criado por USSD.', ''))
-                    text = truncate(text, 160)
+                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', '')
+                    text = text.replace('Criado por USSD.', '').replace('Criado por App.', ''))
                     db_sms = SMS.static_send(phone, text)
                     Uow.add(db_sms)
                 Uow.commit()
             else:
                 current_app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
-
-        elif (time_ago <= updated_datetime <= now) and status != 'open' and _request.get('phone', ''):
+        elif (time_ago <= updated_datetime <= now) and _request.get('phone', ''):
             # Update on request -> notify the person who reported
-            text_tpl = 'Caro cidadao, o problema reportado por si: %s foi actualizado. Novo estado: %s. Comentario CMM: %s'
+            text_tpl = 'Caro municipe, o problema %s tem agora o estado %s. %s'
+
+            if service_notice != 'Em processo':
+                text_tpl += '. Caso discorde responda N a esta SMS'
+
             text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
-            text = truncate(text, 160)
             db_sms = SMS.static_send(_request.get('phone'), text)
             Uow.add(db_sms)
             Uow.commit()
