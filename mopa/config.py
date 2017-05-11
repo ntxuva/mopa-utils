@@ -106,8 +106,10 @@ SMS_THANK_YOU = "A sua resposta foi recebida. Obrigado pelo seu contributo."
 SMS_NO_FEEDBACK_RECEIVED = "Lamentamos nao ter recebido o seu contributo, se o tiver enviado, por favor entre em contacto com a Livaningo, caso contrario pode envia-lo agora."
 SMS_INVALID_FEEDBACK = "O seu contributo nao foi reconhecido. Para algum problema, por favor contacte o MOPA."
 SMS_VALID_ANSWERS = ["yes", "y", "sim", "s", "nao", "n", "no"]
-SMS_UPDATE_NOTIFICATION = "Caro cidadao, o problema reportado por si: [problem_id] foi actualizado. O seu novo estado: [new_status] .Obrigado pelo seu contributo. Mopa"
+SMS_UPDATE_NOTIFICATION = "Caro municipe, o problema reportado por si: [problem_id] foi actualizado. O seu novo estado: [new_status] .Obrigado pelo seu contributo. Mopa"
 SMS_NEW_ISSUE_NOTIFICATION = "Novo problema reportado no mopa: [problem_type] - [description] em [district] [neighbourhood] [location_name]"
+SMS_ISSUE_REOPEN_SUCCESS = "Caro municipe, o seu caso %s foi reaberto"
+SMS_ISSUE_REOPEN_FAIL = "Caro municipe, nao conseguimos encontrar o seu caso para reabrir"
 NEIGHBOURHOODS_JSON_PATH = "static/neighbourhoods-live.json"
 
 # API Settings
