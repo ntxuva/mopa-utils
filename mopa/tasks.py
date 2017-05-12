@@ -662,7 +662,7 @@ def notify_updates_on_requests():
                     r = retry_call(requests.get, fargs=[config.OPEN311_END_POINTS['people'] + '/' + request_id + '.' + config.OPEN311_RESPONSE_FORMATS['json']], exceptions=ConnectTimeout, tries=3)
                     if r.status_code == 200:
                         people = r.json()
-                        phones = map(lambda x: x.phone, people)
+                        phones = map(lambda x: x['phone'], people)
                 except:
                     pass
 
