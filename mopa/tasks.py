@@ -485,6 +485,7 @@ def notify_updates_on_requests():
         updated_datetime = parse(_request['updated_datetime'])
         status = _request['status']
         service_notice = _request['service_notice']
+        request_id = _request['service_request_id']
 
         if (time_ago <= requested_datetime <= now) and service_notice == 'Registado':
             # New request -> notify responsible company/people
@@ -494,15 +495,22 @@ def notify_updates_on_requests():
             location_name = location['location_name']
 
             if neighbourhood:
-                phones = Location.i().get_notified_companies_phones(_request['neighbourhood'], _request['service_code'])
+                phones = []
+
+                try:
+                    r = retry_call(requests.get, fargs=[config.OPEN311_END_POINTS['people'] + '/' + request_id + '.' + config.OPEN311_RESPONSE_FORMATS['json']], exceptions=ConnectTimeout, tries=3)
+                    if r.status_code == 200:
+                        people = r.json()
+                        phones = map(lambda x: x.phone, people)
+                except:
+                    pass
+
+                text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
 
                 for phone in phones:
-                    text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
                     text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', ''))
                     text = text.replace('Criado por USSD.', '').replace('Criado por App.', '')
-                    db_sms = SMS.static_send(phone, text)
-                    Uow.add(db_sms)
-                Uow.commit()
+                    SMS.static_send(phone, text)
             else:
                 current_app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
         elif (time_ago <= updated_datetime <= now) and _request.get('phone', ''):
@@ -513,8 +521,6 @@ def notify_updates_on_requests():
                 text_tpl += '. Caso discorde responda N a esta SMS'
 
             text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
-            db_sms = SMS.static_send(_request.get('phone'), text)
-            Uow.add(db_sms)
-            Uow.commit()
+            SMS.static_send(_request.get('phone'), text)
 
     return "Ok", 200
