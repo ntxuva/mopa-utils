@@ -98,7 +98,7 @@ def receive_sms():
         SMS.static_send(incoming_sms["from"], outgoing_sms)
     else:
         try:
-            r = retry_call(requests.put, fargs=[config.OPEN311_END_POINTS['requests'] + '/' + incoming_sms['from'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']])
+            r = retry_call(requests.put, fargs=[config.OPEN311_END_POINTS['requests'] + '/' + incoming_sms['from'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']], exceptions=ConnectTimeout, tries=3)
             if r.status_code == 200:
                 issue = r.json()
                 SMS.static_send(incoming_sms["from"], config.SMS_ISSUE_REOPEN_SUCCESS % (issue.get('service_request_id', default)))
