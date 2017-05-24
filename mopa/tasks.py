@@ -478,7 +478,7 @@ def notify_updates_on_requests():
     end_date = (today + timedelta(days=1)).strftime('%Y-%m-%d')
     _requests = get_requests(start_date, end_date, True)
 
-    time_ago = datetime.now(config.TZ) + timedelta(seconds=-(1 * 60 * 10))
+    time_ago = datetime.now(config.TZ) + timedelta(seconds=-(60 * 5))
     now = datetime.now(config.TZ)
     for _request in _requests:
         requested_datetime = parse(_request['requested_datetime'])
