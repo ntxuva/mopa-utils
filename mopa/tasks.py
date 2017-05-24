@@ -666,10 +666,10 @@ def notify_updates_on_requests():
                 except:
                     pass
 
-                text_tpl = 'Novo problema reportado no mopa: No: %s - %s em %s. %s'
+                text_tpl = 'MOPA - Novo problema No: %s - %s, %s'
 
                 for phone in phones:
-                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request['neighbourhood'], _request.get('description', ''))
+                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request.get('description', ''))
                     text = text.replace('Criado por USSD.', '').replace('Criado por App.', '')
                     SMS.static_send(phone, text)
             else:
