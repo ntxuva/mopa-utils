@@ -472,47 +472,45 @@ def notify_updates_on_requests():
     """A scheduled task to check if there are any new requests or updated
     requests within the last hour and notify the involved parts"""
 
+    date_format = '%Y-%m-%d'
     today = date.today()
-
-    start_date = today.strftime('%Y-%m-%d')
-    end_date = (today + timedelta(days=1)).strftime('%Y-%m-%d')
-    _requests = get_requests(start_date, end_date, True)
+    start_date = today.strftime(date_format)
+    end_date = (today + timedelta(days=1)).strftime(date_format)
+    recent_requests = get_requests(start_date, end_date, True)
 
     time_ago = datetime.now(config.TZ) + timedelta(seconds=-(60 * 5))
     now = datetime.now(config.TZ)
-    for _request in _requests:
+
+    for _request in recent_requests:
         requested_datetime = parse(_request['requested_datetime'])
         updated_datetime = parse(_request['updated_datetime'])
-        status = _request['status']
         service_notice = _request['service_notice']
         request_id = _request['service_request_id']
 
         if (time_ago <= requested_datetime <= now) and service_notice == 'Registado':
             # New request -> notify responsible company/people
-            location = Location.i().guess_location(_request)
-            district = location['district']
-            neighbourhood = location['neighbourhood']
-            location_name = location['location_name']
 
-            if neighbourhood:
-                phones = []
+            http_response = retry_call(
+                requests.get,
+                fargs=[config.OPEN311_END_POINTS['people'] + '/' + request_id + '.' + config.OPEN311_RESPONSE_FORMATS['json']],
+                exceptions=ConnectTimeout,
+                tries=3
+            )
 
-                try:
-                    r = retry_call(requests.get, fargs=[config.OPEN311_END_POINTS['people'] + '/' + request_id + '.' + config.OPEN311_RESPONSE_FORMATS['json']], exceptions=ConnectTimeout, tries=3)
-                    if r.status_code == 200:
-                        people = r.json()
-                        phones = map(lambda x: x['phone'], people)
-                except:
-                    pass
+            if http_response.status_code != 200:
+                current_app.logger.error("Could not find people to notify of new request: %s " % _request['service_request_id'])
+                continue
 
-                text_tpl = 'MOPA - Novo problema No: %s - %s, %s'
+            people = http_response.json()
+            phones = map(lambda x: x['phone'], people)
 
-                for phone in phones:
-                    text = text_tpl % (_request['service_request_id'], _request['service_name'], _request.get('description', ''))
-                    text = text.replace('Criado por USSD.', '').replace('Criado por App.', '')
-                    SMS.static_send(phone, text)
-            else:
-                current_app.logger.error("New request with no neighbourhood data found. Cannot notify companies. Request ID: " + _request['service_request_id'])
+            text = ('MOPA - Novo problema No: %s - %s, %s' % (_request['service_request_id'], _request['service_name'], _request.get('description', ''))) \
+                .replace('Criado por USSD.', '') \
+                .replace('Criado por App.', '')
+
+            for phone in phones:
+                SMS.static_send(phone, text)
+
         elif (time_ago <= updated_datetime <= now) and _request.get('phone', ''):
             # Update on request -> notify the person who reported
             text_tpl = 'Caro municipe, o problema %s tem agora o estado %s. %s'
@@ -523,4 +521,4 @@ def notify_updates_on_requests():
             text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
             SMS.static_send(_request.get('phone'), text)
 
-    return "Ok", 200
+    return "notify-updates-on-requests completed\n", 200
