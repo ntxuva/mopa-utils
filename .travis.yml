@@ -8,6 +8,6 @@ script: "python manage.py test"
 
 services:
   - mysql
-sudo: true
+# sudo: true
 before_script:
   - mysql -e 'CREATE DATABASE ntxuva2;'
