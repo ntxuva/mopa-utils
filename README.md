@@ -1,5 +1,7 @@
 # Mopa
 
+![Build Status](https://travis-ci.org/ntxuva/mopa-utils.svg?branch=master)
+
 This project contains the source code for the mopa util. Server side code is written in python and meant to run in python 2.7
 To support the project the following external libs have been used
 
