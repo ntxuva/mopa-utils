@@ -1,15 +1,17 @@
 language: python
 python:
   - "2.7"
-# command to install dependencies
-install: "pip install -r requirements.txt -t vendor"
-# command to run tests
-script: "python manage.py test"
-
 services:
   - mysql
-# sudo: true
+install:
+  - pip install -r requirements.txt -t vendor
+  - pip install coveralls
+script:
+  - python manage.py test
+  - sleep 2
+  - coverage run manage.py test
 before_script:
   - mysql -e 'CREATE DATABASE ntxuva2;'
   - mysql -D ntxuva2 < mopa/data/db/mopa_reports_schema.sql
   - mysql -D ntxuva2 < mopa/data/db/mopa_sms_schema.sql
+after_success: coveralls
