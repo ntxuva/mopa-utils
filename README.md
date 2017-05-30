@@ -1,6 +1,7 @@
 # Mopa
 
-![Build Status](https://travis-ci.org/ntxuva/mopa-utils.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/ntxuva/mopa-utils/badge.svg?branch=master)](https://coveralls.io/github/ntxuva/mopa-utils?branch=master)
+[![Build Status](https://travis-ci.org/ntxuva/mopa-utils.svg?branch=master)](https://travis-ci.org/ntxuva/mopa-utils)
+[![Coverage Status](https://coveralls.io/repos/github/ntxuva/mopa-utils/badge.svg?branch=master)](https://coveralls.io/github/ntxuva/mopa-utils?branch=master)
 
 This project contains the source code for the mopa util. Server side code is written in python and meant to run in python 2.7
 To support the project the following external libs have been used
