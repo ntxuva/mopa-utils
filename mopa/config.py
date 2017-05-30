@@ -26,8 +26,6 @@ APP_NAME = 'Mopa'
 TIMEZONE = 'Africa/Harare'
 TZ = pytz.timezone(TIMEZONE)
 
-# We named the file env.ini instead of .env because google app engine doesn't
-# support uploading dot files
 dotenv_path = join(APP_ROOT, '../.env')
 load_dotenv(dotenv_path)
 
