@@ -95,3 +95,21 @@ hr {
 	justify-content: space-between;
 	align-items: center;
 }
+
+
+.card-header {
+    font-size: 92px;
+}
+
+.row {
+    padding: 30px 0;
+}
+
+#monthly-report-title h1 {
+	font-size: 40px;
+	width: 100%;
+	color: #f15722;
+	font-weight: 300;
+	margin: 0 0 0 auto;
+}
+

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="mopa/static/styles/lato.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/pdf.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/typography.css" rel="stylesheet" type="text/css">
+	<link href="mopa/static/styles/styles.css" rel="stylesheet" type="text/css">
+	
+</head>
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <div class="center">
+            <img src="mopa/static/img/logo.jpg" style="vertical-align: middle;" /><br/>
+        </div>
+    </div>
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">
+        <span class="gray right">P&aacute;gina <pdf:pagenumber /></span>
+    </div>
+
+    <!-- HTML Content -->
+    <div class="container">
+       <div class="row">
+           <div id="monthly-report-title" class="col-md-4">
+               <h1>FICHA DO BAIRRO DE {{ neighbourhood }}</h1>
+               <h4>{{ month }} </h4>
+            </div>
+           <div class="col-md-8">
+                <p class='right'>Gerado a {{ today }}</p>
+           </div>
+       </div>
+        <div class="row">
+           <div class="col-md-4">
+              <div class="center">
+                   <h4>PROBLEMAS<br>ESTE MES</h4>
+                   <div class="card-header">{{ number_of_problems }}</div>
+               </div>
+           </div>
+           <div class="col-md-8">
+                <img src="graph1.png" alt="">
+            </div>
+        </div>
+        <div class="row">
+           <div class="col-md-4">
+              <div class="center">
+                   <h4>MUNICIPES<br>QUE USARAM<br>O MOPA</h4>
+                   <div class="card-header">{{ different_citizens }}</div>
+               </div>
+           </div>
+           <div class="col-md-8">
+                <img src="graph2.png" alt="">
+        </div>
+       <div class="row">
+           <div class="col-md-4">
+              <div class="center">
+                   <h4>TEMPO MEDIO <br>DE RESPOSTA (DIAS)</h4>
+                   <div class="card-header">{{ average_response_time }}</div>
+               </div>
+           </div>
+           <div class="col-md-8">
+               <h3>PONTOS MAIS CRITICOS DO BAIRRO</h3>
+                    {{ hotpots_table }}
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
