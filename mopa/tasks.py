@@ -29,7 +29,9 @@ import numpy as np
 import seaborn as sns
 
 import mopa.config as config
-from mopa.infrastructure import Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
+from mopa.infrastructure import (
+    Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
+)
 from mopa.models import Uow, SMS, Survey, Report
 
 
@@ -665,7 +667,11 @@ def notify_updates_on_requests():
             people = http_response.json()
             phones = map(lambda x: x['phone'], people)
 
-            text = ('MOPA - Novo problema No: %s - %s, %s' % (_request['service_request_id'], _request['service_name'], _request.get('description', ''))) \
+            text = ('MOPA - Novo problema No: %s - %s, %s' % (
+                _request['service_request_id'],
+                _request['service_name'],
+                _request.get('description', '')
+            )) \
                 .replace('Criado por USSD.', '') \
                 .replace('Criado por App.', '')
 
@@ -679,7 +685,12 @@ def notify_updates_on_requests():
             if service_notice != 'Em processo':
                 text_tpl += '. Caso discorde responda N a esta SMS'
 
-            text = text_tpl % (_request['service_request_id'], _request['service_notice'],  _request.get('status_notes', ''))
+            text = text_tpl % (
+                _request['service_request_id'],
+                _request['service_notice'],
+                _request.get('status_notes', '')
+            )
+
             SMS.static_send(_request.get('phone'), text)
 
     return "notify-updates-on-requests completed\n", 200
