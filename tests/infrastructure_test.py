@@ -3,7 +3,7 @@
 import os
 import unittest
 from mopa import create_app
-from mopa.infrastructure import (send_mail, asynchronously, snake_case,
+from mopa.infrastructure import (is_valid_mail_address, send_mail, asynchronously, snake_case,
     remove_accents, Location)
 
 
@@ -56,6 +56,14 @@ class MailTestCase(unittest.TestCase):
 
     def test_remove_accents(self):
         self.assertEqual('uo', remove_accents(u'úõ'))
+
+    def test_is_valid_mail_address(self):
+        self.assertTrue(is_valid_mail_address('webmaster@example.com'))
+        self.assertTrue(is_valid_mail_address('support@example.com'))
+        self.assertTrue(is_valid_mail_address('pphagula@gmail.com'))
+        self.assertTrue(is_valid_mail_address('you@example.com'))
+        self.assertTrue(is_valid_mail_address('them@example.com'))
+        self.assertTrue(is_valid_mail_address('themtoo@example.com'))
 
     @unittest.skip('Tests are slow')
     def test_full_email_is_sent(self):
