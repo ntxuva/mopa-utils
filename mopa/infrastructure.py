@@ -392,32 +392,23 @@ from requests.exceptions import ConnectTimeout
 
 
 def get_requests(start_date, end_date, include_phone):
-    """Gets the problems registered in the refered time stamp.
+    """Gets the problems registered in the refereed time stamp.
     dates must be a string in YYYY-MM-dd format (eg. '2015-08-01')"""
-    phone_key = 'phone_key'
-    if include_phone:
-        phone_key = config.OPEN311_PHONE_KEY
-
+    phone_key = config.OPEN311_PHONE_KEY if include_phone else ''
     payload = {'start_date': start_date, 'end_date': end_date, 'phone_key': phone_key}
 
-    r = None
-    try:
-        r = retry_call(requests.get, fargs=[config.OPEN311_END_POINTS['requests'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']], fkwargs={'params': payload, 'allow_redirects': False})
-    except:
-        pass
+    http_response = retry_call(
+        requests.get,
+        fargs=[config.OPEN311_END_POINTS['requests'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']],
+        fkwargs={'params': payload, 'allow_redirects': False},
+        exceptions=ConnectTimeout,
+        tries=3
+    )
 
-    requests_list = []
+    if http_response.status_code != 200:
+        return []
 
-    if not r:
-        return requests_list
-
-    for request in r.json():
-        if u'code' in request and request.get('code', default) == 404:
-            return requests_list
-
-        requests_list.append(request)
-
-    return requests_list
+    return http_response.json()
 
 
 def get_report_file_params(filename):
