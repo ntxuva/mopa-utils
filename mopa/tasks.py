@@ -5,6 +5,7 @@
 
     Contains the scheduled tasks definition
 """
+from __future__ import unicode_literals, print_function
 import os
 import sys
 
@@ -169,7 +170,9 @@ def send_weekly_report(today=None):
         u"Lixo fora do contentor",
         u"Lixo na vala de drenagem",
         u"Camião não passou",
-        u"Contentor a Arder"
+        u"Contentor a Arder",
+        u"Entulho na rua",
+        u"Ramos no chão"
     ]
 
     problem_images = map(lambda x: remove_accents(x).lower().replace(' ', '_'), problem_types)
