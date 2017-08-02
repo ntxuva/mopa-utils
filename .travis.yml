@@ -17,5 +17,5 @@ before_script:
 script:
   - python manage.py test
   - sleep 2
-  - coverage run manage.py test
+  - coverage run --source=mopa manage.py test
 after_success: coveralls
