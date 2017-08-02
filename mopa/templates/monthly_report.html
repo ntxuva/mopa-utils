@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="mopa/static/styles/lato.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/pdf.css" rel="stylesheet" type="text/css">
+    <link href="mopa/static/styles/typography.css" rel="stylesheet" type="text/css">
+	<link href="mopa/static/styles/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+        <div class="center">
+            <img src="mopa/static/img/logo.jpg" style="vertical-align: middle;" /><br/>
+        </div>
+    </div>
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">
+        <span class="gray right">P&aacute;gina <pdf:pagenumber /></span>
+    </div>
+
+    <!-- HTML Content -->
+    <h1 class="center orange">Relat&oacute;rio do mês {{ month }}</h1>
+    <div class="gray center">
+      Gerado a {{ today }}
+    </div>
+    <br/>
+    <h2>Sumário</h2>
+    <h3>Evolução do número de problemas por mês</h3>
+      <img src="mopa/static/img/monthly_report/plot0.png" alt ="Grafico mensal">
+  <pdf:nextpage />
+    <h3>Evolução do número de problemas por mês e categoria</h3>
+      <img src="mopa/static/img/monthly_report/plot00.png" alt ="Grafico mensal">
+  <pdf:nextpage />
+    <h3>Distribuição de problemas por distrito</h3>
+      <img src="mopa/static/img/monthly_report/plot1_1.png" alt ="Problemas por distrito">
+    {{ table_problems_per_district_per_month }}
+  <pdf:nextpage />
+    <h3>Distribuição de problemas por categoria</h3>
+      <img src="mopa/static/img/monthly_report/plot1_2.png" alt ="Problemas por Categoria">
+  <pdf:nextpage />
+    <h3>Distribuição de problemas por estado</h3>
+      <img src="mopa/static/img/monthly_report/plot1_3.png" alt ="Problemas por estado">
+  <pdf:nextpage />
+    <h2>Demanda dos cidadãos</h2>
+    <h3>Problemas reportados por distrito</h3>
+    {{ table2 }}
+    <h3>Número de cidadãos diferentes a reportar em cada distrito</h3>
+    {{ table4 }}
+  <pdf:nextpage />
+    <h2>Gestão da Resposta</h2>
+    <h3>Estado dos problemas de acordo com categoria</h3>
+    {{ table1 }}
+    <h3>Tempo de resposta de acordo com categoria</h3>
+    {{ table3 }}
+  <pdf:nextpage />
+    <h3>Envio de esclarecimentos ao cidadão</h3>
+      <img src="mopa/static/img/monthly_report/plot6.png" alt ="Problemas por estado">
+<pdf:nextpage />
+    <h3>Hora dos problemas</h3>
+      <img src="mopa/static/img/monthly_report/plot4.png" alt ="Problemas por estado">
+<pdf:nextpage />
+    <h3>Hora das respostas</h3>
+      <img src="mopa/static/img/monthly_report/plot5.png" alt ="Problemas por estado">
+
+</body>
+</html>

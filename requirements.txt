@@ -21,3 +21,4 @@ retry==0.9.2
 schedule==0.3.2
 xhtml2pdf==0.0.6
 awesome-slugify==1.6.5
+seaborn==0.7.1

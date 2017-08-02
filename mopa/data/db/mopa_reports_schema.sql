@@ -16,12 +16,12 @@ CREATE TABLE mopa_reports(
   -- _id INT AUTO_INCREMENT ,
 	id VARCHAR(255) PRIMARY KEY,
 	district TEXT,
-	neighbourhood TEXT,
-	location_name TEXT,
+    neighbourhood TEXT,
+    location_name TEXT,
 	nature TEXT,
-	requested_datetime DATETIME,
-	updated_datetime DATETIME,
-	type TEXT,
+    requested_datetime DATETIME,
+    updated_datetime DATETIME,
+    type TEXT,
 	status TEXT,
 	status_notes TEXT
 );
@@ -36,7 +36,7 @@ SELECT recent.*, recent.tempo_medio_resolucao-old.tempo_medio_resolucao as varia
 FROM
 (
 SELECT type,
-	COUNT(*) as no_occorencias,
+    COUNT(*) as no_occorencias,
 	(COUNT(*)/b.total_reports * 100) as `pct_do_total`,
   AVG(a.time_diff) `tempo_medio_resolucao`
 FROM mopa_reports
@@ -63,9 +63,9 @@ SELECT recent.*, recent.tempo_medio_resolucao - old.tempo_medio_resolucao as var
 FROM
 (
 SELECT
-	district,
+    district,
 	neighbourhood,
-	COUNT(*) as no_occorencias,
+    COUNT(*) as no_occorencias,
 	ROUND((COUNT(*)/b.total_reports * 100),2) as `pct_do_total`,
 	AVG(a.time_diff) `tempo_medio_resolucao`
 FROM mopa_reports
@@ -78,8 +78,8 @@ GROUP BY district, neighbourhood
 ) AS recent JOIN
 (
 SELECT
-	district,
-	neighbourhood,
+    district,
+    neighbourhood,
 	COUNT(*) as no_occorencias,
 	ROUND((COUNT(*)/b.total_reports * 100),2) as `pct_do_total`,
 	AVG(a.time_diff) `tempo_medio_resolucao`
@@ -95,7 +95,7 @@ ON recent.district=old.district AND recent.neighbourhood=old.neighbourhood;
 
 -- Tiago Report
 SELECT
-	neighbourhood as bairro,
+    neighbourhood as bairro,
   nature as problema,
   SUM(CASE WHEN status='Registado' THEN 1 ELSE 0 END) AS registado,
   SUM(CASE WHEN status='Em processo' THEN 1 ELSE 0 END) AS em_processo,

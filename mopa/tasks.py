@@ -21,6 +21,17 @@ from sqlalchemy.exc import IntegrityError, DisconnectionError
 
 from slugify import slugify
 
+import pandas as pd
+import dateutil.parser
+import locale
+
+import matplotlib
+matplotlib.use('Agg') # tell matplot not to use XWindows
+
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
 import mopa.config as config
 from mopa.infrastructure import (
     Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
@@ -280,8 +291,182 @@ def send_weekly_report(today=None):
 @tasks.route('/send-monthly-report')
 def send_monthly_report():
     """Task to prepare and send the monthly report"""
-    return "Ok", 200
+    today = datetime.utcnow()
+    first = today.replace(day=1)
+    lastMonth = first - timedelta(days=1)
+    lastMonth_first = lastMonth.replace(day=1)
 
+    districts = pd.read_csv(os.path.join(config.BASE_DIR, 'static/neighbourhoods.csv'))
+
+    all_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?end_date=' + lastMonth.strftime('%Y-%m-%d'))
+    all_reports['requested_datetime'] = pd.to_datetime(all_reports['requested_datetime'])
+    all_reports['requested_month'] = all_reports['requested_datetime'].apply(lambda t: t.strftime('%Y-%m'))
+    all_reports = all_reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
+    all_reports = translate_column_names(all_reports)
+
+    reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date='  + lastMonth_first.strftime('%Y-%m-%d') + '&end_date=' + lastMonth.strftime('%Y-%m-%d') + '&phone_key=666554')
+
+    reports['requested_datetime'] = pd.to_datetime(reports['requested_datetime'])
+    reports['updated_datetime'] = pd.to_datetime(reports['updated_datetime'])
+    reports['requested_month'] = reports['requested_datetime'].apply(lambda t: t.strftime('%y/%m'))
+    reports['response_time'] = (reports['updated_datetime'] - reports['requested_datetime']).dt.days
+    reports = reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
+    reports = translate_column_names(reports)
+
+    # prepare tables
+
+    table_problems_per_district_per_month = pd.crosstab(all_reports['Distrito'], all_reports['Mes'], margins = True)
+    table_problems_per_district_per_month = table_problems_per_district_per_month.to_html()
+
+    table_problems_per_month = pd.crosstab(all_reports['Categoria'], all_reports['Mes'], margins = True)
+    table_problems_per_month = table_problems_per_month.to_html()
+
+    table_service_per_month = pd.crosstab(reports['Categoria'], reports['Estado'], margins = True)
+    table_service_per_month = table_service_per_month.to_html()
+
+    table_problems_per_district = pd.crosstab(reports['Categoria'], reports['Distrito'], margins = True)
+    table_problems_per_district = table_problems_per_district.to_html()
+
+    table_response_time_per_service = reports['response_time']\
+        .groupby(reports['Categoria'])\
+        .agg({'Número de problemas' : np.size, 'Tempo medio de resposta (dias)' : np.mean})\
+        .to_html(float_format = '%2.2f')
+
+    table_unique_citizens_per_district = reports\
+        .pivot_table(index='Categoria', columns='Distrito', values='phone',
+                     fill_value=0,
+                     aggfunc = pd.Series.nunique, margins = True)
+    table_unique_citizens_per_district = table_unique_citizens_per_district.to_html(float_format = '%d')
+
+    ## prepare figures
+
+    fig0 = plt.figure()
+    image0_table = all_reports['Mes'].value_counts().sort_index(ascending = True)
+    ax = image0_table.plot(kind='bar')
+    plt.xticks(rotation=0)
+
+    for spine in plt.gca().spines.values():
+        spine.set_visible(False)
+
+    for bar in ax.patches:
+        height = bar.get_height()
+        plt.gca().text(bar.get_x() + bar.get_width()/2, bar.get_height() - 100 , str('{:d}'.format(int(height))),
+                 ha='center', color='w', fontsize=12)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot0.png'), dpi=300)
+
+    fig00 = plt.figure()
+    image0_table = pd.crosstab(all_reports['Mes'], all_reports['Categoria'])
+    ax = image0_table.plot()
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot00.png'), dpi=300)
+
+    fig1_1 = plt.figure()
+    ax1_1 = fig1_1.add_subplot(111)
+    image1_table = reports['Distrito'].value_counts()
+    image1_table.plot(kind='pie', autopct='%1.0f%%', pctdistance=0.9, labeldistance=1.2)
+    plt.tight_layout()
+    ax1_1.set_aspect('equal')
+    plt.ylabel('')
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot1_1.png'), dpi=300)
+
+    fig1_2 = plt.figure()
+    ax1_2 = fig1_2.add_subplot(111)
+    image2_table = reports['Categoria'].value_counts()
+    image2_table.plot(kind='pie', autopct='%1.0f%%', pctdistance=0.9, labeldistance=1.2)
+    ax1_2.set_aspect('equal')
+    plt.ylabel('')
+    plt.tight_layout()
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot1_2.png'), dpi=300)
+
+    fig1_3 = plt.figure()
+    ax1_3 = fig1_3.add_subplot(111)
+    image2_table = reports['Estado'].value_counts()
+    image2_table.plot(kind='pie', autopct='%1.0f%%', pctdistance=0.9, labeldistance=1.2)
+    ax1_3.set_aspect('equal')
+    plt.ylabel('')
+    plt.tight_layout()
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot1_3.png'), dpi=300)
+
+    fig3 = plt.figure()
+    image3_table = pd.crosstab(reports['Categoria'], reports['requested_datetime'].dt.weekday)
+    image3_table.columns = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+    sns.heatmap(image3_table, annot=True, linewidths=.5, annot_kws={"size": 8}, fmt='g', cmap='Reds', cbar=False)
+    plt.yticks(rotation=0)
+    plt.tight_layout()
+    fig3.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot3.png'), dpi=300)
+
+    fig4 = plt.figure()
+    image4_table = pd.crosstab(reports['Categoria'], reports['requested_datetime'].dt.hour)
+    sns.heatmap(image4_table, annot=True, linewidths=.5, annot_kws={"size": 8}, fmt='g', cmap='Reds', cbar=False)
+    plt.xlabel('Horas')
+    plt.yticks(rotation=0)
+    plt.tight_layout()
+    fig4.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot4.png'), dpi=300)
+
+    fig5 = plt.figure()
+    image5_table = pd.crosstab(reports['Categoria'], reports['updated_datetime'].dt.hour+2)
+    _ = sns.heatmap(image5_table, annot=True, linewidths=.5, annot_kws={"size": 8}, fmt='g', cmap='Reds', cbar=False)
+    plt.yticks(rotation=0)
+    plt.xlabel('Horas')
+    plt.tight_layout()
+    fig5.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot5.png'), dpi=300)
+
+    fig6 = plt.figure()
+    ax6 = fig6.add_subplot(111)
+    image6_values =[reports['status_notes'].count(), len(reports.index)]
+    image6_labels = ['Esclarecimento do CMM', 'Nenhum esclarecimento do CMM']
+    plt.pie(image6_values, autopct='%1.0f%%', pctdistance=0.9)
+    ax6.set_aspect('equal')
+    plt.legend(labels = image6_labels, loc="best")
+    plt.ylabel('')
+    plt.tight_layout()
+    plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot6.png'), dpi=300)
+
+    locale.setlocale(locale.LC_ALL, 'pt_PT.UTF-8')
+
+    # Generate PDF
+    context = {
+        'today': today.strftime('%d-%m-%Y'),
+        'month': lastMonth.strftime('%m/%Y'),
+        'table_problems_per_month' : table_problems_per_month,
+        'table_problems_per_district_per_month' : table_problems_per_district_per_month,
+        'table1': table_service_per_month,
+        'table2': table_problems_per_district,
+        'table3': table_response_time_per_service,
+        'table4': table_unique_citizens_per_district,
+        'static': os.path.join(config.BASE_DIR, 'templates') + '/'
+    }
+
+    f_name = 'relatorio-mensal-' + '-' + today.strftime('%Y_%m_%d') + '.pdf'
+    generate_pdf('monthly_report.html', context, f_name)
+
+    html = '''
+        <html>
+            <head></head>
+            <body>
+            <p>Sauda&ccedil;&otilde;es!<br/><br/>
+                Segue em anexo o relatorio mensal<br/><br/>
+                Cumprimentos,<br/>
+                <em>Enviado automaticamente</em>
+            </p>
+            </body>
+        </html>
+    '''
+
+    send_mail(
+        config.WEEKLY_REPORT_TO,
+        '[MOPA] Relatorio Mensal - ' + lastMonth.strftime('%B of %Y'),
+        html,
+        is_html=True,
+        cc=config.DAILY_REPORT_CC,
+        sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
+        attachments=[config.REPORTS_DIR + '/' + f_name]
+    )
+
+    return "Report successfully generated for %s." % lastMonth.strftime('%B of %Y'), 200
 
 @tasks.route('/send-daily-report/<regex("\d{4}-\d{2}-\d{2}"):today>')
 @tasks.route('/send-daily-report')
@@ -536,3 +721,8 @@ def notify_updates_on_requests():
             SMS.static_send(_request.get('phone'), text)
 
     return "notify-updates-on-requests completed\n", 200
+
+
+def translate_column_names(df):
+    df.rename(columns={'service_notice' : 'Estado', 'district' : 'Distrito', 'service_name' : 'Categoria', 'requested_month' : 'Mes'}, inplace = True)
+    return df

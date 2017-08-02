@@ -3,15 +3,19 @@ python:
   - "2.7"
 services:
   - mysql
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install build-essential python-dev
 install:
   - pip install -r requirements.txt -t vendor
   - pip install coveralls
-script:
-  - python manage.py test
-  - sleep 2
-  - coverage run manage.py test
 before_script:
   - mysql -e 'CREATE DATABASE ntxuva2;'
   - mysql -D ntxuva2 < mopa/data/db/mopa_reports_schema.sql
   - mysql -D ntxuva2 < mopa/data/db/mopa_sms_schema.sql
+  - export DISPLAY=:0.0
+script:
+  - python manage.py test
+  - sleep 2
+  - coverage run manage.py test
 after_success: coveralls

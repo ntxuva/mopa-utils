@@ -23,6 +23,7 @@ from mopa.infrastructure import *
 from mopa.models import *
 import mopa.config as config
 
+
 bp = api = Blueprint('api', __name__)
 
 
@@ -181,19 +182,17 @@ def get_critical_points_by_day(day):
             answer["location"] = point.get('location', "")
             answer["geo_location"] = point.get('geo_location', "")
             answer["neighbourhood"] = point.get('neighbourhood', "")
-            answer["district"] = point.get('district', "")
-
         del answer["answered_by"]
         del answer["created_at"]
 
     return Response(json.dumps(answers, cls=CustomJSONEncoder))
 
 
-@api.route("/reports/", methods=["GET"], defaults={'year': date.today().year, 'month': date.today().month, 'day': date.today().day})
-@api.route("/reports/<year>/<month>/<day>", methods=["GET"])
-def get_reports(year, month, day):
+@api.route("/reports/", methods=["GET"], defaults={'district' : 'kamaxaquene', 'year': date.today().year, 'month': date.today().month, 'day': date.today().day})
+@api.route("/reports/<district>/<year>/<month>/<day>", methods=["GET"])
+def get_reports(district, year, month, day):
     current_app.logger.info("%s %s %s" % (year, month, day))
-    file_name = "relatorio-diario-{0}_{1:02d}_{2:02d}.pdf".format(int(year), int(month), int(day))
+    file_name = "relatorio-diario-{0}-{1}_{2:02d}_{3:02d}.pdf".format(district, int(year), int(month), int(day))
     if file_name:
         return send_from_directory(config.REPORTS_DIR, file_name, as_attachment=True)
 
