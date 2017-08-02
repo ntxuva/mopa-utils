@@ -443,7 +443,28 @@ def send_monthly_report():
     f_name = 'relatorio-mensal-' + '-' + today.strftime('%Y_%m_%d') + '.pdf'
     generate_pdf('monthly_report.html', context, f_name)
 
-    # TODO: send the email with newly generated report
+    html = '''
+        <html>
+            <head></head>
+            <body>
+            <p>Sauda&ccedil;&otilde;es!<br/><br/>
+                Segue em anexo o relatorio mensal<br/><br/>
+                Cumprimentos,<br/>
+                <em>Enviado automaticamente</em>
+            </p>
+            </body>
+        </html>
+    '''
+
+    send_mail(
+        config.WEEKLY_REPORT_TO,
+        '[MOPA] Relatorio Mensal - ' + lastMonth.strftime('%B of %Y'),
+        html,
+        is_html=True,
+        cc=config.DAILY_REPORT_CC,
+        sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
+        attachments=[config.REPORTS_DIR + '/' + f_name]
+    )
 
     return "Report successfully generated for %s." % lastMonth.strftime('%B of %Y'), 200
 
