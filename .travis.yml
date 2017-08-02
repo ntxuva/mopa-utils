@@ -17,4 +17,5 @@ before_script:
   - mysql -e 'CREATE DATABASE ntxuva2;'
   - mysql -D ntxuva2 < mopa/data/db/mopa_reports_schema.sql
   - mysql -D ntxuva2 < mopa/data/db/mopa_sms_schema.sql
+  - export DISPLAY=:0.0
 after_success: coveralls

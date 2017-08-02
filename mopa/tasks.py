@@ -25,6 +25,9 @@ import pandas as pd
 import dateutil.parser
 import locale
 
+import matplotlib
+matplotlib.use('Agg') # tell matplot not to use XWindows
+
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
