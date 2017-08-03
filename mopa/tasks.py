@@ -24,9 +24,10 @@ from slugify import slugify
 import pandas as pd
 import dateutil.parser
 import locale
+import warnings
 
 import matplotlib
-matplotlib.use('Agg') # tell matplot not to use XWindows
+matplotlib.use('Agg', warn=False) # tell matplot not to use XWindows
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -425,7 +426,13 @@ def send_monthly_report():
     plt.tight_layout()
     plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot6.png'), dpi=300)
 
-    locale.setlocale(locale.LC_ALL, 'pt_PT.UTF-8')
+    try:
+        locale.setlocale(locale.LC_ALL, str('pt_PT.UTF-8'))
+    except locale.Error:
+        try:
+            locale.setlocale(locale.LC_ALL, str('Portuguese_Portugal.1252'))
+        except locale.Error:
+            warnings.warn("Could not set locale to Portuguese/Portugal. ")
 
     # Generate PDF
     context = {
