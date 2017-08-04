@@ -1,0 +1,9 @@
+[run]
+source=
+    mopa
+omit =
+    manage.py
+    tests/*
+    venv*/
+    lib/*
+    vendor/*
