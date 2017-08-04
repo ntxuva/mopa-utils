@@ -22,3 +22,5 @@ schedule==0.3.2
 xhtml2pdf==0.0.6
 awesome-slugify==1.6.5
 seaborn==0.7.1
+matplotlib==2.0.2
+scipy==0.19.1
