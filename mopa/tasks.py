@@ -95,7 +95,7 @@ def send_weekly_report(today=None):
             Uow.commit()
         except IntegrityError:
             Uow.rollback()
-        except Exception, ex:
+        except Exception as ex:
             Uow.rollback()
             current_app.logger.error("Error While Inserting Report in DB\n" + traceback.format_exc())
 
@@ -294,18 +294,18 @@ def send_monthly_report():
     """Task to prepare and send the monthly report"""
     today = datetime.utcnow()
     first = today.replace(day=1)
-    lastMonth = first - timedelta(days=1)
-    lastMonth_first = lastMonth.replace(day=1)
+    last_month = first - timedelta(days=1)
+    last_month_first = last_month.replace(day=1)
 
     districts = pd.read_csv(os.path.join(config.BASE_DIR, 'static/neighbourhoods.csv'))
 
-    all_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?end_date=' + lastMonth.strftime('%Y-%m-%d'))
+    all_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?end_date=' + last_month.strftime('%Y-%m-%d'))
     all_reports['requested_datetime'] = pd.to_datetime(all_reports['requested_datetime'])
     all_reports['requested_month'] = all_reports['requested_datetime'].apply(lambda t: t.strftime('%Y-%m'))
     all_reports = all_reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
     all_reports = translate_column_names(all_reports)
 
-    reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date='  + lastMonth_first.strftime('%Y-%m-%d') + '&end_date=' + lastMonth.strftime('%Y-%m-%d') + '&phone_key=666554')
+    reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date='  + last_month_first.strftime('%Y-%m-%d') + '&end_date=' + last_month.strftime('%Y-%m-%d') + '&phone_key=666554')
 
     reports['requested_datetime'] = pd.to_datetime(reports['requested_datetime'])
     reports['updated_datetime'] = pd.to_datetime(reports['updated_datetime'])
@@ -437,7 +437,7 @@ def send_monthly_report():
     # Generate PDF
     context = {
         'today': today.strftime('%d-%m-%Y'),
-        'month': lastMonth.strftime('%m/%Y'),
+        'month': last_month.strftime('%m/%Y'),
         'table_problems_per_month' : table_problems_per_month,
         'table_problems_per_district_per_month' : table_problems_per_district_per_month,
         'table1': table_service_per_month,
@@ -447,7 +447,7 @@ def send_monthly_report():
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
-    f_name = 'relatorio-mensal-' + '-' + today.strftime('%Y_%m_%d') + '.pdf'
+    f_name = 'relatorio-mensal' + '-' + today.strftime('%Y_%m_%d') + '.pdf'
     generate_pdf('monthly_report.html', context, f_name)
 
     html = '''
@@ -465,7 +465,7 @@ def send_monthly_report():
 
     send_mail(
         config.WEEKLY_REPORT_TO,
-        '[MOPA] Relatorio Mensal - ' + lastMonth.strftime('%B of %Y'),
+        '[MOPA] Relatorio Mensal - ' + last_month.strftime('%B of %Y'),
         html,
         is_html=True,
         cc=config.DAILY_REPORT_CC,
@@ -473,7 +473,8 @@ def send_monthly_report():
         attachments=[config.REPORTS_DIR + '/' + f_name]
     )
 
-    return "Report successfully generated for %s." % lastMonth.strftime('%B of %Y'), 200
+    return "Report successfully generated for %s." % last_month.strftime('%B of %Y'), 200
+
 
 @tasks.route('/send-daily-report/<regex("\d{4}-\d{2}-\d{2}"):today>')
 @tasks.route('/send-daily-report')
@@ -566,7 +567,7 @@ def send_daily_survey_replies():
 
     try:
         response = retry_call(requests.get, fargs=['http://mopa.co.mz:8080/critical-points/' + today.strftime('%Y-%m-%d')], exceptions=ConnectTimeout, tries=3)
-    except Exception, ex:
+    except Exception as ex:
         ex_type, ex_obj, ex_tb = sys.exc_info()
         fname = os.path.split(ex_tb.tb_frame.f_code.co_filename)[1]
         current_app.logger.error("Could not fetch daily survey answers required to generate report.\nError message:{ex_msg}.\nException Type: {ex_type}.\nFile name: {file_name}.\nLine No: {line_no}.\nTraceback: {traceback}".format(ex_msg=str(ex), ex_type=str(ex_type), file_name=str(fname), line_no=str(ex_tb.tb_lineno), traceback=traceback.format_exc()))
