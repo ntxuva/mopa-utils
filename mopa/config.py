@@ -124,7 +124,8 @@ OPEN311_END_POINTS = {
     'services'	: OPEN311_BASE_URL + 'services',
     'tokens'	: OPEN311_BASE_URL + 'tokens',
     'locations'	: OPEN311_BASE_URL + 'locations',
-    'people'	: OPEN311_BASE_URL + 'people'
+    'people'	: OPEN311_BASE_URL + 'people',
+    'reopen'	: OPEN311_BASE_URL + 'reopen'
 }
 
 OPEN311_PHONE_KEY = os.getenv('OPEN311_PHONE_KEY', 'OPEN311_PHONE_KEY')
