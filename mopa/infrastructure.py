@@ -400,7 +400,7 @@ def get_requests(start_date, end_date, include_phone):
     http_response = retry_call(
         requests.get,
         fargs=[config.OPEN311_END_POINTS['requests'] + '.' + config.OPEN311_RESPONSE_FORMATS['json']],
-        fkwargs={'params': payload, 'allow_redirects': False},
+        fkwargs={'params': payload},
         exceptions=ConnectTimeout,
         tries=3
     )
