@@ -6,11 +6,11 @@
 This project contains the source code for the mopa util. Server side code is written in python and meant to run in python 2.7
 To support the project the following external libs have been used
 
-- [flask](http://flask.pocoo.org/) - for REST API and backend HTTP
+- [flask](http://flask.pocoo.org/) - for REST API and back-end HTTP
 - [flask-sqlalchemy](https://pythonhosted.org/Flask-SQLAlchemy/) - as ORM for db access
 - [Schedule](https://github.com/mrhwick/schedule) - for scheduled tasks
 - [Jinja2](http://jinja.pocoo.org/) - For the report templating
-- [xhtml2pdf](http://www.xhtml2pdf.com/) - For convertion of html template to html5
+- [xhtml2pdf](http://www.xhtml2pdf.com/) - For conversion of html template to html5
 - [pudb](https://pypi.python.org/pypi/pudb/) - For debugging
 
 ## Installing and Running
@@ -28,18 +28,19 @@ gunicorn wsgi # run gunicorn
 
 sudo rm /etc/nginx/sites-enabled/default
 sudo cp path-to-mopa-utils/etc/nginx.conf /etc/nginx/sites-available/mopautils # make app available on nginx
-sudo ln -s /etc/nginx/sites-enabled/mopautils /etc/nginx/sites-enabled/mopautils # deploy nginx
+sudo ln -s /etc/nginx/sites-available/mopautils /etc/nginx/sites-enabled/mopautils # deploy nginx
 sudo service nginx reload
 
-# append and update path-to-mopa-utils/etc/supervisord.conf to /etc/supervisor/supervisord.conf
+sudo apt-get install supervisord
+sudo cp path-to-mopa-utils/etc/supervisord.conf /etc/supervisor/conf.d/mopa-utils.conf
 sudo service supervisor restart
 
-copy .env.example .env
+cp .env.example .env
 # Edit .env then put API_KEY in /etc/environment
 
 # Nuke *.pyc files
-find . -name "*.pyc" -exec rm -rf {} \;
-find . -name \*.pyc -delete
+sudo find . -name "*.pyc" -exec rm -rf {} \;
+sudo find . -name \*.pyc -delete
 ```
 
 ## Guidelines on Common usage of xhtml2pdf and errors
