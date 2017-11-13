@@ -35,10 +35,6 @@ def not_found(error):
 
 @api.route('/')
 def index():
-    context = {
-        "body": "Hello World!",
-        "name": "Mopa"
-    }
     return "Hello Mopa", 200
 
 
@@ -80,7 +76,7 @@ def receive_sms():
             today_survey = Survey.todays()
 
             if today_survey:
-                answer = SurveyAnswer(today_survey.survey_id,  incoming_sms_parts[0], incoming_sms["from"], stored_incoming_sms.id, survey_key=today_survey.id)
+                answer = SurveyAnswer(today_survey.survey_id, incoming_sms_parts[0], incoming_sms["from"], stored_incoming_sms.id, survey_key=today_survey.id)
                 Uow.add(answer)
                 Uow.commit()
                 outgoing_sms = config.SMS_THANK_YOU
@@ -188,7 +184,7 @@ def get_critical_points_by_day(day):
     return Response(json.dumps(answers, cls=CustomJSONEncoder))
 
 
-@api.route("/reports/", methods=["GET"], defaults={'district' : 'kamaxaquene', 'year': date.today().year, 'month': date.today().month, 'day': date.today().day})
+@api.route("/reports/", methods=["GET"], defaults={'district': 'kamaxaquene', 'year': date.today().year, 'month': date.today().month, 'day': date.today().day})
 @api.route("/reports/<district>/<year>/<month>/<day>", methods=["GET"])
 def get_reports(district, year, month, day):
     current_app.logger.info("%s %s %s" % (year, month, day))
