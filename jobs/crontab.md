@@ -9,7 +9,7 @@ grep CRON /var/log/syslog | tail
 ## Edit schedule with
 
 ```sh
-crontab -e
+sudo crontab -e
 ```
 
 ## Schedule to be set
