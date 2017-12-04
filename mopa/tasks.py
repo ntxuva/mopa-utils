@@ -464,7 +464,7 @@ def send_monthly_report():
     '''
 
     send_mail(
-        config.WEEKLY_REPORT_TO,
+        config.DAILY_REPORT_TO,
         '[MOPA] Relatorio Mensal - ' + last_month.strftime('%B of %Y'),
         html,
         is_html=True,
