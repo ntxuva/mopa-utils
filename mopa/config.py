@@ -18,7 +18,7 @@ def cheap_dot_env(path):
 BASE_DIR = APP_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # Admin Emails
-ADMINS = map(lambda x: x.strip(), os.getenv('ADMINS', 'admin@xample.com').rsplit(','))
+ADMINS = filter(None, map(lambda x: x.strip(), os.getenv('ADMINS', 'admin@xample.com').rsplit(',')))
 
 APP_NAME = 'Mopa'
 
