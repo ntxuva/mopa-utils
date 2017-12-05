@@ -349,15 +349,16 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
 
     try:
         # this doesn't support `with` statement so we do `close` the old way.
-        mailServer = smtplib.SMTP(os.getenv('SMTP_HOST'), os.getenv('SMTP_PORT'))
-        mailServer.ehlo()
-        if os.getenv('SMTP_USE_TLS'):
-            mailServer.starttls()
-        mailServer.ehlo()
-        mailServer.login(os.getenv('SMTP_USERNAME'), os.getenv('SMTP_PASSWORD'))
-        mailServer.sendmail(subject, map(lambda x: x[1], all_destinations), mail.as_string())
+        mail_server = smtplib.SMTP_SSL(config.SMTP_HOST, config.SMTP_PORT) if config.SMTP_USE_SSL else smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT)
+        mail_server.set_debuglevel(1)
+        mail_server.ehlo()
+        if config.SMTP_USE_TLS:
+            mail_server.starttls()
+            mail_server.ehlo()
+        mail_server.login(config.SMTP_USERNAME, config.SMTP_PASSWORD)
+        mail_server.sendmail(subject, list(map(lambda x: x[1], all_destinations)), mail.as_string())
         # Should be mailServer.quit(), but that crashes...
-        mailServer.close()
+        mail_server.close()
     except Exception, ex:
         logger.error("Unable to send the email. Error: %s" % str(ex))
         raise
