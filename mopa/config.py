@@ -76,8 +76,8 @@ DATABASE_CONNECT_OPTIONS = {}
 # Email
 SMTP_HOST = os.getenv('SMTP_HOST')
 SMTP_PORT = os.getenv('SMTP_PORT', 25)
-SMTP_USE_TLS = bool(os.getenv('SMTP_USE_TLS', "false"))
-SMTP_USE_SSL = bool(os.getenv('SMTP_USE_SSL', "false"))
+SMTP_USE_TLS = os.getenv('SMTP_USE_TLS', 'false') == 'true'
+SMTP_USE_SSL = os.getenv('SMTP_USE_SSL', 'false') == 'true'
 SMTP_USERNAME = os.getenv('SMTP_USERNAME')
 SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
 EMAIL_DEFAULT_NAME = 'Mopa'
