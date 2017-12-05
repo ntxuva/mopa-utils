@@ -27,7 +27,7 @@ import locale
 import warnings
 
 import matplotlib
-matplotlib.use('Agg', warn=False) # tell matplot not to use XWindows
+matplotlib.use('Agg', warn=False)  # tell matplot not to use XWindows
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -35,7 +35,7 @@ import seaborn as sns
 
 import mopa.config as config
 from mopa.infrastructure import (
-    Location, xstr, snake_case, remove_accents, get_requests, generate_pdf, send_mail, truncate
+    Location, xstr, remove_accents, get_requests, generate_pdf, send_mail
 )
 from mopa.models import Uow, SMS, Survey, Report
 
@@ -47,8 +47,8 @@ bp = tasks = Blueprint('tasks', __name__)
 def before_request():
     """Checks if API_KEY is valid"""
     api_key = request.headers.get('API_KEY', None)
-    if not api_key or api_key != current_app.config['API_KEY']:
-        abort(403)  # Forbidden / Not Authorized
+    if api_key != current_app.config['API_KEY']:
+        abort(403)
 
 
 @tasks.route('/send-weekly-report/<regex("\d{4}-\d{2}-\d{2}"):today>')
@@ -62,10 +62,6 @@ def send_weekly_report(today=None):
 
     old_start_date = start_date + timedelta(days=-7)
     old_end_date = start_date
-
-    # Get requests
-    default = ''
-    requests_list = []
 
     for _request in get_requests(start_date, end_date, True):
         location = Location.i().guess_location(_request)
@@ -104,20 +100,20 @@ def send_weekly_report(today=None):
     estados_report_rows = Report.get_summary_report(start_date, end_date, old_start_date, old_end_date)
 
     # calculate totals for states
-    total_occurencies = 0
+    total_occurrences = 0
     total_pct = 0
     total_tempo_medio_resolucao = 0
     total_variacao = 0
 
     for estado in estados_report_rows:
-        total_occurencies += estado["no_occorencias"]
+        total_occurrences += estado["no_occorencias"]
         total_pct += estado["pct_do_total"]
         total_tempo_medio_resolucao += estado["tempo_medio_resolucao"]
         total_variacao += estado.get("variacao") if estado.get("variacao") else 0
 
     estados_report_rows.append({
         'type': 'TOTAL',
-        'no_occorencias': total_occurencies,
+        'no_occorencias': total_occurrences,
         'pct_do_total': total_pct,
         'tempo_medio_resolucao': total_tempo_medio_resolucao,
         'variacao': total_variacao
@@ -199,7 +195,6 @@ def send_weekly_report(today=None):
                     "registado": row.get("registado", 0),
                     "em_processo": row.get("em_processo", 0),
                     "resolvido": row.get("resolvido", 0),
-                    # "arquivado": row.get("arquivado", 0),
                     "invalido": row.get("invalido", 0),
                     "total": row.get("total", 0)
                 })
@@ -217,7 +212,6 @@ def send_weekly_report(today=None):
                     "registado": 0,
                     "em_processo": 0,
                     "resolvido": 0,
-                    # "arquivado": 0,
                     "invalido": 0,
                     "total": 0
                 })
@@ -260,8 +254,8 @@ def send_weekly_report(today=None):
         'icons': dict(zip(problem_types, problem_images)),
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
-    f_name = 'relatorio-semanal-' + today.strftime('%Y_%m_%d') + '.pdf'
-    generate_pdf('weekly_report.html', context, f_name)
+    report_file_name = 'relatorio-semanal-' + today.strftime('%Y_%m_%d') + '.pdf'
+    generate_pdf('weekly_report.html', context, report_file_name)
 
     # Send mail
     html = '''\
@@ -283,7 +277,7 @@ def send_weekly_report(today=None):
         is_html=True,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
-        attachments=[config.REPORTS_DIR + '/' + f_name]
+        attachments=[config.REPORTS_DIR + '/' + report_file_name]
     )
 
     return "Ok", 200
@@ -305,7 +299,7 @@ def send_monthly_report():
     all_reports = all_reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
     all_reports = translate_column_names(all_reports)
 
-    reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date='  + last_month_first.strftime('%Y-%m-%d') + '&end_date=' + last_month.strftime('%Y-%m-%d') + '&phone_key=666554')
+    reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date=' + last_month_first.strftime('%Y-%m-%d') + '&end_date=' + last_month.strftime('%Y-%m-%d') + '&phone_key=666554')
 
     reports['requested_datetime'] = pd.to_datetime(reports['requested_datetime'])
     reports['updated_datetime'] = pd.to_datetime(reports['updated_datetime'])
@@ -316,33 +310,29 @@ def send_monthly_report():
 
     # prepare tables
 
-    table_problems_per_district_per_month = pd.crosstab(all_reports['Distrito'], all_reports['Mes'], margins = True)
+    table_problems_per_district_per_month = pd.crosstab(all_reports['Distrito'], all_reports['Mes'], margins=True)
     table_problems_per_district_per_month = table_problems_per_district_per_month.to_html()
 
-    table_problems_per_month = pd.crosstab(all_reports['Categoria'], all_reports['Mes'], margins = True)
+    table_problems_per_month = pd.crosstab(all_reports['Categoria'], all_reports['Mes'], margins=True)
     table_problems_per_month = table_problems_per_month.to_html()
 
-    table_service_per_month = pd.crosstab(reports['Categoria'], reports['Estado'], margins = True)
+    table_service_per_month = pd.crosstab(reports['Categoria'], reports['Estado'], margins=True)
     table_service_per_month = table_service_per_month.to_html()
 
-    table_problems_per_district = pd.crosstab(reports['Categoria'], reports['Distrito'], margins = True)
+    table_problems_per_district = pd.crosstab(reports['Categoria'], reports['Distrito'], margins=True)
     table_problems_per_district = table_problems_per_district.to_html()
 
-    table_response_time_per_service = reports['response_time']\
-        .groupby(reports['Categoria'])\
-        .agg({'Número de problemas' : np.size, 'Tempo medio de resposta (dias)' : np.mean})\
-        .to_html(float_format = '%2.2f')
+    table_response_time_per_service = reports['response_time'].groupby(reports['Categoria'])\
+                                                              .agg({'Número de problemas': np.size, 'Tempo medio de resposta (dias)': np.mean})\
+                                                              .to_html(float_format='%2.2f')
 
-    table_unique_citizens_per_district = reports\
-        .pivot_table(index='Categoria', columns='Distrito', values='phone',
-                     fill_value=0,
-                     aggfunc = pd.Series.nunique, margins = True)
-    table_unique_citizens_per_district = table_unique_citizens_per_district.to_html(float_format = '%d')
+    table_unique_citizens_per_district = reports.pivot_table(index='Categoria', columns='Distrito', values='phone', fill_value=0, aggfunc=pd.Series.nunique, margins=True)
+    table_unique_citizens_per_district = table_unique_citizens_per_district.to_html(float_format='%d')
 
-    ## prepare figures
+    # prepare figures
 
     fig0 = plt.figure()
-    image0_table = all_reports['Mes'].value_counts().sort_index(ascending = True)
+    image0_table = all_reports['Mes'].value_counts().sort_index(ascending=True)
     ax = image0_table.plot(kind='bar')
     plt.xticks(rotation=0)
 
@@ -351,8 +341,7 @@ def send_monthly_report():
 
     for bar in ax.patches:
         height = bar.get_height()
-        plt.gca().text(bar.get_x() + bar.get_width()/2, bar.get_height() - 100 , str('{:d}'.format(int(height))),
-                 ha='center', color='w', fontsize=12)
+        plt.gca().text(bar.get_x() + bar.get_width()/2, bar.get_height() - 100, str('{:d}'.format(int(height))), ha='center', color='w', fontsize=12)
 
     plt.tight_layout()
     plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot0.png'), dpi=300)
@@ -417,11 +406,11 @@ def send_monthly_report():
 
     fig6 = plt.figure()
     ax6 = fig6.add_subplot(111)
-    image6_values =[reports['status_notes'].count(), len(reports.index)]
+    image6_values = [reports['status_notes'].count(), len(reports.index)]
     image6_labels = ['Esclarecimento do CMM', 'Nenhum esclarecimento do CMM']
     plt.pie(image6_values, autopct='%1.0f%%', pctdistance=0.9)
     ax6.set_aspect('equal')
-    plt.legend(labels = image6_labels, loc="best")
+    plt.legend(labels=image6_labels, loc="best")
     plt.ylabel('')
     plt.tight_layout()
     plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot6.png'), dpi=300)
@@ -438,8 +427,8 @@ def send_monthly_report():
     context = {
         'today': today.strftime('%d-%m-%Y'),
         'month': last_month.strftime('%m/%Y'),
-        'table_problems_per_month' : table_problems_per_month,
-        'table_problems_per_district_per_month' : table_problems_per_district_per_month,
+        'table_problems_per_month': table_problems_per_month,
+        'table_problems_per_district_per_month': table_problems_per_district_per_month,
         'table1': table_service_per_month,
         'table2': table_problems_per_district,
         'table3': table_response_time_per_service,
@@ -447,8 +436,8 @@ def send_monthly_report():
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
-    f_name = 'relatorio-mensal' + '-' + today.strftime('%Y_%m_%d') + '.pdf'
-    generate_pdf('monthly_report.html', context, f_name)
+    report_file_name = 'relatorio-mensal' + '-' + today.strftime('%Y_%m_%d') + '.pdf'
+    generate_pdf('monthly_report.html', context, report_file_name)
 
     html = '''
         <html>
@@ -470,7 +459,7 @@ def send_monthly_report():
         is_html=True,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
-        attachments=[config.REPORTS_DIR + '/' + f_name]
+        attachments=[config.REPORTS_DIR + '/' + report_file_name]
     )
 
     return "Report successfully generated for %s." % last_month.strftime('%B of %Y'), 200
@@ -484,7 +473,6 @@ def send_daily_report(today=None):
     today = date.today() if today is None else datetime.strptime(today, '%Y-%m-%d')
 
     # Get requests
-    default = ''
     requests_list = []
     districts = []
 
@@ -528,8 +516,8 @@ def send_daily_report(today=None):
             'static': os.path.join(config.BASE_DIR, 'templates') + '/'
         }
 
-        f_name = 'relatorio-diario-' + slugify(district) + '-' + today.strftime('%Y_%m_%d') + '.pdf'
-        generate_pdf('daily_report.html', context, f_name)
+        report_file_name = 'relatorio-diario-' + slugify(district) + '-' + today.strftime('%Y_%m_%d') + '.pdf'
+        generate_pdf('daily_report.html', context, report_file_name)
 
         # Send mail
         html = '''\
@@ -551,7 +539,7 @@ def send_daily_report(today=None):
             is_html=True,
             cc=config.DAILY_REPORT_CC,
             sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
-            attachments=[config.REPORTS_DIR + '/' + f_name]
+            attachments=[config.REPORTS_DIR + '/' + report_file_name]
         )
 
     return "Ok", 200
@@ -600,8 +588,8 @@ def send_daily_survey_replies():
         'static': os.path.join(config.BASE_DIR, 'templates') + '/'
     }
 
-    f_name = 'respostas-ao-inquerito-diario-' + today.strftime('%Y_%m_%d') + '.pdf'
-    generate_pdf('daily_survey_answers.html', context, f_name)
+    report_file_name = 'respostas-ao-inquerito-diario-' + today.strftime('%Y_%m_%d') + '.pdf'
+    generate_pdf('daily_survey_answers.html', context, report_file_name)
 
     # Send mail
     html = '''\
@@ -624,7 +612,7 @@ def send_daily_survey_replies():
         is_html=True,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
-        attachments=[config.REPORTS_DIR + '/' + f_name]
+        attachments=[config.REPORTS_DIR + '/' + report_file_name]
     )
 
     return "Ok", 200
@@ -732,5 +720,5 @@ def notify_updates_on_requests():
 
 
 def translate_column_names(df):
-    df.rename(columns={'service_notice' : 'Estado', 'district' : 'Distrito', 'service_name' : 'Categoria', 'requested_month' : 'Mes'}, inplace = True)
+    df.rename(columns={'service_notice': 'Estado', 'district': 'Distrito', 'service_name': 'Categoria', 'requested_month': 'Mes'}, inplace=True)
     return df
