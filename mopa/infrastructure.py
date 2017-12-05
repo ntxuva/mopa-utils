@@ -350,7 +350,6 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None, reply_to=N
     try:
         # this doesn't support `with` statement so we do `close` the old way.
         mail_server = smtplib.SMTP_SSL(config.SMTP_HOST, config.SMTP_PORT) if config.SMTP_USE_SSL else smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT)
-        mail_server.set_debuglevel(1)
         mail_server.ehlo()
         if config.SMTP_USE_TLS:
             mail_server.starttls()
