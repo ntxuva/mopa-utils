@@ -4,7 +4,6 @@ import os
 import subprocess
 import sys
 
-sys.path.insert(1, os.path.join(os.path.abspath('.'), 'vendor'))
 
 from mopa import create_app
 from flask import Flask, g, jsonify, url_for
@@ -22,7 +21,7 @@ manager.add_command("shell", Shell(make_context=make_shell_context))
 @manager.command
 def test(coverage=False):
     """Runs unit tests and presents coverage report"""
-    tests = subprocess.call(['python', '-c', "import os; import sys; sys.path.insert(1, os.path.join(os.path.abspath('.'), 'vendor')); import tests as tests; tests.run()"])
+    tests = subprocess.call(['python', '-c', "import tests as tests; tests.run()"])
     sys.exit(tests)
 
 
@@ -57,6 +56,7 @@ def profile(length=25, profile_dir=None):
 @manager.command
 def runserver_secure():
     app.run('0.0.0.0', ssl_context='adhoc')
+
 
 if __name__ == '__main__':
     manager.run()

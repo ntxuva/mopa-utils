@@ -6,8 +6,8 @@
 This project contains the source code for the mopa util. Server side code is written in python and meant to run in python 2.7
 To support the project the following external libs have been used
 
-- [flask](http://flask.pocoo.org/) - for REST API and back-end HTTP
-- [flask-sqlalchemy](https://pythonhosted.org/Flask-SQLAlchemy/) - as ORM for db access
+- [Flask](http://flask.pocoo.org/) - for REST API and back-end HTTP
+- [Flask-SQLAlchemy](https://pythonhosted.org/Flask-SQLAlchemy/) - as ORM for db access
 - [Schedule](https://github.com/mrhwick/schedule) - for scheduled tasks
 - [Jinja2](http://jinja.pocoo.org/) - For the report templating
 - [xhtml2pdf](http://www.xhtml2pdf.com/) - For conversion of html template to html5
@@ -18,7 +18,9 @@ To support the project the following external libs have been used
 ```sh
 virtualenv venv # create virtual env
 source venv/bin/activate # activate virtual env
-pip install -r requirements.txt -t vendor --upgrade # install dependencies in lib/vendor folder
+# pip install -r requirements.txt -t vendor --upgrade # install dependencies in vendor folder. 
+# Option above won't work because of https://github.com/pypa/pip/issues/4390
+pip install -r requirements.txt --upgrade
 pip install gunicorn # install gunicorn WSGI server
 
 python manage.py test # tests

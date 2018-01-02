@@ -33,9 +33,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
+from send_mail import send_mail
+
 import mopa.config as config
 from mopa.infrastructure import (
-    Location, xstr, remove_accents, get_requests, generate_pdf, send_mail
+    Location, xstr, remove_accents, get_requests, generate_pdf
 )
 from mopa.models import Uow, SMS, Survey, Report
 
@@ -258,23 +260,22 @@ def send_weekly_report(today=None):
     generate_pdf('weekly_report.html', context, report_file_name)
 
     # Send mail
-    html = '''\
-        <html>
-            <head></head>
-            <body>
-            <p>Sauda&ccedil;&otilde;es!<br/><br/>
-                Segue em anexo o relat&oacute;rio MOPA<br/><br/>
-                Cumprimentos,<br/>
-                <em>Enviado automaticamente</em>
-            </p>
-            </body>
-        </html>
+    html = '''
+<html>
+    <head></head>
+    <body>
+    <p>Sauda&ccedil;&otilde;es!<br/><br/>
+        Segue em anexo o relat&oacute;rio MOPA<br/><br/>
+        Cumprimentos,<br/>
+        <em>Enviado automaticamente</em>
+    </p>
+    </body>
+</html>
             '''
     send_mail(
-        config.WEEKLY_REPORT_TO,
         '[MOPA] Relatorio Semanal - ' + today.strftime('%Y-%m-%d'),
-        html,
-        is_html=True,
+        html_message=html,
+        to=config.WEEKLY_REPORT_TO,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
         attachments=[config.REPORTS_DIR + '/' + report_file_name]
@@ -440,23 +441,22 @@ def send_monthly_report():
     generate_pdf('monthly_report.html', context, report_file_name)
 
     html = '''
-        <html>
-            <head></head>
-            <body>
-            <p>Sauda&ccedil;&otilde;es!<br/><br/>
-                Segue em anexo o relatorio mensal<br/><br/>
-                Cumprimentos,<br/>
-                <em>Enviado automaticamente</em>
-            </p>
-            </body>
-        </html>
+<html>
+    <head></head>
+    <body>
+    <p>Sauda&ccedil;&otilde;es!<br/><br/>
+        Segue em anexo o relatorio mensal<br/><br/>
+        Cumprimentos,<br/>
+        <em>Enviado automaticamente</em>
+    </p>
+    </body>
+</html>
     '''
 
     send_mail(
-        config.DAILY_REPORT_TO,
         '[MOPA] Relatorio Mensal - ' + last_month.strftime('%B of %Y'),
-        html,
-        is_html=True,
+        html_message=html,
+        to=config.DAILY_REPORT_TO,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
         attachments=[config.REPORTS_DIR + '/' + report_file_name]
@@ -520,23 +520,22 @@ def send_daily_report(today=None):
         generate_pdf('daily_report.html', context, report_file_name)
 
         # Send mail
-        html = '''\
-            <html>
-                <head></head>
-                <body>
-                <p>Sauda&ccedil;&otilde;es!<br/><br/>
-                    Segue em anexo o relat&oacute;rio MOPA<br/><br/>
-                    Cumprimentos,<br/>
-                    <em>Enviado automaticamente</em>
-                </p>
-                </body>
-            </html>
+        html = '''
+<html>
+    <head></head>
+    <body>
+    <p>Sauda&ccedil;&otilde;es!<br/><br/>
+        Segue em anexo o relat&oacute;rio MOPA<br/><br/>
+        Cumprimentos,<br/>
+        <em>Enviado automaticamente</em>
+    </p>
+    </body>
+</html>
                 '''
         send_mail(
-            config.DAILY_REPORT_TO,
             '[MOPA] Relatorio Diario - ' + district.title() + ' - ' + today.strftime('%Y-%m-%d'),
-            html,
-            is_html=True,
+            html_message=html,
+            to=config.DAILY_REPORT_TO,
             cc=config.DAILY_REPORT_CC,
             sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
             attachments=[config.REPORTS_DIR + '/' + report_file_name]
@@ -592,24 +591,23 @@ def send_daily_survey_replies():
     generate_pdf('daily_survey_answers.html', context, report_file_name)
 
     # Send mail
-    html = '''\
-        <html>
-            <head></head>
-            <body>
-            <p>Sauda&ccedil;&otilde;es!<br/><br/>
-                Seguem em anexo as respostas aos inqu&eacute;ritos \
-                di&aacute;rios<br/><br/>
-                Cumprimentos,<br/>
-                <em>Enviado automaticamente</em>
-            </p>
-            </body>
-        </html>
+    html = '''
+<html>
+    <head></head>
+    <body>
+    <p>Sauda&ccedil;&otilde;es!<br/><br/>
+        Seguem em anexo as respostas aos inqu&eacute;ritos
+        di&aacute;rios<br/><br/>
+        Cumprimentos,<br/>
+        <em>Enviado automaticamente</em>
+    </p>
+    </body>
+</html>
             '''
     send_mail(
-        config.DAILY_ENQUIRY_REPORT_TO,
         '[MOPA] Respostas aos Inqueritos Diarios - ' + today.strftime('%Y-%m-%d'),
-        html,
-        is_html=True,
+        html_message=html,
+        to=config.DAILY_ENQUIRY_REPORT_TO,
         cc=config.DAILY_REPORT_CC,
         sender=(config.EMAIL_DEFAULT_NAME, config.EMAIL_DEFAULT_SENDER),
         attachments=[config.REPORTS_DIR + '/' + report_file_name]
