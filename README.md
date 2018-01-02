@@ -6,8 +6,8 @@
 This project contains the source code for the mopa util. Server side code is written in python and meant to run in python 2.7
 To support the project the following external libs have been used
 
-- [flask](http://flask.pocoo.org/) - for REST API and back-end HTTP
-- [flask-sqlalchemy](https://pythonhosted.org/Flask-SQLAlchemy/) - as ORM for db access
+- [Flask](http://flask.pocoo.org/) - for REST API and back-end HTTP
+- [Flask-SQLAlchemy](https://pythonhosted.org/Flask-SQLAlchemy/) - as ORM for db access
 - [Schedule](https://github.com/mrhwick/schedule) - for scheduled tasks
 - [Jinja2](http://jinja.pocoo.org/) - For the report templating
 - [xhtml2pdf](http://www.xhtml2pdf.com/) - For conversion of html template to html5
