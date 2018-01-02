@@ -1,3 +1,4 @@
+-e git+https://github.com/dareenzo/send_mail.git@fd6922873ebfe912a8d11348309dc6529917f72e#egg=send_mail
 coverage==4.2
 Flask==0.11.1
 Flask-Cors==2.0.1

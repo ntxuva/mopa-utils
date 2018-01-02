@@ -28,4 +28,3 @@ exec gunicorn wsgi \
   --user=$USER --group=$GROUP \
   --log-level=info \
   --reload \
-

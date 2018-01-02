@@ -18,7 +18,9 @@ To support the project the following external libs have been used
 ```sh
 virtualenv venv # create virtual env
 source venv/bin/activate # activate virtual env
-pip install -r requirements.txt -t vendor --upgrade # install dependencies in lib/vendor folder
+# pip install -r requirements.txt -t vendor --upgrade # install dependencies in vendor folder. 
+# Option above won't work because of https://github.com/pypa/pip/issues/4390
+pip install -r requirements.txt --upgrade
 pip install gunicorn # install gunicorn WSGI server
 
 python manage.py test # tests
