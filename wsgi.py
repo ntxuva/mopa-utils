@@ -9,7 +9,7 @@ if os.environ.get('WORKER_CLASS') in ('greenlet', 'gevent'):
     # Monkey-patching for gevent.
     from gevent import monkey; monkey.patch_all()
 
-# Redirect print statements
+# Redirect print statements to stderr
 # http://serverfault.com/questions/239614/wsgi-and-python-print-statements#239621
 sys.stdout = sys.stderr
 
@@ -34,6 +34,5 @@ def wsgi_app(environ, start_response):
     yield output
 
 
-# mod_wsgi need the *application* variable to serve our small app
-# application = wsgi_app
+# mod_wsgi needs a `application` variable in order to serve our app
 application = create_app()
