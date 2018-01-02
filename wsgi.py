@@ -20,7 +20,6 @@ if path not in sys.path:
 os.chdir(path)
 
 # import all library code and application packages
-sys.path.append(path + '/vendor')
 sys.path.append(path + '/mopa')
 from mopa import create_app
 
