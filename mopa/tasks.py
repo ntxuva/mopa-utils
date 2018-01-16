@@ -694,6 +694,7 @@ def notify_updates_on_requests():
                 _request.get('description', '')
             )) \
                 .replace('Criado por USSD.', '') \
+                .replace('Criado por site.', '') \
                 .replace('Criado por App.', '')
 
             for phone in phones:
