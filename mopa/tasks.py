@@ -291,14 +291,16 @@ def send_monthly_report():
     first = today.replace(day=1)
     last_month = first - timedelta(days=1)
     last_month_first = last_month.replace(day=1)
+    last_year = first - timedelta(days=360)
+    last_year_first = last_year.replace(day=1)
 
     districts = pd.read_csv(os.path.join(config.BASE_DIR, 'static/neighbourhoods.csv'))
 
-    all_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?end_date=' + last_month.strftime('%Y-%m-%d'))
-    all_reports['requested_datetime'] = pd.to_datetime(all_reports['requested_datetime'])
-    all_reports['requested_month'] = all_reports['requested_datetime'].apply(lambda t: t.strftime('%Y-%m'))
-    all_reports = all_reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
-    all_reports = translate_column_names(all_reports)
+    latest_reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date=' + last_year_first.strftime('%Y-%m-%d') + '&end_date=' + last_month.strftime('%Y-%m-%d'))
+    latest_reports['requested_datetime'] = pd.to_datetime(latest_reports['requested_datetime'])
+    latest_reports['requested_month'] = latest_reports['requested_datetime'].apply(lambda t: t.strftime('%Y-%m'))
+    latest_reports = latest_reports.merge(districts, how='left', left_on='neighbourhood', right_on='neighbourhood')
+    latest_reports = translate_column_names(latest_reports)
 
     reports = pd.read_json('http://mopa.co.mz/georeport/v2/requests.json?start_date=' + last_month_first.strftime('%Y-%m-%d') + '&end_date=' + last_month.strftime('%Y-%m-%d') + '&phone_key=666554')
 
@@ -311,10 +313,10 @@ def send_monthly_report():
 
     # prepare tables
 
-    table_problems_per_district_per_month = pd.crosstab(all_reports['Distrito'], all_reports['Mes'], margins=True)
+    table_problems_per_district_per_month = pd.crosstab(latest_reports['Distrito'], latest_reports['Mes'], margins=True)
     table_problems_per_district_per_month = table_problems_per_district_per_month.to_html()
 
-    table_problems_per_month = pd.crosstab(all_reports['Categoria'], all_reports['Mes'], margins=True)
+    table_problems_per_month = pd.crosstab(latest_reports['Categoria'], latest_reports['Mes'], margins=True)
     table_problems_per_month = table_problems_per_month.to_html()
 
     table_service_per_month = pd.crosstab(reports['Categoria'], reports['Estado'], margins=True)
@@ -323,9 +325,10 @@ def send_monthly_report():
     table_problems_per_district = pd.crosstab(reports['Categoria'], reports['Distrito'], margins=True)
     table_problems_per_district = table_problems_per_district.to_html()
 
-    table_response_time_per_service = reports['response_time'].groupby(reports['Categoria'])\
-                                                              .agg({'Número de problemas': np.size, 'Tempo medio de resposta (dias)': np.mean})\
-                                                              .to_html(float_format='%2.2f')
+    table_response_time_per_service = reports['response_time']\
+        .groupby(reports['Categoria'])\
+        .agg({'Número de problemas': np.size, 'Tempo medio de resposta (dias)': np.mean})\
+        .to_html(float_format='%2.2f')
 
     table_unique_citizens_per_district = reports.pivot_table(index='Categoria', columns='Distrito', values='phone', fill_value=0, aggfunc=pd.Series.nunique, margins=True)
     table_unique_citizens_per_district = table_unique_citizens_per_district.to_html(float_format='%d')
@@ -333,7 +336,7 @@ def send_monthly_report():
     # prepare figures
 
     fig0 = plt.figure()
-    image0_table = all_reports['Mes'].value_counts().sort_index(ascending=True)
+    image0_table = latest_reports['Mes'].value_counts().sort_index(ascending=True)
     ax = image0_table.plot(kind='bar')
     plt.xticks(rotation=0)
 
@@ -348,7 +351,7 @@ def send_monthly_report():
     plt.savefig(os.path.join(config.BASE_DIR, 'static/img/monthly_report/plot0.png'), dpi=300)
 
     fig00 = plt.figure()
-    image0_table = pd.crosstab(all_reports['Mes'], all_reports['Categoria'])
+    image0_table = pd.crosstab(latest_reports['Mes'], latest_reports['Categoria'])
     ax = image0_table.plot()
     plt.xticks(rotation=0)
     plt.tight_layout()
