@@ -111,7 +111,7 @@ SMS_ISSUE_REOPEN_FAIL = "Caro municipe, nao conseguimos encontrar o seu caso par
 NEIGHBOURHOODS_JSON_PATH = "static/neighbourhoods-live.json"
 
 # API Settings
-OPEN311_BASE_URL = 'http://mopa.co.mz/georeport/v2/'
+OPEN311_BASE_URL = 'https://www.mopa.co.mz/georeport/v2/'
 
 OPEN311_RESPONSE_FORMATS = {
     'xml':  'xml',
